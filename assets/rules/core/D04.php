@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class D04 extends \Tirreno\Assets\Rule {
+class D04 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Rare browser device';
     public const DESCRIPTION = 'User operates device with uncommon browser.';
     public const ATTRIBUTES = [];

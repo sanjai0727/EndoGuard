@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models;
+namespace EndoGuard\\Models;
 
-class Email extends \Tirreno\Models\BaseSql implements \Tirreno\Interfaces\FraudFlagUpdaterInterface {
+class Email extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\FraudFlagUpdaterInterface {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getEmailDetails(int $id, int $apiKey): array {
@@ -71,7 +71,7 @@ class Email extends \Tirreno\Models\BaseSql implements \Tirreno\Interfaces\Fraud
 
         $results = $this->execQuery($query, $params);
 
-        \Tirreno\Utils\Enrichment::calculateEmailReputation($results);
+        \EndoGuard\\Utils\Enrichment::calculateEmailReputation($results);
 
         return $results[0] ?? [];
     }

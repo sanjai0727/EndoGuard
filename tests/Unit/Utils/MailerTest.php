@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Utils;
 
-use Tirreno\Utils\Mailer;
+use EndoGuard\\Utils\Mailer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Tirreno\Utils\Mailer.
+ * Unit tests for EndoGuard\\Utils\Mailer.
  *
  * Covered (unit-testable without refactor):
  * - Mailer::send() returns a development-mode response when SEND_EMAIL is falsy

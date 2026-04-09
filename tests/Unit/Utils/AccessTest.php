@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Utils;
 
-use Tirreno\Utils\Access;
-use Tirreno\Utils\ErrorCodes;
+use EndoGuard\\Utils\Access;
+use EndoGuard\\Utils\ErrorCodes;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Tirreno\Utils\Access.
+ * Unit tests for EndoGuard\\Utils\Access.
  *
  * Covered (unit-testable without refactor):
  * - Access::CSRFTokenValid()

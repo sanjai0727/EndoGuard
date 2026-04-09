@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class I04 extends \Tirreno\Assets\Rule {
+class I04 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Shared IP';
     public const DESCRIPTION = 'Multiple users detected on the same IP address. High risk of multi-accounting.';
     public const ATTRIBUTES = [];

@@ -1,31 +1,31 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models;
+namespace EndoGuard\\Models;
 
-class Logbook extends \Tirreno\Models\BaseSql {
+class Logbook extends \EndoGuard\\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_logbook';
 
     public function getLastSucceededEvent(int $apiKey): array {
         $params = [
             ':api_key'          => $apiKey,
             ':endpoint'         => '/sensor/',
-            ':success'          => \Tirreno\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_SUCCESS,
-            ':validation_error' => \Tirreno\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_VALIDATION_ERROR,
+            ':success'          => \EndoGuard\\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_SUCCESS,
+            ':validation_error' => \EndoGuard\\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_VALIDATION_ERROR,
         ];
 
         $query = (
@@ -121,7 +121,7 @@ class Logbook extends \Tirreno\Models\BaseSql {
     public function rotateRequests(?int $apiKey): int {
         $params = [
             ':key'      => $apiKey,
-            ':limit'    => \Tirreno\Utils\Variables::getLogbookLimit(),
+            ':limit'    => \EndoGuard\\Utils\Variables::getLogbookLimit(),
         ];
 
         $query = (

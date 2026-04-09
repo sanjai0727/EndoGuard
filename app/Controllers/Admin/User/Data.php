@@ -1,25 +1,25 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\User;
+namespace EndoGuard\\Controllers\Admin\User;
 
-class Data extends \Tirreno\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     public function proceedPostRequest(): array {
-        return match (\Tirreno\Utils\Conversion::getStringRequestParam('cmd')) {
+        return match (\EndoGuard\\Utils\Conversion::getStringRequestParam('cmd')) {
             'riskScore'     => $this->recalculateRiskScore(),
             'reenrichment'  => $this->enrichEntity(),
             'delete'        => $this->deleteUser(),
@@ -29,11 +29,11 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
 
     public function recalculateRiskScore(): array {
         $result = [];
-        set_error_handler([\Tirreno\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
+        set_error_handler([\EndoGuard\\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
 
         try {
-            $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-            $userId = \Tirreno\Utils\Conversion::getIntRequestParam('accountid');
+            $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+            $userId = \EndoGuard\\Utils\Conversion::getIntRequestParam('accountid');
 
             [$score, $rules] = $this->getUserScore($userId, $apiKey);
             $result = [
@@ -42,7 +42,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
                 'rules' => $rules,
             ];
         } catch (\ErrorException $e) {
-            $result = ['ERROR_CODE' => \Tirreno\Utils\ErrorCodes::RISK_SCORE_UPDATE_UNKNOWN_ERROR];
+            $result = ['ERROR_CODE' => \EndoGuard\\Utils\ErrorCodes::RISK_SCORE_UPDATE_UNKNOWN_ERROR];
         }
 
         restore_error_handler();
@@ -51,28 +51,28 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function enrichEntity(): array {
-        $dataController = new \Tirreno\Controllers\Admin\Enrichment\Data();
-        $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $enrichmentKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
+        $dataController = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
+        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $enrichmentKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
 
-        $type       = \Tirreno\Utils\Conversion::getStringRequestParam('type');
-        $search     = \Tirreno\Utils\Conversion::getStringRequestParam('search', true);
-        $entityId   = \Tirreno\Utils\Conversion::getIntRequestParam('entityId', true);
+        $type       = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
+        $search     = \EndoGuard\\Utils\Conversion::getStringRequestParam('search', true);
+        $entityId   = \EndoGuard\\Utils\Conversion::getIntRequestParam('entityId', true);
 
         return $dataController->enrichEntity($type, $search, $entityId, $apiKey, $enrichmentKey);
     }
 
     public function deleteUser(): void {
-        $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
 
         if ($apiKey) {
-            $model = new \Tirreno\Models\Queue();
-            $accountId = \Tirreno\Utils\Conversion::getIntRequestParam('accountid');
-            $code = \Tirreno\Utils\ErrorCodes::REST_API_USER_ALREADY_DELETING;
+            $model = new \EndoGuard\\Models\Queue();
+            $accountId = \EndoGuard\\Utils\Conversion::getIntRequestParam('accountid');
+            $code = \EndoGuard\\Utils\ErrorCodes::REST_API_USER_ALREADY_DELETING;
 
-            if (!$model->isInQueue($accountId, \Tirreno\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE, $apiKey)) {
-                $code = \Tirreno\Utils\ErrorCodes::REST_API_USER_ADDED_FOR_DELETION;
-                $model->add($accountId, \Tirreno\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE, $apiKey);
+            if (!$model->isInQueue($accountId, \EndoGuard\\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE, $apiKey)) {
+                $code = \EndoGuard\\Utils\ErrorCodes::REST_API_USER_ADDED_FOR_DELETION;
+                $model->add($accountId, \EndoGuard\\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE, $apiKey);
             }
 
             $this->f3->set('SESSION.extra_message_code', $code);
@@ -81,7 +81,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function getUserScoreDetails(int $userId, int $apiKey): array {
-        $model = new \Tirreno\Models\User();
+        $model = new \EndoGuard\\Models\User();
         $user = $model->getUserById($userId, $apiKey);
 
         return [
@@ -91,8 +91,8 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function getUserById(int $accountId, int $apiKey): array {
-        $user = (new \Tirreno\Models\User())->getUserById($accountId, $apiKey);
-        $rules = (new \Tirreno\Models\Rules())->getAll();
+        $user = (new \EndoGuard\\Models\User())->getUserById($accountId, $apiKey);
+        $rules = (new \EndoGuard\\Models\Rules())->getAll();
 
         $details = [];
         if ($user['score_details']) {
@@ -109,7 +109,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
             }
         }
 
-        usort($details, [\Tirreno\Utils\Sort::class, 'cmpScore']);
+        usort($details, [\EndoGuard\\Utils\Sort::class, 'cmpScore']);
 
         $user['score_details'] = $details;
 
@@ -123,66 +123,66 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         $user['page_title'] = $pageTitle;
 
         $tsColumns = ['created', 'lastseen', 'score_updated_at', 'latest_decision', 'updated', 'added_to_review'];
-        \Tirreno\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $user);
+        \EndoGuard\\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $user);
 
         return $user;
     }
 
     public function checkIfOperatorHasAccess(int $userId, int $apiKey): bool {
-        return (new \Tirreno\Models\User())->checkAccess($userId, $apiKey);
+        return (new \EndoGuard\\Models\User())->checkAccess($userId, $apiKey);
     }
 
     public function checkEnrichmentAvailability(): bool {
-        return \Tirreno\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString() !== null;
+        return \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString() !== null;
     }
 
     public function addToWatchlist(int $accountId, int $apiKey): void {
-        $model = new \Tirreno\Models\Watchlist();
+        $model = new \EndoGuard\\Models\Watchlist();
         $model->add($accountId, $apiKey);
     }
 
     public function removeFromWatchlist(int $accountId, int $apiKey): void {
-        $model = new \Tirreno\Models\Watchlist();
+        $model = new \EndoGuard\\Models\Watchlist();
         $model->remove($accountId, $apiKey);
     }
 
     public function addToBlacklistQueue(int $accountId, bool $fraud, bool $cron, bool $cnt, int $apiKey): void {
-        $model = new \Tirreno\Models\Queue();
-        $inQueue = $model->isInQueue($accountId, \Tirreno\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey);
+        $model = new \EndoGuard\\Models\Queue();
+        $inQueue = $model->isInQueue($accountId, \EndoGuard\\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey);
 
         if (!$fraud) {
             $this->setFraudFlag($accountId, false, $apiKey); // Directly remove blacklisted items
 
             if ($inQueue) {
-                $model->removeFromQueue($accountId, \Tirreno\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey); // Cancel queued operation
+                $model->removeFromQueue($accountId, \EndoGuard\\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey); // Cancel queued operation
             }
         }
 
         if (!$inQueue && $fraud) {
-            $model->add($accountId, \Tirreno\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey);
+            $model->add($accountId, \EndoGuard\\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey);
         }
 
-        $model = new \Tirreno\Models\User();
+        $model = new \EndoGuard\\Models\User();
         $model->updateFraudFlag([$accountId], $apiKey, $fraud);
 
         if ($cnt) {
-            $controller = new \Tirreno\Controllers\Admin\Blacklist\Data();
+            $controller = new \EndoGuard\\Controllers\Admin\Blacklist\Data();
             $controller->setBlacklistUsersCount(false, $apiKey);        // do not use cache
-            $controller = new \Tirreno\Controllers\Admin\ReviewQueue\Data();
+            $controller = new \EndoGuard\\Controllers\Admin\ReviewQueue\Data();
             $controller->setNotReviewedCount(false, $apiKey);           // do not use cache
         }
 
-        \Tirreno\Utils\Routes::callExtra('UPDATE_USER_FRAUD_STATUS', $accountId, $fraud, $cron, $apiKey);
+        \EndoGuard\\Utils\Routes::callExtra('UPDATE_USER_FRAUD_STATUS', $accountId, $fraud, $cron, $apiKey);
     }
 
     public function addToCalulcateRiskScoreQueue(int $accountId): void {
-        $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
 
-        $model = new \Tirreno\Models\Queue();
-        $inQueue = $model->isInQueue($accountId, \Tirreno\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $apiKey);
+        $model = new \EndoGuard\\Models\Queue();
+        $inQueue = $model->isInQueue($accountId, \EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $apiKey);
 
         if (!$inQueue) {
-            $model->add($accountId, \Tirreno\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $apiKey);
+            $model->add($accountId, \EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $apiKey);
         }
     }
 
@@ -190,11 +190,11 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
      * @param array{accountId: int, key: int}[] $accounts
      */
     public function addBatchToCalulcateRiskScoreQueue(array $accounts): void {
-        (new \Tirreno\Models\Queue())->addBatch($accounts, \Tirreno\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
+        (new \EndoGuard\\Models\Queue())->addBatch($accounts, \EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
     }
 
     public function setReviewedFlag(int $accountId, bool $reviewed, int $apiKey): void {
-        $model = new \Tirreno\Models\User();
+        $model = new \EndoGuard\\Models\User();
         $model->updateReviewedFlag($accountId, $apiKey, $reviewed);
     }
 
@@ -202,10 +202,10 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         $total = 0;
         $rules = [];
 
-        $rulesController = new \Tirreno\Controllers\Admin\Rules\Data();
+        $rulesController = new \EndoGuard\\Controllers\Admin\Rules\Data();
         $rulesController->evaluateUser($accountId, $apiKey);
 
-        $model = new \Tirreno\Models\User();
+        $model = new \EndoGuard\\Models\User();
         $rules = $model->getApplicableRulesByAccountId($accountId, $apiKey);
 
         $total = $rules[0]['total_score'] ?? 0;
@@ -217,23 +217,23 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function getScheduledForDeletion(int $userId, int $apiKey): array {
-        $model = new \Tirreno\Models\Queue();
+        $model = new \EndoGuard\\Models\Queue();
 
-        [$scheduled, $status] = $model->isInQueueStatus($userId, \Tirreno\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE, $apiKey);
+        [$scheduled, $status] = $model->isInQueueStatus($userId, \EndoGuard\\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE, $apiKey);
 
-        return [$scheduled, ($status === \Tirreno\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE) ? \Tirreno\Utils\ErrorCodes::USER_DELETION_FAILED : null];
+        return [$scheduled, ($status === \EndoGuard\\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE) ? \EndoGuard\\Utils\ErrorCodes::USER_DELETION_FAILED : null];
     }
 
     public function getScheduledForBlacklist(int $userId, int $apiKey): array {
-        $model = new \Tirreno\Models\Queue();
+        $model = new \EndoGuard\\Models\Queue();
 
-        [$scheduled, $status] = $model->isInQueueStatus($userId, \Tirreno\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey);
+        [$scheduled, $status] = $model->isInQueueStatus($userId, \EndoGuard\\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE, $apiKey);
 
-        return [$scheduled, ($status === \Tirreno\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE) ? \Tirreno\Utils\ErrorCodes::USER_BLACKLISTING_FAILED : null];
+        return [$scheduled, ($status === \EndoGuard\\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE) ? \EndoGuard\\Utils\ErrorCodes::USER_BLACKLISTING_FAILED : null];
     }
 
     public function setFraudFlag(int $accountId, bool $fraud, int $apiKey): array {
-        $blacklistItemsModel = new \Tirreno\Models\BlacklistItems();
+        $blacklistItemsModel = new \EndoGuard\\Models\BlacklistItems();
 
         $ips = $blacklistItemsModel->getIpsRelatedToAccountWithinOperator($accountId, $apiKey);
         $emails = $blacklistItemsModel->getEmailsRelatedToAccountWithinOperator($accountId, $apiKey);
@@ -246,21 +246,21 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         $ips = $blacklistItemsModel->getIpsRelatedToAccountWithinOperator($accountId, $apiKey);
         $relatedIpsIds = array_column($ips, 'id');
         if (count($relatedIpsIds) !== 0) {
-            $model = new \Tirreno\Models\Ip();
+            $model = new \EndoGuard\\Models\Ip();
             $model->updateFraudFlag($relatedIpsIds, $fraud, $apiKey);
         }
 
         $emails = $blacklistItemsModel->getEmailsRelatedToAccountWithinOperator($accountId, $apiKey);
         $relatedEmailsIds = array_column($emails, 'id');
         if (count($relatedEmailsIds) !== 0) {
-            $model = new \Tirreno\Models\Email();
+            $model = new \EndoGuard\\Models\Email();
             $model->updateFraudFlag($relatedEmailsIds, $fraud, $apiKey);
         }
 
         $phones = $blacklistItemsModel->getPhonesRelatedToAccountWithinOperator($accountId, $apiKey);
         $relatedPhonesIds = array_column($phones, 'id');
         if (count($relatedPhonesIds) !== 0) {
-            $model = new \Tirreno\Models\Phone();
+            $model = new \EndoGuard\\Models\Phone();
             $model->updateFraudFlag($relatedPhonesIds, $fraud, $apiKey);
         }
 
@@ -270,10 +270,10 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     public function updateUserStatus(int $score, string $details, bool $cron, int $accountId, int $apiKey): void {
         $addToReview = false;
 
-        $model = new \Tirreno\Models\ApiKeys();
+        $model = new \EndoGuard\\Models\ApiKeys();
         $key = $model->getKeyById($apiKey);
 
-        $userModel = new \Tirreno\Models\User();
+        $userModel = new \EndoGuard\\Models\User();
 
         if ($score <= $key['blacklist_threshold']) {
             $this->addToBlacklistQueue($accountId, true, true, false, $apiKey); // automatic blacklist anyway, do not recalculate
@@ -282,12 +282,12 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
             $addToReview = $user['added_to_review'] === null && $user['fraud'] === null;
 
             if (!$cron && $addToReview) {
-                $controller = new \Tirreno\Controllers\Admin\ReviewQueue\Data();
+                $controller = new \EndoGuard\\Controllers\Admin\ReviewQueue\Data();
                 $controller->setNotReviewedCount(false, $apiKey);           // do not use cache
             }
         }
 
-        \Tirreno\Utils\Routes::callExtra('UPDATE_USER_STATUS', $score, $details, $addToReview, $cron, $accountId, $apiKey);
+        \EndoGuard\\Utils\Routes::callExtra('UPDATE_USER_STATUS', $score, $details, $addToReview, $cron, $accountId, $apiKey);
 
         $userModel->updateUserStatus($score, $details, $addToReview, $accountId, $apiKey);
     }

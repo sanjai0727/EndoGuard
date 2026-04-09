@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models\UserDetails;
+namespace EndoGuard\\Models\UserDetails;
 
-class Behaviour extends \Tirreno\Models\BaseSql {
+class Behaviour extends \EndoGuard\\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getDayDetails(int $userId, array $dateRange, int $apiKey): array {
@@ -27,11 +27,11 @@ class Behaviour extends \Tirreno\Models\BaseSql {
             ':start_ts'         => $dateRange['startDate'],
             ':end_ts'           => $dateRange['endDate'],
             ':offset'           => $dateRange['offset'],
-            ':failed_login'     => \Tirreno\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID,
-            ':success_login'    => \Tirreno\Utils\Constants::get()->ACCOUNT_LOGIN_EVENT_TYPE_ID,
-            ':password_reset'   => \Tirreno\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID,
-            ':seconds_day'      => \Tirreno\Utils\Constants::get()->SECONDS_IN_DAY,
-            ':night_time_end'   => \Tirreno\Utils\Constants::get()->SECONDS_IN_HOUR * 5,
+            ':failed_login'     => \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID,
+            ':success_login'    => \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_EVENT_TYPE_ID,
+            ':password_reset'   => \EndoGuard\\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID,
+            ':seconds_day'      => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY,
+            ':night_time_end'   => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_HOUR * 5,
         ];
 
         $query = (

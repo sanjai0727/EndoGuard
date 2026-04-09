@@ -1,32 +1,32 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\Rules;
+namespace EndoGuard\\Controllers\Admin\Rules;
 
-class Data extends \Tirreno\Controllers\Admin\Base\Data {
-    private \Tirreno\Controllers\Admin\Context\Data $contextController;
-    private \Tirreno\Controllers\Admin\User\Data $userController;
-    private \Tirreno\Models\OperatorsRules $rulesModel;
+class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+    private \EndoGuard\\Controllers\Admin\Context\Data $contextController;
+    private \EndoGuard\\Controllers\Admin\User\Data $userController;
+    private \EndoGuard\\Models\OperatorsRules $rulesModel;
 
     private array $totalModels;
     private array $rulesMap;
 
     public function proceedPostRequest(): array {
-        return match (\Tirreno\Utils\Conversion::getStringRequestParam('cmd')) {
+        return match (\EndoGuard\\Utils\Conversion::getStringRequestParam('cmd')) {
             'changeThresholdValues' => $this->changeThresholdValues(),
             'refreshRules'          => $this->refreshRules(),
             'applyRulesPreset'      => $this->applyRulesPreset(),
@@ -37,7 +37,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     private function refreshRules(): array {
         $pageParams = [];
         $params = $this->extractRequestParams(['token']);
-        $errorCode = \Tirreno\Utils\Validators::validateRefreshRules($params);
+        $errorCode = \EndoGuard\\Utils\Validators::validateRefreshRules($params);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
@@ -101,7 +101,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function updateRules(bool $localRules = true): array {
-        $model = new \Tirreno\Models\Rules();
+        $model = new \EndoGuard\\Models\Rules();
 
         // get all rules from db by uid; will not return classes with filename mismatch or invalid classname
         $currentRules   = $model->getAll();
@@ -114,13 +114,13 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         $iterates       = [[], [], [], [], [], []];
         $metUids        = [];
 
-        //$parentClass = \Tirreno\Controllers\Admin\Rules\Set\BaseRule::class;
-        $parentClass = \Tirreno\Assets\Rule::class;
+        //$parentClass = \EndoGuard\\Controllers\Admin\Rules\Set\BaseRule::class;
+        $parentClass = \EndoGuard\\Assets\Rule::class;
         $mtd         = 'defineCondition';
 
-        $mainClasses    = \Tirreno\Utils\Assets\RulesClasses::getRulesClasses(true);
+        $mainClasses    = \EndoGuard\\Utils\Assets\RulesClasses::getRulesClasses(true);
         // local classes first to keep ability to override default classes
-        $allClassesFromFiles = $localRules ? \Tirreno\Utils\Assets\RulesClasses::getRulesClasses(false)['imported'] : [];
+        $allClassesFromFiles = $localRules ? \EndoGuard\\Utils\Assets\RulesClasses::getRulesClasses(false)['imported'] : [];
         $allClassesFromFiles += $mainClasses['imported'];
 
         foreach ($allClassesFromFiles as $uid => $cls) {
@@ -149,7 +149,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
             }
 
             $status = $this->addRule($sortedRules, $obj, $valid, $model);
-            $iterates[($status === null ? 0 : 1 + \Tirreno\Utils\Conversion::intVal($status, 0)) * 2 + \Tirreno\Utils\Conversion::intVal($valid, 0)][] = $uid;
+            $iterates[($status === null ? 0 : 1 + \EndoGuard\\Utils\Conversion::intVal($status, 0)) * 2 + \EndoGuard\\Utils\Conversion::intVal($valid, 0)][] = $uid;
             $metUids[] = $uid;
         }
 
@@ -184,7 +184,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         return sprintf($template, strval($cnt), ($cnt > 1 ? 's' : ''), $str);
     }
 
-    private function addRule(array $existingArray, array $obj, bool $valid, \Tirreno\Models\Rules $model): ?bool {
+    private function addRule(array $existingArray, array $obj, bool $valid, \EndoGuard\\Models\Rules $model): ?bool {
         $data = $existingArray[$obj['uid']] ?? null;
         $result = null;
 
@@ -218,16 +218,16 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     public function changeThresholdValues(): array {
         $pageParams = [];
         $params = $this->extractRequestParams(['token', 'keyId', 'blacklist-threshold', 'review-queue-threshold']);
-        $errorCode = \Tirreno\Utils\Validators::validateThresholdValues($params);
+        $errorCode = \EndoGuard\\Utils\Validators::validateThresholdValues($params);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $keyId                  = \Tirreno\Utils\Conversion::getIntRequestParam('keyId');
-            $blacklistThreshold     = \Tirreno\Utils\Conversion::getIntRequestParam('blacklist-threshold', true) ?? -1;
-            $reviewQueueThreshold   = \Tirreno\Utils\Conversion::getIntRequestParam('review-queue-threshold');
+            $keyId                  = \EndoGuard\\Utils\Conversion::getIntRequestParam('keyId');
+            $blacklistThreshold     = \EndoGuard\\Utils\Conversion::getIntRequestParam('blacklist-threshold', true) ?? -1;
+            $reviewQueueThreshold   = \EndoGuard\\Utils\Conversion::getIntRequestParam('review-queue-threshold');
 
-            $model = new \Tirreno\Models\ApiKeys();
+            $model = new \EndoGuard\\Models\ApiKeys();
             $key = $model->getKeyById($keyId);
 
             $recalculateReviewQueueCnt = $key['review_queue_threshold'] !== $reviewQueueThreshold;
@@ -236,7 +236,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
             $model->updateReviewQueueThreshold($reviewQueueThreshold, $keyId);
 
             if ($recalculateReviewQueueCnt) {
-                $controller = new \Tirreno\Controllers\Admin\ReviewQueue\Data();
+                $controller = new \EndoGuard\\Controllers\Admin\ReviewQueue\Data();
                 $controller->setNotReviewedCount(false, $keyId);
             }
 
@@ -249,13 +249,13 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     public function applyRulesPreset(): array {
         $pageParams = [];
         $params = $this->extractRequestParams(['token', 'keyId', 'rules-preset']);
-        $errorCode = \Tirreno\Utils\Validators::validateRulesPreset($params);
+        $errorCode = \EndoGuard\\Utils\Validators::validateRulesPreset($params);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $keyId                  = \Tirreno\Utils\Conversion::getIntRequestParam('keyId');
-            $rulePresetName         = \Tirreno\Utils\Conversion::getStringRequestParam('rules-preset');
+            $keyId                  = \EndoGuard\\Utils\Conversion::getIntRequestParam('keyId');
+            $rulePresetName         = \EndoGuard\\Utils\Conversion::getStringRequestParam('rules-preset');
 
             $this->applyRulesPresetById($rulePresetName, $keyId);
 
@@ -266,16 +266,16 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function applyRulesPresetById(string $presetId, int $apiKey): void {
-        $model = new \Tirreno\Models\OperatorsRules();
+        $model = new \EndoGuard\\Models\OperatorsRules();
 
-        $rules = \Tirreno\Utils\Constants::get()->RULES_PRESETS;
+        $rules = \EndoGuard\\Utils\Constants::get()->RULES_PRESETS;
         if (!array_key_exists($presetId, $rules)) {
             return;
         }
 
         $defaultRules = $rules[$presetId]['main'];
 
-        if (\Tirreno\Utils\Variables::getEmailPhoneAllowed()) {
+        if (\EndoGuard\\Utils\Variables::getEmailPhoneAllowed()) {
             $defaultRules = array_merge($defaultRules, $rules[$presetId]['additional']);
         }
 
@@ -297,12 +297,12 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function saveUserRule(string $ruleUid, int $score, int $apiKey): void {
-        $model = new \Tirreno\Models\OperatorsRules();
+        $model = new \EndoGuard\\Models\OperatorsRules();
         $model->updateRule($ruleUid, $score, $apiKey);
     }
 
     public function saveRuleProportion(string $ruleUid, float $proportion, int $apiKey): void {
-        $model = new \Tirreno\Models\OperatorsRules();
+        $model = new \EndoGuard\\Models\OperatorsRules();
         $model->updateRuleProportion($ruleUid, $proportion, $apiKey);
     }
 
@@ -324,7 +324,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         $context = [];
         $record = [];
 
-        foreach (array_chunk($accountIds, \Tirreno\Utils\Variables::getRuleUsersBatchSize()) as $batch) {
+        foreach (array_chunk($accountIds, \EndoGuard\\Utils\Variables::getRuleUsersBatchSize()) as $batch) {
             $context = $this->contextController->getContextByAccountIds($batch, $apiKey);
             foreach ($batch as $user) {
                 $record = $context[$user] ?? null;
@@ -341,7 +341,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         return $result;
     }
 
-    private function executeRule(\Tirreno\Assets\Rule $rule, array $params): bool {
+    private function executeRule(\EndoGuard\\Assets\Rule $rule, array $params): bool {
         $executed = false;
 
         try {
@@ -349,7 +349,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
             $executed = $rule->execute();
         } catch (\Throwable $e) {
             if (defined($rule->uid)) {
-                $model = new \Tirreno\Models\Rules();
+                $model = new \EndoGuard\\Models\Rules();
                 $model->setInvalidByUid($rule->uid);
             }
 
@@ -360,7 +360,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function checkRule(string $ruleUid, int $apiKey): array {
-        $model = new \Tirreno\Models\Users();
+        $model = new \EndoGuard\\Models\Users();
         $users = $model->getLastThousandUsers($apiKey);
         $accounts = [];
         foreach ($users as $user) {
@@ -420,21 +420,21 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
 
     public function buildEvaluationModels(?string $uid = null): void {
         $this->totalModels = [];
-        foreach (\Tirreno\Utils\Constants::get()->RULES_TOTALS_MODELS as $className) {
+        foreach (\EndoGuard\\Utils\Constants::get()->RULES_TOTALS_MODELS as $className) {
             $this->totalModels[] = new $className();
         }
 
-        $this->contextController    = new \Tirreno\Controllers\Admin\Context\Data();
-        $this->userController       = new \Tirreno\Controllers\Admin\User\Data();
-        $this->rulesModel           = new \Tirreno\Models\OperatorsRules();
+        $this->contextController    = new \EndoGuard\\Controllers\Admin\Context\Data();
+        $this->userController       = new \EndoGuard\\Controllers\Admin\User\Data();
+        $this->rulesModel           = new \EndoGuard\\Models\OperatorsRules();
 
         $ruleBuilder = new \Ruler\RuleBuilder();
 
         if ($uid) {
-            $ruleObj = \Tirreno\Utils\Assets\RulesClasses::getSingleRuleObject($uid, $ruleBuilder);
+            $ruleObj = \EndoGuard\\Utils\Assets\RulesClasses::getSingleRuleObject($uid, $ruleBuilder);
             $this->rulesMap = $ruleObj ? [$uid => $ruleObj] : [];
         } else {
-            $this->rulesMap = \Tirreno\Utils\Assets\RulesClasses::getAllRulesObjects($ruleBuilder);
+            $this->rulesMap = \EndoGuard\\Utils\Assets\RulesClasses::getAllRulesObjects($ruleBuilder);
         }
     }
 
@@ -448,12 +448,12 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
 
         $matches = count($filterScores);
 
-        return max(\Tirreno\Utils\Conversion::intVal((99 - ($totalScore * (pow($matches, 1.1) - $matches + 1))), 0), 0);
+        return max(\EndoGuard\\Utils\Conversion::intVal((99 - ($totalScore * (pow($matches, 1.1) - $matches + 1))), 0), 0);
     }
 
     // only valid, not missing, with fitting attributes, returning associative array
-    private function getAllRulesWithOperatorValues(\Tirreno\Models\OperatorsRules $rulesModel, int $apiKey): array {
-        $model = new \Tirreno\Models\ApiKeys();
+    private function getAllRulesWithOperatorValues(\EndoGuard\\Models\OperatorsRules $rulesModel, int $apiKey): array {
+        $model = new \EndoGuard\\Models\ApiKeys();
         $skipAttributes = $model->getSkipEnrichingAttributes($apiKey);
 
         $rules = $rulesModel->getAllValidRulesByOperator($apiKey);
@@ -465,31 +465,31 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
 
     // with fitting attributes and sorted, returning as regular array
     private function getAllAttrFilteredRulesByApiKey(int $apiKey): array {
-        $model = new \Tirreno\Models\ApiKeys();
+        $model = new \EndoGuard\\Models\ApiKeys();
         $skipAttributes = $model->getSkipEnrichingAttributes($apiKey);
 
-        $model = new \Tirreno\Models\OperatorsRules();
+        $model = new \EndoGuard\\Models\OperatorsRules();
         $rules = $model->getAllRulesByOperator($apiKey);
 
         $results = $this->filterRulesByAttributesAddTypes($rules, $skipAttributes);
 
-        usort($results, [\Tirreno\Utils\Sort::class, 'cmpRule']);
+        usort($results, [\EndoGuard\\Utils\Sort::class, 'cmpRule']);
 
         return $results;
     }
 
     // do not filter by attributes if data is needed only for rendering info
     public function getAllRulesByApiKey(int $apiKey): array {
-        $model = new \Tirreno\Models\OperatorsRules();
+        $model = new \EndoGuard\\Models\OperatorsRules();
         $rules = $model->getAllRulesByOperator($apiKey);
 
         $results = [];
         foreach ($rules as $rule) {
-            $rule['type'] = \Tirreno\Utils\Assets\RulesClasses::getRuleTypeByUid($rule['uid']);
+            $rule['type'] = \EndoGuard\\Utils\Assets\RulesClasses::getRuleTypeByUid($rule['uid']);
             $results[] = $rule;
         }
 
-        usort($results, [\Tirreno\Utils\Sort::class, 'cmpRule']);
+        usort($results, [\EndoGuard\\Utils\Sort::class, 'cmpRule']);
 
         return $results;
     }
@@ -499,7 +499,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
 
         foreach ($rules as $id => $row) {
             if (!count(array_intersect(json_decode($row['attributes']), $skipAttributes))) {
-                $row['type'] = \Tirreno\Utils\Assets\RulesClasses::getRuleTypeByUid($row['uid']);
+                $row['type'] = \EndoGuard\\Utils\Assets\RulesClasses::getRuleTypeByUid($row['uid']);
                 $results[$id] = $row;
             }
         }

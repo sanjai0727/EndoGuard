@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E19 extends \Tirreno\Assets\Rule {
+class E19 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Multiple emails changed';
     public const DESCRIPTION = 'User has changed their email.';
     public const ATTRIBUTES = [];

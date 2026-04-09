@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class B11 extends \Tirreno\Assets\Rule {
+class B11 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'New account (1 day)';
     public const DESCRIPTION = 'The account has been created today.';
     public const ATTRIBUTES = [];

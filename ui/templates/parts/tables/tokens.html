@@ -22,7 +22,7 @@
         <repeat group="{{ @API_KEYS }}" value="{{ @API_KEY }}">
             <tr>
                 <td><code>{{ @API_KEY.key }}</code></td>
-                <td>{{ \Tirreno\Utils\ElapsedDate::short(@API_KEY.created_at) }}</td>
+                <td>{{ \EndoGuard\\Utils\ElapsedDate::short(@API_KEY.created_at) }}</td>
                 <td>
                     <include href="templates/parts/forms/resetKeyForm.html" with="id={{@API_KEY.id}}, isOwner={{@IS_OWNER}}" />
                 </td>

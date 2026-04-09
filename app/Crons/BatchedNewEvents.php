@@ -1,25 +1,25 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Crons;
+namespace EndoGuard\\Crons;
 
 class BatchedNewEvents extends Base {
     protected function readyToProcess(): bool {
-        $model = new \Tirreno\Models\Cursor();
+        $model = new \EndoGuard\\Models\Cursor();
 
         // was not locked; locking now
         if ($model->safeLock()) {
@@ -28,7 +28,7 @@ class BatchedNewEvents extends Base {
 
         $result = $model->getLock();
 
-        if (\Tirreno\Utils\DateRange::isQueueTimeouted($result['updated'])) {
+        if (\EndoGuard\\Utils\DateRange::isQueueTimeouted($result['updated'])) {
             return false;
         }
 
@@ -44,11 +44,11 @@ class BatchedNewEvents extends Base {
             return;
         }
 
-        $model = new \Tirreno\Models\Cursor();
+        $model = new \EndoGuard\\Models\Cursor();
 
         try {
             $cursor = $model->getCursor();
-            $next = $model->getNextCursor($cursor, \Tirreno\Utils\Variables::getNewEventsBatchSize());
+            $next = $model->getNextCursor($cursor, \EndoGuard\\Utils\Variables::getNewEventsBatchSize());
 
             if (!$next) {
                 $this->addLog('No new events.');
@@ -57,11 +57,11 @@ class BatchedNewEvents extends Base {
                 return;
             }
 
-            $accounts = (new \Tirreno\Models\Events())->getDistinctAccounts($cursor, $next);
+            $accounts = (new \EndoGuard\\Models\Events())->getDistinctAccounts($cursor, $next);
 
-            \Tirreno\Utils\Routes::callExtra('BATCHING_NEW_EVENTS', $cursor, $next);
+            \EndoGuard\\Utils\Routes::callExtra('BATCHING_NEW_EVENTS', $cursor, $next);
 
-            (new \Tirreno\Models\Queue())->addBatch($accounts, \Tirreno\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
+            (new \EndoGuard\\Models\Queue())->addBatch($accounts, \EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
 
             $model->updateCursor($next);
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E03 extends \Tirreno\Assets\Rule {
+class E03 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Suspicious words in email';
     public const DESCRIPTION = 'Email contains word parts that usually found in automatically generated mailboxes.';
     public const ATTRIBUTES = [];

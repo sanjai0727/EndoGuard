@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E02 extends \Tirreno\Assets\Rule {
+class E02 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'New domain and no breaches';
     public const DESCRIPTION = 'Email belongs to recently created domain name and it doesn\'t appear in data breaches. Increased risk due to lack of authenticity.';
     public const ATTRIBUTES = ['email', 'domain'];

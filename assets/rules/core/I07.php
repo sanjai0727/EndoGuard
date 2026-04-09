@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class I07 extends \Tirreno\Assets\Rule {
+class I07 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'IP belongs to Apple Relay';
     public const DESCRIPTION = 'IP address belongs to iCloud Private Relay, part of an iCloud+ subscription.';
     public const ATTRIBUTES = ['ip'];

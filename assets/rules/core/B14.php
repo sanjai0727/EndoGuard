@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class B14 extends \Tirreno\Assets\Rule {
+class B14 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Aged account (>30 days)';
     public const DESCRIPTION = 'The account has been created over 30 days ago.';
     public const ATTRIBUTES = [];

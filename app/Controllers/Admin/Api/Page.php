@@ -1,29 +1,29 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\Api;
+namespace EndoGuard\\Controllers\Admin\Api;
 
-class Page extends \Tirreno\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminApi';
 
     public function getPageParams(): array {
         $dataController = new Data();
 
-        $currentOperator = \Tirreno\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
         $operatorId = $currentOperator->id;
 
         $scheduledForEnrichment = $dataController->getScheduledForEnrichment();
@@ -33,7 +33,7 @@ class Page extends \Tirreno\Controllers\Admin\Base\Page {
             'LOAD_DATATABLE'            => true,
             'HTML_FILE'                 => 'admin/api.html',
             'JS'                        => 'admin_api.js',
-            'API_URL'                   => \Tirreno\Utils\Variables::getHostWithProtocolAndBase() . '/sensor/',
+            'API_URL'                   => \EndoGuard\\Utils\Variables::getHostWithProtocolAndBase() . '/sensor/',
         ];
 
         if ($this->isPostRequest()) {

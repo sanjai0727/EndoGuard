@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E30 extends \Tirreno\Assets\Rule {
+class E30 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Domain with average rank';
     public const DESCRIPTION = 'Email domain has tranco rank between 100.000 and 4.000.000';
     public const ATTRIBUTES = ['domain'];

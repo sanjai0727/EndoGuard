@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models\Grid\Base;
+namespace EndoGuard\\Models\Grid\Base;
 
-class Grid extends \Tirreno\Models\BaseSql {
+class Grid extends \EndoGuard\\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     protected ?object $idsModel = null;
@@ -31,7 +31,7 @@ class Grid extends \Tirreno\Models\BaseSql {
         $data = $this->getData();
         $total = $this->getTotal();
 
-        $dateRange = \Tirreno\Utils\DateRange::getDatesRangeFromRequest();
+        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
 
         return [
             'data' => $data,
@@ -66,7 +66,7 @@ class Grid extends \Tirreno\Models\BaseSql {
     }
 
     protected function convertTimeToUserTimezone(array &$result): void {
-        \Tirreno\Utils\Timezones::translateTimezones($result);
+        \EndoGuard\\Utils\Timezones::translateTimezones($result);
     }
 
     protected function calculateCustomParams(array &$result): void {

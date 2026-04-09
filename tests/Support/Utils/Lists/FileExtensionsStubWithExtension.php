@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Support\Utils\Lists;
 
-use Tirreno\Utils\Assets\Lists\FileExtensions;
+use EndoGuard\\Utils\Assets\Lists\FileExtensions;
 
 /**
  * Stub: overrides extension loading (no filesystem).

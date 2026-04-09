@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Utils;
 
-use Tirreno\Utils\ErrorHandler;
+use EndoGuard\\Utils\ErrorHandler;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Tirreno\Utils\ErrorHandler.
+ * Unit tests for EndoGuard\\Utils\ErrorHandler.
  *
  * Covered (unit-testable without refactor):
  * - ErrorHandler::getErrorDetails() (trace normalization + message formatting + basic payload fields)

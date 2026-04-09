@@ -1,28 +1,28 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Utils\Http;
+namespace EndoGuard\\Utils\Http;
 
-final class StreamTransport implements \Tirreno\Interfaces\HttpTransportInterface {
+final class StreamTransport implements \EndoGuard\\Interfaces\HttpTransportInterface {
     public function isAvailable(): bool {
         return function_exists('file_get_contents');
     }
 
-    public function request(\Tirreno\Entities\HttpRequest $request): \Tirreno\Entities\HttpResponse {
+    public function request(\EndoGuard\\Entities\HttpRequest $request): \EndoGuard\\Entities\HttpResponse {
         $options = [
             'http' => [
                 'method' => $request->method(),
@@ -52,16 +52,16 @@ final class StreamTransport implements \Tirreno\Interfaces\HttpTransportInterfac
         $code = $this->extractHttpStatus($respHeaders);
 
         if ($raw === null) {
-            $result = \Tirreno\Entities\HttpResponse::failure($code, 'stream_request_failed', $respHeaders);
+            $result = \EndoGuard\\Entities\HttpResponse::failure($code, 'stream_request_failed', $respHeaders);
 
             return $result;
         }
 
-        return \Tirreno\Entities\HttpResponse::success($code, $raw, $respHeaders);
+        return \EndoGuard\\Entities\HttpResponse::success($code, $raw, $respHeaders);
     }
 
     private function safeFileGetContents(string $url, ?array $options): array {
-        set_error_handler([\Tirreno\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
+        set_error_handler([\EndoGuard\\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
 
         try {
             $context = null;

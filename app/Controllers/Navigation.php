@@ -1,28 +1,28 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers;
+namespace EndoGuard\\Controllers;
 
 class Navigation extends Base {
-    public \Tirreno\Views\Base $response;
+    public \EndoGuard\\Views\Base $response;
 
     public function beforeroute(): void {
         // CSRF assignment in base page
-        $this->response = new \Tirreno\Views\Frontend();
+        $this->response = new \EndoGuard\\Views\Frontend();
     }
 
     /**
@@ -36,41 +36,41 @@ class Navigation extends Base {
     }
 
     public function visitSignupPage(): void {
-        \Tirreno\Utils\Routes::redirectIfLogged();
+        \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        $pageController = new \Tirreno\Controllers\Pages\Signup();
+        $pageController = new \EndoGuard\\Controllers\Pages\Signup();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitLoginPage(): void {
-        \Tirreno\Utils\Routes::redirectIfLogged();
+        \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        $pageController = new \Tirreno\Controllers\Pages\Login();
+        $pageController = new \EndoGuard\\Controllers\Pages\Login();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitForgotPasswordPage(): void {
-        \Tirreno\Utils\Routes::redirectIfLogged();
+        \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        if (!\Tirreno\Utils\Variables::getForgotPasswordAllowed()) {
+        if (!\EndoGuard\\Utils\Variables::getForgotPasswordAllowed()) {
             $this->f3->reroute('/');
         }
 
-        $pageController = new \Tirreno\Controllers\Pages\ForgotPassword();
+        $pageController = new \EndoGuard\\Controllers\Pages\ForgotPassword();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitPasswordRecoveringPage(): void {
-        \Tirreno\Utils\Routes::redirectIfLogged();
+        \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        $pageController = new \Tirreno\Controllers\Pages\PasswordRecovering();
+        $pageController = new \EndoGuard\\Controllers\Pages\PasswordRecovering();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitLogoutPage(): void {
-        \Tirreno\Utils\Routes::redirectIfUnlogged();
+        \EndoGuard\\Utils\Routes::redirectIfUnlogged();
 
-        $pageController = new \Tirreno\Controllers\Pages\Logout();
+        $pageController = new \EndoGuard\\Controllers\Pages\Logout();
         $this->response->data = $pageController->getPageParams();
     }
 }

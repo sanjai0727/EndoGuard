@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E09 extends \Tirreno\Assets\Rule {
+class E09 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Free email provider';
     public const DESCRIPTION = 'Email belongs to free provider. These mailboxes are the easiest to create.';
     public const ATTRIBUTES = ['domain'];

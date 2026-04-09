@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class D07 extends \Tirreno\Assets\Rule {
+class D07 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Several desktop devices';
     public const DESCRIPTION = 'User accesses the account using different OS desktop devices. Account may be shared between different people.';
     public const ATTRIBUTES = [];

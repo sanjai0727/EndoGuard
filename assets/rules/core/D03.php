@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class D03 extends \Tirreno\Assets\Rule {
+class D03 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Device is bot';
     public const DESCRIPTION = 'The user may be using a device with a user agent that is identified as a bot.';
     public const ATTRIBUTES = [];

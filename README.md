@@ -1,22 +1,22 @@
-# tirreno
+# endoguard
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ec30c28f67de476f8b98d2798079bdf0)](https://app.codacy.com/gh/TirrenoTechnologies/tirreno/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-[![Docker Pulls](https://img.shields.io/docker/pulls/tirreno/tirreno?style=flat)](https://hub.docker.com/r/tirreno/tirreno/)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ec30c28f67de476f8b98d2798079bdf0)](https://app.codacy.com/gh/endoguardTechnologies/endoguard/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Docker Pulls](https://img.shields.io/docker/pulls/endoguard/endoguard?style=flat)](https://hub.docker.com/r/endoguard/endoguard/)
 
 <p align="center">
-    <a href="https://www.tirreno.com/" target="_blank">
-        <img src="https://www.tirreno.com/firstscreen.jpg" alt="tirreno screenshot" />
+    <a href="https://www.endoguard.io/" target="_blank">
+        <img src="https://www.endoguard.io/firstscreen.jpg" alt="endoguard screenshot" />
     </a>
 </p>
 
-[tirreno](https://www.tirreno.com) is an open-source security framework.
+[endoguard](https://www.endoguard.io) is an open-source security framework.
 
-tirreno *[tir.ˈrɛ.no]* helps understand, monitor, and protect your product from threats, fraud, and abuse. While classic cybersecurity focuses on infrastructure and network perimeter, most breaches occur through compromised accounts and application logic abuse that bypasses firewalls, SIEM, WAFs, and other defenses. tirreno detects threats where they actually happen: inside your product.
+endoguard helps understand, monitor, and protect your product from threats, fraud, and abuse. While classic cybersecurity focuses on infrastructure and network perimeter, most breaches occur through compromised accounts and application logic abuse that bypasses firewalls, SIEM, WAFs, and other defenses. endoguard detects threats where they actually happen: inside your product.
 
-tirreno is a hand-written, few-dependency, "low-tech" PHP/PostgreSQL application. After a straightforward five-minute installation, you can ingest events through API calls and immediately access a real-time threat dashboard.
+endoguard is a hand-written, few-dependency, "low-tech" PHP/PostgreSQL application. After a straightforward five-minute installation, you can ingest events through API calls and immediately access a real-time threat dashboard.
 
 ## Core components
-* **SDKs & API** Integrate tirreno into any product with SDKs.
+* **SDKs & API** Integrate endoguard into any product with SDKs.
   Send events with full context in a few lines of code.
 * **Built-in dashboard** Monitor and understand your product's
   security events from a single interface. Ready for use in minutes.
@@ -57,7 +57,7 @@ tirreno is a hand-written, few-dependency, "low-tech" PHP/PostgreSQL application
 
 ## Live demo
 
-Check out the live demo at [play.tirreno.com](https://play.tirreno.com) (*admin/tirreno*).
+Check out the live demo at [play.endoguard.io](https://play.endoguard.io) (*admin/endoguard*).
 
 ## Requirements
 
@@ -73,87 +73,87 @@ Check out the live demo at [play.tirreno.com](https://play.tirreno.com) (*admin/
 
 ## Docker-based installation
 
-To run tirreno within a Docker container you may use command below:
+To run endoguard within a Docker container you may use command below:
 
 ```bash
-curl -sL tirreno.com/t.yml | docker compose -f - up -d
+curl -sL endoguard.io/t.yml | docker compose -f - up -d
 ```
 Continue with step 4 of [Quickstart](#quickstart-install).
 
 ## Quickstart install
-1. [Download](https://www.tirreno.com/download/) the latest version of tirreno (ZIP file).
-2. Extract the tirreno-master.zip file to the location where you want it installed on your web server.
+1. [Download](https://www.endoguard.io/download/) the latest version of endoguard (ZIP file).
+2. Extract the endoguard-master.zip file to the location where you want it installed on your web server.
 3. Navigate to `http://localhost:8585/install/index.php` in a browser to launch the installation process.
 4. After the successful installation, delete the `install/` directory and its contents.
 5. Navigate to `http://localhost:8585/signup/` in a browser to create an administrator account.
 6. For cron job setup, insert the following schedule (every 10 minutes) expression with the `crontab -e` command or by editing the `/var/spool/cron/your-web-server` file:
 
 ```
-*/10 * * * * /usr/bin/php /absolute/path/to/tirreno/index.php /cron
+*/10 * * * * /usr/bin/php /absolute/path/to/endoguard/index.php /cron
 ```
 
 ## Using Heroku (optional)
 
-Click [here](https://heroku.com/deploy?template=https://github.com/tirrenotechnologies/tirreno) to launch heroku deployment.
+Click [here](https://heroku.com/deploy?template=https://github.com/endoguardtechnologies/endoguard) to launch heroku deployment.
 
 ## Via Composer and Packagist (optional)
 
-tirreno is published at Packagist and could be installed with Composer:
+endoguard is published at Packagist and could be installed with Composer:
 
 ```
-composer create-project tirreno/tirreno
+composer create-project endoguard/endoguard
 ```
 
 or could be pulled into an existing project:
 
 ```
-composer require tirreno/tirreno
+composer require endoguard/endoguard
 ```
 
 ## SDKs
 
-* [PHP](https://github.com/tirrenotechnologies/tirreno-php-tracker)
-* [Python](https://github.com/tirrenotechnologies/tirreno-python-tracker)
-* [NodeJS](https://github.com/tirrenotechnologies/tirreno-nodejs-tracker)
-* [WordPress](https://github.com/tirrenotechnologies/tirreno-wordpress-tracker)
+* [PHP](https://github.com/endoguardtechnologies/endoguard-php-tracker)
+* [Python](https://github.com/endoguardtechnologies/endoguard-python-tracker)
+* [NodeJS](https://github.com/endoguardtechnologies/endoguard-nodejs-tracker)
+* [WordPress](https://github.com/endoguardtechnologies/endoguard-wordpress-tracker)
   
 ## Documentation
 
-See the [User guide](https://docs.tirreno.com/) for details on how to use tirreno, [Developers documentation](https://github.com/tirrenotechnologies/DEVELOPMENT.md) to customize your integration, [Admin documentation](https://github.com/tirrenotechnologies/ADMIN.md) for installation, maintenance and updates.
+See the [User guide](https://docs.endoguard.io/) for details on how to use EndoGuard, [Developers documentation](https://github.com/endoguardtechnologies/DEVELOPMENT.md) to customize your integration, [Admin documentation](https://github.com/endoguardtechnologies/ADMIN.md) for installation, maintenance and updates.
 
 ## About
 
-tirreno is an [open-source security framework](https://www.tirreno.com) that embeds protection against threats, fraud, and abuse right into your product.
+endoguard is an [open-source security framework](https://www.endoguard.io) that embeds protection against threats, fraud, and abuse right into your product.
 
 The project started as a proprietary system in 2021 and was open-sourced (AGPL) in December 2024.
 
-Behind tirreno is a blend of extraordinary engineers and professionals, with over a decade of experience in cyberdefence. We solve real people's challenges through love in *ascétique* code and open technologies. tirreno is not VC-motivated. Our inspiration comes from the daily threats posed by organized cybercriminals, driving us to reimagine the place of security in modern applications.
+Behind endoguard is a blend of extraordinary engineers and professionals, with over a decade of experience in cyberdefence. We solve real people's challenges through love in *ascétique* code and open technologies. endoguard is not VC-motivated. Our inspiration comes from the daily threats posed by organized cybercriminals, driving us to reimagine the place of security in modern applications.
 
-## Why the name tirreno?
+## Why the name endoguard?
 
-Tyrrhenian people may have lived in Tuscany and eastern Switzerland as far back as 800 BC. The term "Tyrrhenian" became more commonly associated with the Etruscans, and it is from them that the Tyrrhenian Sea derives its name, which is still in use today.
+The name **endoguard** is derived from the Greek prefix *endo-* (meaning internal, within) and the English word *guard*. This reflects the project's core philosophy: security should not just be a perimeter wall, but an embedded layer that protects an application from the inside out.
 
-According to historical sources, Tyrrhenian people were the first to use trumpets for signaling about coming threats, which was later adopted by Greek and Roman military forces.
+While classic security tools monitor the network, endoguard monitors the "gut" of the application — user behavior, business logic transitions, and internal events. It stands as a silent sentinel within your code, providing a baseline of trust and detection where threats actually manifest.
 
-While working on the logo, we conducted our own historical study and traced mentions of 'tirreno' back to the 15th-century printed edition of the Vulgate (the Latin Bible). We kept it lowercase to stay true to the original — quite literally, by the book. The tirreno wordmark stands behind the horizon line, as a metaphor of the endless evolutionary cycle of the threat landscape and our commitment to rise over it.
+The endoguard wordmark stands behind the horizon line, as a metaphor of the endless evolutionary cycle of the threat landscape and our commitment to rise over it.
 
 ## Links
 
-* [Website](https://www.tirreno.com)
-* [Live demo](https://play.tirreno.com)
-* [Admin documentation](https://github.com/tirrenotechnologies/ADMIN.md)
-* [Developers documentation](https://github.com/tirrenotechnologies/DEVELOPMENT.md)
-* [Resource center](https://www.tirreno.com/bat/)
-* [Docker Hub](https://hub.docker.com/r/tirreno/tirreno)
-* [User guide](https://docs.tirreno.com)
-* [Packagist](https://packagist.org/packages/tirreno/tirreno)
-* [Mattermost community](https://chat.tirreno.com)
+* [Website](https://www.endoguard.io)
+* [Live demo](https://play.endoguard.io)
+* [Admin documentation](https://github.com/endoguardtechnologies/ADMIN.md)
+* [Developers documentation](https://github.com/endoguardtechnologies/DEVELOPMENT.md)
+* [Resource center](https://www.endoguard.io/bat/)
+* [Docker Hub](https://hub.docker.com/r/endoguard/endoguard)
+* [User guide](https://docs.endoguard.io)
+* [Packagist](https://packagist.org/packages/endoguard/endoguard)
+* [Mattermost community](https://chat.endoguard.io)
   
 ## Reporting a security issue
 
-If you've found a security-related issue with tirreno, please email security@tirreno.com. Submitting the issue on GitHub exposes the vulnerability to the public, making it easy to exploit. We will publicly disclose the security issue after it has been resolved.
+If you've found a security-related issue with endoguard, please email security@endoguard.io. Submitting the issue on GitHub exposes the vulnerability to the public, making it easy to exploit. We will publicly disclose the security issue after it has been resolved.
 
-After receiving a report, tirreno will take the following steps:
+After receiving a report, endoguard will take the following steps:
 
 * Confirm that the report has been received and is being addressed.
 * Attempt to reproduce the problem and confirm the vulnerability.
@@ -165,7 +165,7 @@ After receiving a report, tirreno will take the following steps:
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License (AGPL) as published by the Free Software Foundation version 3.
 
-The name "tirreno" is a registered trademark of tirreno technologies sàrl, and tirreno technologies sàrl hereby declines to grant a trademark license to "tirreno" pursuant to the GNU Affero General Public License version 3 Section 7(e), without a separate agreement with tirreno technologies sàrl.
+The name "endoguard" is a registered trademark of EndoGuard Security sàrl, and EndoGuard Security sàrl hereby declines to grant a trademark license to "endoguard" pursuant to the GNU Affero General Public License version 3 Section 7(e), without a separate agreement with EndoGuard Security sàrl.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See GNU Affero General Public License for more details.
 
@@ -173,6 +173,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 ## Authors
 
-tirreno Copyright (C) 2026 tirreno technologies sàrl, Vaud, Switzerland. (License AGPLv3)
+endoguard Copyright (C) 2026 EndoGuard Security sàrl, Vaud, Switzerland. (License AGPLv3)
 
 't'

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class P04 extends \Tirreno\Assets\Rule {
+class P04 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Valid phone';
     public const DESCRIPTION = 'User provided correct phone number.';
     public const ATTRIBUTES = ['phone'];

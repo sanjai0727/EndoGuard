@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models;
+namespace EndoGuard\\Models;
 
-class Events extends \Tirreno\Models\BaseSql {
+class Events extends \EndoGuard\\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getDistinctAccounts(int $after, int $until): array {
@@ -43,8 +43,8 @@ class Events extends \Tirreno\Models\BaseSql {
     }
 
     protected function applyLimit(string &$query, array &$queryParams): void {
-        $start = \Tirreno\Utils\Conversion::getIntRequestParam('start');
-        $length = \Tirreno\Utils\Conversion::getIntRequestParam('length');
+        $start = \EndoGuard\\Utils\Conversion::getIntRequestParam('start');
+        $length = \EndoGuard\\Utils\Conversion::getIntRequestParam('length');
 
         if (isset($start) && isset($length)) {
             $query .= ' LIMIT :length OFFSET :start';
@@ -104,7 +104,7 @@ class Events extends \Tirreno\Models\BaseSql {
         $params = [
             ':api_key'  => $apiKey,
             ':weeks'    => $weeks,
-            ':week_sec' => \Tirreno\Utils\Constants::get()->SECONDS_IN_WEEK,
+            ':week_sec' => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_WEEK,
         ];
 
         $query = (

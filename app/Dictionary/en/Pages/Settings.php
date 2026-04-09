@@ -1,16 +1,16 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
@@ -43,7 +43,7 @@ return [
     'AdminSettings_closeAccount_success_message' => 'Your account has been successfully deleted and you are unable to use it anymore.',
 
     'AdminSettings_checkUpdates_form_title' => 'Check for updates',
-    'AdminSettings_form_checkUpdates_confirmationMessage' => 'Periodically, tirreno releases updates which can include application updates and important security patches.',
+    'AdminSettings_form_checkUpdates_confirmationMessage' => 'Periodically, endoguard releases updates which can include application updates and important security patches.',
     'AdminSettings_form_checkUpdates_currentVerision' => 'Current version: ',
     'AdminSettings_checkUpdates_form_button' => 'Check',
 

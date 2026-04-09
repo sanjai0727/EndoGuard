@@ -1,21 +1,21 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models\Chart;
+namespace EndoGuard\\Models\Chart;
 
 class FieldAuditTrail extends BaseEventsCount {
     public function getCounts(int $apiKey): array {
@@ -44,15 +44,15 @@ class FieldAuditTrail extends BaseEventsCount {
 
     protected function executeOnRangeById(string $query, int $apiKey): array {
         // do not use offset because :start_time/:end_time compared with UTC event.time
-        $dateRange = \Tirreno\Utils\DateRange::getLatestNDatesRangeFromRequest(180);
-        $offset = \Tirreno\Utils\Timezones::getCurrentOperatorOffset();
+        $dateRange = \EndoGuard\\Utils\DateRange::getLatestNDatesRangeFromRequest(180);
+        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
 
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \Tirreno\Utils\DateRange::getResolutionFromRequest(),
-            ':id'           => \Tirreno\Utils\Conversion::getIntRequestParam('id'),
+            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
+            ':id'           => \EndoGuard\\Utils\Conversion::getIntRequestParam('id'),
             ':offset'       => strval($offset),     // str for postgres
         ];
 

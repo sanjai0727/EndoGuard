@@ -1,33 +1,33 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\Api;
+namespace EndoGuard\\Controllers\Admin\Api;
 
-class Data extends \Tirreno\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     protected array $ENRICHED_ATTRIBUTES = [];
 
     public function __construct() {
         parent::__construct();
 
-        $this->ENRICHED_ATTRIBUTES = array_keys(\Tirreno\Utils\Constants::get()->ENRICHING_ATTRIBUTES);
+        $this->ENRICHED_ATTRIBUTES = array_keys(\EndoGuard\\Utils\Constants::get()->ENRICHING_ATTRIBUTES);
     }
 
     public function proceedPostRequest(): array {
-        return match (\Tirreno\Utils\Conversion::getStringRequestParam('cmd')) {
+        return match (\EndoGuard\\Utils\Conversion::getStringRequestParam('cmd')) {
             'resetKey'          => $this->resetApiKey(),
             'updateApiUsage'    => $this->updateApiUsage(),
             'enrichAll'         => $this->enrichAll(),
@@ -36,12 +36,12 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function getUsageStats(int $operatorId): array {
-        $model = new \Tirreno\Models\ApiKeys();
+        $model = new \EndoGuard\\Models\ApiKeys();
         $apiKeys = $model->getKeys($operatorId);
 
         $isOwner = true;
         if (!$apiKeys) {
-            $coOwnerModel = new \Tirreno\Models\ApiKeyCoOwner();
+            $coOwnerModel = new \EndoGuard\\Models\ApiKeyCoOwner();
             $key = $coOwnerModel->getCoOwnershipKeyId($operatorId);
 
             if ($key) {
@@ -87,7 +87,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function getOperatorApiKeysDetails(int $operatorId): array {
-        [$isOwner, $apiKeys] = \Tirreno\Utils\ApiKeys::getOperatorApiKeys($operatorId);
+        [$isOwner, $apiKeys] = \EndoGuard\\Utils\ApiKeys::getOperatorApiKeys($operatorId);
 
         $resultKeys = [];
 
@@ -108,7 +108,7 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     private function getSubscriptionStats(string $token): array {
-        $response = \Tirreno\Utils\Network::sendApiRequest(null, '/usage-stats', 'GET', $token);
+        $response = \EndoGuard\\Utils\Network::sendApiRequest(null, '/usage-stats', 'GET', $token);
         $code = $response->code();
         $result = $response->body();
 
@@ -122,17 +122,17 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         $pageParams = [];
         $params = $this->extractRequestParams(['token', 'keyId']);
         // TODO: valid only for owners?
-        $errorCode = \Tirreno\Utils\Validators::validateResetApiKey($params);
+        $errorCode = \EndoGuard\\Utils\Validators::validateResetApiKey($params);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $keyId = \Tirreno\Utils\Conversion::getIntRequestParam('keyId');
+            $keyId = \EndoGuard\\Utils\Conversion::getIntRequestParam('keyId');
 
-            $currentOperator = \Tirreno\Utils\Routes::getCurrentRequestOperator();
+            $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
             $operatorId = $currentOperator->id;
 
-            $model = new \Tirreno\Models\ApiKeys();
+            $model = new \EndoGuard\\Models\ApiKeys();
             $model->resetKey($keyId, $operatorId);
 
             $pageParams['SUCCESS_MESSAGE'] = $this->f3->get('AdminApi_reset_success_message');
@@ -144,18 +144,18 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     public function enrichAll(): array {
         $pageParams = [];
         $params = $this->extractRequestParams(['token']);
-        $enrichmentKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
-        $errorCode = \Tirreno\Utils\Validators::validateEnrichAll($params, $enrichmentKey);
+        $enrichmentKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
+        $errorCode = \EndoGuard\\Utils\Validators::validateEnrichAll($params, $enrichmentKey);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+            $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
 
-            $model = new \Tirreno\Models\Users();
+            $model = new \EndoGuard\\Models\Users();
             $accountsToEnrich = $model->notCheckedUsers($apiKey);
 
-            (new \Tirreno\Models\Queue())->addBatchIds($accountsToEnrich, \Tirreno\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
+            (new \EndoGuard\\Models\Queue())->addBatchIds($accountsToEnrich, \EndoGuard\\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
 
             $pageParams['SUCCESS_MESSAGE'] = $this->f3->get('AdminApi_manual_enrichment_success_message');
         }
@@ -177,33 +177,33 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
         $pageParams = [];
         // apiToken, exchangeBlacklist optional
         $params = $this->extractRequestParams(['token', 'keyId', 'enrichedAttributes']);
-        $errorCode = \Tirreno\Utils\Validators::validateUpdateApiUsage($params, $this->ENRICHED_ATTRIBUTES);
+        $errorCode = \EndoGuard\\Utils\Validators::validateUpdateApiUsage($params, $this->ENRICHED_ATTRIBUTES);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $keyId = \Tirreno\Utils\Conversion::getIntRequestParam('keyId');
+            $keyId = \EndoGuard\\Utils\Conversion::getIntRequestParam('keyId');
 
-            $model = new \Tirreno\Models\ApiKeys();
+            $model = new \EndoGuard\\Models\ApiKeys();
             $model->getKeyById($keyId);
 
-            $apiToken = \Tirreno\Utils\Conversion::getStringRequestParam('apiToken', true);
+            $apiToken = \EndoGuard\\Utils\Conversion::getStringRequestParam('apiToken', true);
 
             if ($apiToken !== null) {
                 $apiToken = trim($apiToken);
                 [$code, , $error] = $this->getSubscriptionStats($apiToken);
                 if (strlen($error) > 0 || $code > 201) {
-                    $pageParams['ERROR_CODE'] = \Tirreno\Utils\ErrorCodes::SUBSCRIPTION_KEY_INVALID_UPDATE;
+                    $pageParams['ERROR_CODE'] = \EndoGuard\\Utils\ErrorCodes::SUBSCRIPTION_KEY_INVALID_UPDATE;
                     return $pageParams;
                 }
                 $model->updateInternalToken($apiToken, $keyId);
             }
 
-            $enrichedAttributes = \Tirreno\Utils\Conversion::getDictionaryRequestParam('enrichedAttributes');
+            $enrichedAttributes = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('enrichedAttributes');
             $skipEnrichingAttr = array_diff($this->ENRICHED_ATTRIBUTES, array_keys($enrichedAttributes));
             $model->updateSkipEnrichingAttributes($skipEnrichingAttr, $keyId);
 
-            $skipBlacklistSync = !\Tirreno\Utils\Conversion::getStringRequestParam('exchangeBlacklist');
+            $skipBlacklistSync = !\EndoGuard\\Utils\Conversion::getStringRequestParam('exchangeBlacklist');
             $model->updateSkipBlacklistSynchronisation($skipBlacklistSync, $keyId);
 
             $pageParams['SUCCESS_MESSAGE'] = $this->f3->get('AdminApi_data_enrichment_success_message');
@@ -213,17 +213,17 @@ class Data extends \Tirreno\Controllers\Admin\Base\Data {
     }
 
     public function getNotCheckedEntitiesForLoggedUser(): bool {
-        $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $controller = new \Tirreno\Controllers\Admin\Enrichment\Data();
+        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $controller = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
 
         return $controller->getNotCheckedExists($apiKey);
     }
 
     public function getScheduledForEnrichment(): bool {
-        $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $model = new \Tirreno\Models\Queue();
+        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $model = new \EndoGuard\\Models\Queue();
 
         // do not use isInQueue() to prevent true on failed state
-        return $model->actionIsInQueueProcessing(\Tirreno\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
+        return $model->actionIsInQueueProcessing(\EndoGuard\\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
     }
 }

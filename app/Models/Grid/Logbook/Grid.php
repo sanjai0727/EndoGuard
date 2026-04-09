@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models\Grid\Logbook;
+namespace EndoGuard\\Models\Grid\Logbook;
 
-class Grid extends \Tirreno\Models\Grid\Base\Grid {
+class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
     public function __construct(int $apiKey) {
         parent::__construct();
 
@@ -32,9 +32,9 @@ class Grid extends \Tirreno\Models\Grid\Base\Grid {
 
     protected function convertTimeToUserTimezone(array &$result): void {
         $field = 'created';
-        \Tirreno\Utils\Timezones::translateTimezones($result, [$field], true);
+        \EndoGuard\\Utils\Timezones::translateTimezones($result, [$field], true);
 
-        $serverOffset = \Tirreno\Utils\Timezones::getServerOffset();
+        $serverOffset = \EndoGuard\\Utils\Timezones::getServerOffset();
 
         foreach ($result as $idx => $row) {
             if (!isset($row[$field])) {
@@ -42,7 +42,7 @@ class Grid extends \Tirreno\Models\Grid\Base\Grid {
             }
 
             // substract server time
-            $result[$idx][$field] = \Tirreno\Utils\Timezones::addOffset($row[$field], -$serverOffset, true);
+            $result[$idx][$field] = \EndoGuard\\Utils\Timezones::addOffset($row[$field], -$serverOffset, true);
         }
     }
 }

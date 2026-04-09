@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Utils;
 
-use Tirreno\Utils\Sort;
+use EndoGuard\\Utils\Sort;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Tirreno\Utils\Sort.
+ * Unit tests for EndoGuard\\Utils\Sort.
  *
  * Covered (unit-testable without refactor):
  * - Sort::cmpTimestamp() (numeric timestamp delta)

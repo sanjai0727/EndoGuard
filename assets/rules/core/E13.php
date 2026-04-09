@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E13 extends \Tirreno\Assets\Rule {
+class E13 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'New domain';
     public const DESCRIPTION = 'Domain name was registered recently, which is rare for average users.';
     public const ATTRIBUTES = ['domain'];

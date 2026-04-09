@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class A03 extends \Tirreno\Assets\Rule {
+class A03 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'New device and new country';
     public const DESCRIPTION = 'User logged in with new device from new location, which can be a sign of account takeover.';
     public const ATTRIBUTES = ['ip'];
@@ -11,7 +11,7 @@ class A03 extends \Tirreno\Assets\Rule {
         $eventNewDeviceNewCountry = false;
         if ($params['eup_device_count'] > 1 && count(array_unique($params['eip_country_id'])) > 1) {
             foreach (array_keys($params['event_device']) as $idx) {
-                if (\Tirreno\Utils\Rules::eventDeviceIsNew($params, $idx) && \Tirreno\Utils\Rules::countryIsNewByIpId($params, $params['event_ip'][$idx])) {
+                if (\EndoGuard\\Utils\Rules::eventDeviceIsNew($params, $idx) && \EndoGuard\\Utils\Rules::countryIsNewByIpId($params, $params['event_ip'][$idx])) {
                     $eventNewDeviceNewCountry = true;
                     break;
                 }

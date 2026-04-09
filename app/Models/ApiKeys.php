@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models;
+namespace EndoGuard\\Models;
 
-class ApiKeys extends \Tirreno\Models\BaseSql {
+class ApiKeys extends \EndoGuard\\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_api';
 
     public function insertRecord(string $skipEnrichingAttr, bool $skipBlacklistSync, int $operatorId): int {
@@ -29,7 +29,7 @@ class ApiKeys extends \Tirreno\Models\BaseSql {
             ':operator_id'          => $operatorId,
             ':skip_enriching_attr'  => $skipEnrichingAttr,
             ':skip_blacklist_sync'  => $skipBlacklistSync,
-            ':key'                  => \Tirreno\Utils\Access::saltHash($uuid),
+            ':key'                  => \EndoGuard\\Utils\Access::saltHash($uuid),
         ];
 
         $query = (
@@ -85,7 +85,7 @@ class ApiKeys extends \Tirreno\Models\BaseSql {
         $params = [
             ':operator_id'  => $operatorId,
             ':key_id'       => $keyId,
-            ':key'          => \Tirreno\Utils\Access::saltHash($uuid),
+            ':key'          => \EndoGuard\\Utils\Access::saltHash($uuid),
         ];
 
         $query = (
@@ -207,7 +207,7 @@ class ApiKeys extends \Tirreno\Models\BaseSql {
 
         $results = json_decode($results[0]['skip_enriching_attributes']);
 
-        if (!\Tirreno\Utils\Variables::getEmailPhoneAllowed()) {
+        if (!\EndoGuard\\Utils\Variables::getEmailPhoneAllowed()) {
             if (!in_array('email', $results, true)) {
                 $results[] = 'email';
             }
@@ -224,7 +224,7 @@ class ApiKeys extends \Tirreno\Models\BaseSql {
 
     public function enrichableAttributes(int $keyId): array {
         $skipAttributes = $this->getSkipEnrichingAttributes($keyId);
-        $attributes = \Tirreno\Utils\Constants::get()->ENRICHING_ATTRIBUTES;
+        $attributes = \EndoGuard\\Utils\Constants::get()->ENRICHING_ATTRIBUTES;
         $attributes = array_diff_key($attributes, array_flip($skipAttributes));
 
         return $attributes;

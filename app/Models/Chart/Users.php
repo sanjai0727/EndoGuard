@@ -1,21 +1,21 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models\Chart;
+namespace EndoGuard\\Models\Chart;
 
 class Users extends Base {
     protected ?string $DB_TABLE_NAME = 'event_account';
@@ -32,26 +32,26 @@ class Users extends Base {
     }
 
     private function getFirstLine(int $apiKey): array {
-        $dateRange = \Tirreno\Utils\DateRange::getDatesRangeFromRequest();
+        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
         if (!$dateRange) {
             $dateRange = [
                 'endDate' => date('Y-m-d H:i:s'),
                 'startDate' => date('Y-m-d H:i:s', 0),
             ];
         }
-        $offset = \Tirreno\Utils\Timezones::getCurrentOperatorOffset();
+        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \Tirreno\Utils\DateRange::getResolutionFromRequest(),
+            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
             ':offset'       => strval($offset),
-            ':high_inf'     => \Tirreno\Utils\Constants::get()->USER_HIGH_SCORE_INF,
-            //':high_sup'     => \Tirreno\Utils\Constants::get()->USER_HIGH_SCORE_SUP,
-            ':med_inf'      => \Tirreno\Utils\Constants::get()->USER_MEDIUM_SCORE_INF,
-            ':med_sup'      => \Tirreno\Utils\Constants::get()->USER_MEDIUM_SCORE_SUP,
-            ':low_inf'      => \Tirreno\Utils\Constants::get()->USER_LOW_SCORE_INF,
-            ':low_sup'      => \Tirreno\Utils\Constants::get()->USER_LOW_SCORE_SUP,
+            ':high_inf'     => \EndoGuard\\Utils\Constants::get()->USER_HIGH_SCORE_INF,
+            //':high_sup'     => \EndoGuard\\Utils\Constants::get()->USER_HIGH_SCORE_SUP,
+            ':med_inf'      => \EndoGuard\\Utils\Constants::get()->USER_MEDIUM_SCORE_INF,
+            ':med_sup'      => \EndoGuard\\Utils\Constants::get()->USER_MEDIUM_SCORE_SUP,
+            ':low_inf'      => \EndoGuard\\Utils\Constants::get()->USER_LOW_SCORE_INF,
+            ':low_sup'      => \EndoGuard\\Utils\Constants::get()->USER_LOW_SCORE_SUP,
         ];
 
         $query = (

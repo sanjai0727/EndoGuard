@@ -1,67 +1,79 @@
-<table class="table-tile content info-tiles" id="dashboard-counters">
-    <tr>
-{***
-        <td class="table-card tile-padding totalEvents">
+<div class="table-tile cards-grid" id="dashboard-counters">
+    <div class="table-card totalUsers">
+        <div class="card-content">
             <div class="subtitle">
-                {{ @AdminHome_total_events }}<p class="tooltip-info tooltip" title="{{ @AdminHome_total_events_tooltip }}"><include href="images/icons/information.svg" alt=''/>
-                </p>
+                <span>{{ @AdminHome_total_users }}</span>
+                <span class="tooltip-info tooltip" title="{{ @AdminHome_total_users_tooltip }}">
+                    <include href="images/icons/information.svg" />
+                </span>
             </div>
             <p class="title"></p>
-            <a href="{{ @BASE }}/event">{{ @AdminHome_view_all }}</a>
-        </td>
-***}
-        <td class="table-card tile-padding totalUsers">
-            <div class="subtitle">
-                {{ @AdminHome_total_users }}<p class="tooltip-info tooltip" title="{{ @AdminHome_total_users_tooltip }}"><include href="images/icons/information.svg" alt=''/>
-                </p>
-            </div>
-            <p class="title"></p>
-            <a href="{{ @BASE }}/id">{{ @AdminHome_view_all }}</a>
-        </td>
+            <a href="{{ @BASE }}/id" class="view-all">{{ @AdminHome_view_all }}</a>
+        </div>
+    </div>
 
-        <td class="table-card tile-padding totalIps">
+    <div class="table-card totalIps">
+        <div class="card-content">
             <div class="subtitle">
-                {{ @AdminHome_total_ips }}<p class="tooltip-info tooltip" title="{{ @AdminHome_total_ips_tooltip }}"><include href="images/icons/information.svg" alt=''/>
-                </p>
+                <span>{{ @AdminHome_total_ips }}</span>
+                <span class="tooltip-info tooltip" title="{{ @AdminHome_total_ips_tooltip }}">
+                    <include href="images/icons/information.svg" />
+                </span>
             </div>
             <p class="title"></p>
-            <a href="{{ @BASE }}/ip">{{ @AdminHome_view_all }}</a>
-        </td>
+            <a href="{{ @BASE }}/ip" class="view-all">{{ @AdminHome_view_all }}</a>
+        </div>
+    </div>
 
-        <td class="table-card tile-padding totalCountries">
+    <div class="table-card totalCountries">
+        <div class="card-content">
             <div class="subtitle">
-                {{ @AdminHome_total_countries }}<p class="tooltip-info tooltip" title="{{ @AdminHome_total_countries_tooltip }}"><include href="images/icons/information.svg" alt=''/>
-                </p>
+                <span>{{ @AdminHome_total_countries }}</span>
+                <span class="tooltip-info tooltip" title="{{ @AdminHome_total_countries_tooltip }}">
+                    <include href="images/icons/information.svg" />
+                </span>
             </div>
             <p class="title"></p>
-            <a href="{{ @BASE }}/country">{{ @AdminHome_view_all }}</a>
-        </td>
+            <a href="{{ @BASE }}/country" class="view-all">{{ @AdminHome_view_all }}</a>
+        </div>
+    </div>
 
-        <td class="table-card tile-padding totalUrls">
+    <div class="table-card totalUrls">
+        <div class="card-content">
             <div class="subtitle">
-                {{ @AdminHome_total_urls }}<p class="tooltip-info tooltip" title="{{ @AdminHome_total_urls_tooltip }}"><include href="images/icons/information.svg" alt=''/>
-                </p>
+                <span>{{ @AdminHome_total_urls }}</span>
+                <span class="tooltip-info tooltip" title="{{ @AdminHome_total_urls_tooltip }}">
+                    <include href="images/icons/information.svg" />
+                </span>
             </div>
             <p class="title"></p>
-            <a href="{{ @BASE }}/resource">{{ @AdminHome_view_all }}</a>
-        </td>
+            <a href="{{ @BASE }}/resource" class="view-all">{{ @AdminHome_view_all }}</a>
+        </div>
+    </div>
 
-        <td class="table-card tile-padding totalUsersForReview">
+    <div class="table-card totalUsersForReview">
+        <div class="card-content">
             <div class="subtitle">
-                {{ @AdminHome_total_users_for_review }}<p class="tooltip-info tooltip" title="{{ @AdminHome_total_users_for_review_tooltip }}"><include href="images/icons/information.svg" alt=''/>
-                </p>
+                <span>{{ @AdminHome_total_users_for_review }}</span>
+                <span class="tooltip-info tooltip" title="{{ @AdminHome_total_users_for_review_tooltip }}">
+                    <include href="images/icons/information.svg" />
+                </span>
             </div>
             <p class="title"></p>
-            <a href="{{ @BASE }}/review-queue">{{ @AdminHome_view_all }}</a>
-        </td>
+            <a href="{{ @BASE }}/review-queue" class="view-all">{{ @AdminHome_view_all }}</a>
+        </div>
+    </div>
 
-        <td class="table-card tile-padding totalBlockedUsers">
+    <div class="table-card totalBlockedUsers">
+        <div class="card-content">
             <div class="subtitle">
-                {{ @AdminHome_total_blocked_users }}<p class="tooltip-info tooltip" title="{{ @AdminHome_total_blocked_users_tooltip }}"><include href="images/icons/information.svg" alt=''/>
-                </p>
+                <span>{{ @AdminHome_total_blocked_users }}</span>
+                <span class="tooltip-info tooltip" title="{{ @AdminHome_total_blocked_users_tooltip }}">
+                    <include href="images/icons/information.svg" />
+                </span>
             </div>
             <p class="title"></p>
-            <a href="{{ @BASE }}/blacklist">{{ @AdminHome_view_all }}</a>
-        </td>
-    </tr>
-</table>
+            <a href="{{ @BASE }}/blacklist" class="view-all">{{ @AdminHome_view_all }}</a>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 {
-    "name": "tirreno/tirreno",
+    "name": "endoguard/endoguard",
     "type": "project",
-    "description": "Open-source security framework",
+    "description": "EndoGuard: Internal & Embedded Cybersecurity Framework",
     "keywords": [
-        "tirreno",
+        "endoguard",
         "fraud-detection",
         "audit-trail",
         "analytics",
@@ -13,12 +13,12 @@
         "application-monitoring"
     ],
     "license": "AGPL-3.0+",
-    "homepage": "https://www.tirreno.com",
+    "homepage": "https://www.endoguard.io",
     "authors": [
         {
-            "name": "Tirreno Technologies Sàrl",
-            "email": "team@tirreno.com",
-            "homepage": "https://www.tirreno.com/"
+            "name": "EndoGuard Security",
+            "email": "team@endoguard.io",
+            "homepage": "https://www.endoguard.io/"
         }
     ],
     "config": {
@@ -41,7 +41,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Tirreno\\": "app/"
+            "EndoGuard\\": "app/"
         }
     },
     "extra": {

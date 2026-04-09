@@ -1,29 +1,29 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\User;
+namespace EndoGuard\\Controllers\Admin\User;
 
-class Page extends \Tirreno\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminUser';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $userId = \Tirreno\Utils\Conversion::getIntUrlParam('userId');
+        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $userId = \EndoGuard\\Utils\Conversion::getIntUrlParam('userId');
         $hasAccess = $dataController->checkIfOperatorHasAccess($userId, $apiKey);
 
         if (!$hasAccess) {
@@ -62,7 +62,7 @@ class Page extends \Tirreno\Controllers\Admin\Base\Page {
 
         [$scheduledForBlacklist, $errorCode] = $dataController->getScheduledForBlacklist($userId, $apiKey);
         if ($scheduledForBlacklist) {
-            $this->f3->set('SESSION.extra_message_code', $errorCode ?? \Tirreno\Utils\ErrorCodes::USER_BLACKLISTING_QUEUED);
+            $this->f3->set('SESSION.extra_message_code', $errorCode ?? \EndoGuard\\Utils\ErrorCodes::USER_BLACKLISTING_QUEUED);
         }
 
         return parent::applyPageParams($pageParams);

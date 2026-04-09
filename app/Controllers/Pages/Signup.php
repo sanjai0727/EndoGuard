@@ -1,42 +1,42 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Pages;
+namespace EndoGuard\\Controllers\Pages;
 
 class Signup extends Base {
     public ?string $page = 'Signup';
 
     public function getPageParams(): array {
-        $model = new \Tirreno\Models\Operator();
+        $model = new \EndoGuard\\Models\Operator();
         if (count($model->getAll())) {
             $this->f3->error(404);
         }
 
         $pageParams = [
             'HTML_FILE'     => 'signup.html',
-            'TIMEZONES'     => \Tirreno\Utils\Timezones::timezonesList(),
-            'RULES_PRESETS' => \Tirreno\Utils\Constants::get()->RULES_PRESETS,
+            'TIMEZONES'     => \EndoGuard\\Utils\Timezones::timezonesList(),
+            'RULES_PRESETS' => \EndoGuard\\Utils\Constants::get()->RULES_PRESETS,
         ];
 
         if ($this->isPostRequest()) {
-            \Tirreno\Utils\Updates::syncUpdates();
+            \EndoGuard\\Utils\Updates::syncUpdates();
 
             $params = $this->extractRequestParams(['token', 'email', 'password', 'timezone', 'rules-preset']);
-            $errorCode = \Tirreno\Utils\Validators::validateSignup($params);
+            $errorCode = \EndoGuard\\Utils\Validators::validateSignup($params);
 
             $pageParams['ERROR_CODE'] = $errorCode;
 
@@ -46,10 +46,10 @@ class Signup extends Base {
                 $operatorId = $this->addUser($params);
 
                 $apiKey = $this->addDefaultApiKey($operatorId);
-                (new \Tirreno\Controllers\Admin\Rules\Data())->applyRulesPresetById($params['rules-preset'], $apiKey);
+                (new \EndoGuard\\Controllers\Admin\Rules\Data())->applyRulesPresetById($params['rules-preset'], $apiKey);
 
                 //$this->sendActivationEmail($operatorId);
-                $pageParams['SUCCESS_CODE'] = \Tirreno\Utils\ErrorCodes::ACCOUNT_CREATED;
+                $pageParams['SUCCESS_CODE'] = \EndoGuard\\Utils\ErrorCodes::ACCOUNT_CREATED;
             }
         }
 
@@ -57,21 +57,21 @@ class Signup extends Base {
     }
 
     private function addDefaultApiKey(int $operatorId): int {
-        $skipEnrichingAttr = json_encode(array_keys(\Tirreno\Utils\Constants::get()->ENRICHING_ATTRIBUTES));
-        $model = new \Tirreno\Models\ApiKeys();
+        $skipEnrichingAttr = json_encode(array_keys(\EndoGuard\\Utils\Constants::get()->ENRICHING_ATTRIBUTES));
+        $model = new \EndoGuard\\Models\ApiKeys();
 
         return $model->insertRecord($skipEnrichingAttr, true, $operatorId);
     }
 
     protected function addUser(array $data): int {
-        $model = new \Tirreno\Models\Operator();
+        $model = new \EndoGuard\\Models\Operator();
 
         return $model->insertRecord($data['password'], $data['email'], $data['timezone']);
     }
 
     /*private function sendActivationEmail(int $operatorId): void {
-        $operator = \Tirreno\Entities\Operator::getById($operatorId);
-        $url = \Tirreno\Utils\Variables::getHostWithProtocolAndBase();
+        $operator = \EndoGuard\\Entities\Operator::getById($operatorId);
+        $url = \EndoGuard\\Utils\Variables::getHostWithProtocolAndBase();
 
         $toName = $operator->firstname;
         $toAddress = $operator->email;
@@ -83,6 +83,6 @@ class Signup extends Base {
         $activationUrl = sprintf('%s/account-activation/%s', $url, $activationKey);
         $message = sprintf($message, $activationUrl);
 
-        \Tirreno\Utils\Mailer::send($toName, $toAddress, $subject, $message);
+        \EndoGuard\\Utils\Mailer::send($toName, $toAddress, $subject, $message);
     }*/
 }

@@ -48,26 +48,26 @@
 
                                 <repeat group="{{ @API_KEYS }}" value="{{ @API_KEY }}">
                                     <div id="php">
-                                        <pre class="tirreno" contenteditable="true" lang="zkk" spellcheck="false"
+                                        <pre class="endoguard" contenteditable="true" lang="zkk" spellcheck="false"
                                             ><include href="templates/snippets/php.html" with="apiKey={{ @API_KEY.key }}, apiUrl={{ @API_URL }}"/></pre>
                                     </div>
 
                                     <div id="python" class="is-hidden">
-                                        <pre class="tirreno" contenteditable="true" lang="zkk" spellcheck="false"
+                                        <pre class="endoguard" contenteditable="true" lang="zkk" spellcheck="false"
                                             ><include href="templates/snippets/python.html" with="apiKey={{ @API_KEY.key }}, apiUrl={{ @API_URL }}"/></pre>
                                     </div>
 
                                     <div id="nodejs" class="is-hidden">
-                                        <pre class="tirreno" contenteditable="true" lang="zkk" spellcheck="false"
+                                        <pre class="endoguard" contenteditable="true" lang="zkk" spellcheck="false"
                                             ><include href="templates/snippets/nodejs.html" with="apiKey={{ @API_KEY.key }}, apiUrl={{ @API_URL }}"/></pre>
                                     </div>
 
                                     <div id="ruby" class="is-hidden">
-                                        <pre class="tirreno" contenteditable="true" lang="zkk" spellcheck="false"
+                                        <pre class="endoguard" contenteditable="true" lang="zkk" spellcheck="false"
                                             ><include href="templates/snippets/ruby.html" with="apiKey={{ @API_KEY.key }}, apiUrl={{ @API_URL }}"/></pre>
                                     </div>
                                     <div id="curl" class="is-hidden">
-                                        <pre class="tirreno" contenteditable="true" lang="zkk" spellcheck="false"
+                                        <pre class="endoguard" contenteditable="true" lang="zkk" spellcheck="false"
                                             ><include href="templates/snippets/curl.html" with="apiKey={{ @API_KEY.key }}, apiUrl={{ @API_URL }}"/></pre>
                                     </div>
                                 </repeat>

@@ -1,21 +1,21 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models\Chart;
+namespace EndoGuard\\Models\Chart;
 
 class Logbook extends Base {
     protected ?string $DB_TABLE_NAME = 'event_logbook';
@@ -33,8 +33,8 @@ class Logbook extends Base {
 
     private function getFirstLine(int $apiKey): array {
         // apply server offset to utc requested date range because dateRangeField is in server time zone
-        $serverOffset = \Tirreno\Utils\Timezones::getServerOffset();
-        $dateRange = \Tirreno\Utils\DateRange::getDatesRangeFromRequest($serverOffset);
+        $serverOffset = \EndoGuard\\Utils\Timezones::getServerOffset();
+        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest($serverOffset);
 
         if (!$dateRange) {
             $dateRange = [
@@ -43,20 +43,20 @@ class Logbook extends Base {
             ];
         }
 
-        //$dateRange['endDate']   = \Tirreno\Utils\Timezones::localizeForActiveOperator($dateRange['endDate']);
-        //$dateRange['startDate'] = \Tirreno\Utils\Timezones::localizeForActiveOperator($dateRange['startDate']);
+        //$dateRange['endDate']   = \EndoGuard\\Utils\Timezones::localizeForActiveOperator($dateRange['endDate']);
+        //$dateRange['startDate'] = \EndoGuard\\Utils\Timezones::localizeForActiveOperator($dateRange['startDate']);
 
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \Tirreno\Utils\DateRange::getResolutionFromRequest(),
-            ':comb_offset'  => strval(\Tirreno\Utils\Timezones::getCurrentOperatorOffset() - $serverOffset),
+            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
+            ':comb_offset'  => strval(\EndoGuard\\Utils\Timezones::getCurrentOperatorOffset() - $serverOffset),
         ];
 
-        [$failedTypesParams, $failedFlatIds]    = $this->getArrayPlaceholders(\Tirreno\Utils\Constants::get()->FAILED_LOGBOOK_EVENT_TYPES, 'failed');
-        [$issuedTypesParams, $issuedFlatIds]    = $this->getArrayPlaceholders(\Tirreno\Utils\Constants::get()->ISSUED_LOGBOOK_EVENT_TYPES, 'issued');
-        [$normalTypesParams, $normalFlatIds]    = $this->getArrayPlaceholders(\Tirreno\Utils\Constants::get()->NORMAL_LOGBOOK_EVENT_TYPES, 'normal');
+        [$failedTypesParams, $failedFlatIds]    = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->FAILED_LOGBOOK_EVENT_TYPES, 'failed');
+        [$issuedTypesParams, $issuedFlatIds]    = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->ISSUED_LOGBOOK_EVENT_TYPES, 'issued');
+        [$normalTypesParams, $normalFlatIds]    = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->NORMAL_LOGBOOK_EVENT_TYPES, 'normal');
 
         $params = array_merge($params, $failedTypesParams);
         $params = array_merge($params, $issuedTypesParams);

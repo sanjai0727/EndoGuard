@@ -1,18 +1,15 @@
 {
-    "name": "tirreno",
-    "description": "Open security framework. Understand, monitor, and protect your application from cyber threats, account takeovers, and abuse.",
-    "website": "https://www.tirreno.com",
-    "repository": "https://github.com/tirrenotechnologies/tirreno",
-    "logo": "https://www.tirreno.com/tirreno-logo-public.png",
+    "name": "EndoGuard",
+    "description": "Embedded & Internal Cybersecurity Framework. Understand, monitor, and protect your application from within.",
+    "website": "https://www.endoguard.io",
+    "repository": "https://github.com/endoguardtechnologies/endoguard",
+    "logo": "https://www.endoguard.io/logo-public.png",
     "keywords": [
-        "tirreno",
+        "endoguard",
+        "cybersecurity",
         "fraud-detection",
-        "audit-trail",
-        "analytics",
-        "monitoring",
-        "bot-detection",
-        "antispam",
-        "application-monitoring"
+        "internal-security",
+        "audit-trail"
     ],
     "success_url": "/install/index.php?mode=schema",
     "addons": [

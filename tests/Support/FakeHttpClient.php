@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Support;
 
-use Tirreno\Utils\Http\HttpClient;
-use Tirreno\Entities\HttpRequest;
-use Tirreno\Entities\HttpResponse;
+use EndoGuard\\Utils\Http\HttpClient;
+use EndoGuard\\Entities\HttpRequest;
+use EndoGuard\\Entities\HttpResponse;
 
 /**
  * FakeHttpClient is a deterministic test double for HttpClient.

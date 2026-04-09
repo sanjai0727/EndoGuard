@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class B26 extends \Tirreno\Assets\Rule {
+class B26 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Single event sessions';
     public const DESCRIPTION = 'User had sessions with only one event.';
     public const ATTRIBUTES = [];

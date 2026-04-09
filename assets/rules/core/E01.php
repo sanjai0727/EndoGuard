@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E01 extends \Tirreno\Assets\Rule {
+class E01 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Invalid email format';
     public const DESCRIPTION = 'Invalid email format. Should be \'username@domain.com\'.';
     public const ATTRIBUTES = [];

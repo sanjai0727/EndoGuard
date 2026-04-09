@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class D01 extends \Tirreno\Assets\Rule {
+class D01 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Device is unknown';
     public const DESCRIPTION = 'User has manipulated the device information, so it is not recognized.';
     public const ATTRIBUTES = [];

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E25 extends \Tirreno\Assets\Rule {
+class E25 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Military domain (.mil)';
     public const DESCRIPTION = 'Email belongs to military domain.';
     public const ATTRIBUTES = [];

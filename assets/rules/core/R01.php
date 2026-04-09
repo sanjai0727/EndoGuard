@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class R01 extends \Tirreno\Assets\Rule {
+class R01 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'IP in blacklist';
     public const DESCRIPTION = 'This IP address appears in the blacklist.';
     public const ATTRIBUTES = [];

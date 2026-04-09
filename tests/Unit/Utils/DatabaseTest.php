@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Utils;
 
-use Tirreno\Utils\Database;
+use EndoGuard\\Utils\Database;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
 
 /**
- * Unit tests for Tirreno\Utils\Database.
+ * Unit tests for EndoGuard\\Utils\Database.
  *
  * Covered (unit-testable without refactor):
  * - initConnect():

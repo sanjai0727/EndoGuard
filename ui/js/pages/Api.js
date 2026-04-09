@@ -47,6 +47,6 @@ export class ApiPage extends BasePage {
     }
 
     get snippets() {
-        return document.querySelectorAll('.tirreno');
+        return document.querySelectorAll('.endoguard');
     }
 }

@@ -1,31 +1,31 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Crons;
+namespace EndoGuard\\Crons;
 
 class EnrichmentQueueHandler extends BaseQueue {
-    private \Tirreno\Controllers\Admin\Enrichment\Data $controller;
+    private \EndoGuard\\Controllers\Admin\Enrichment\Data $controller;
 
     public function __construct() {
-        $this->controller = new \Tirreno\Controllers\Admin\Enrichment\Data();
+        $this->controller = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
     }
 
     public function process(): void {
-        parent::baseProcess(\Tirreno\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE);
+        parent::baseProcess(\EndoGuard\\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE);
     }
 
     protected function processItem(array $item): void {
@@ -35,7 +35,7 @@ class EnrichmentQueueHandler extends BaseQueue {
 
         $entities = $this->controller->getNotCheckedEntitiesByUserId($userId, $apiKey);
 
-        $key = (new \Tirreno\Models\ApiKeys())->getKeyById($apiKey);
+        $key = (new \EndoGuard\\Models\ApiKeys())->getKeyById($apiKey);
         $subscriptionKey = $key['token'];
 
         // TODO: check key ?

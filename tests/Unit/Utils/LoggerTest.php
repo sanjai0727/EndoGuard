@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Utils;
 
-use Tirreno\Utils\Logger;
+use EndoGuard\\Utils\Logger;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Tirreno\Utils\Logger.
+ * Unit tests for EndoGuard\\Utils\Logger.
  *
  * Covered (unit-testable without refactor):
  * - Logger::logCronLine() (pure formatting)

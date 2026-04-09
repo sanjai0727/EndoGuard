@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Utils;
 
-use Tirreno\Utils\Rules;
+use EndoGuard\\Utils\Rules;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Tirreno\Utils\Rules.
+ * Unit tests for EndoGuard\\Utils\Rules.
  *
  * Covered (unit-testable without refactor):
  * - Rules::checkPhoneCountryMatchIp() (pure array logic, null/0 handling)

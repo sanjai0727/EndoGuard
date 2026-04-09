@@ -1,3 +1,3 @@
 # Authors
 
-- Tirreno Technologies Sàrl
+- EndoGuard Security Sàrl

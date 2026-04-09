@@ -1,12 +1,12 @@
 <?php
 
-namespace Tirreno\Rules\Custom;
+namespace EndoGuard\\Rules\Custom;
 
 /**
  * @example This is a sample implementation for demonstration purposes.
  * @internal Do not use in production - copy and modify for your own rules.
  */
-class X03 extends \Tirreno\Assets\Rule {
+class X03 extends \EndoGuard\\Assets\Rule {
     /** @var string Human-readable name displayed in the UI */
     public const NAME = '1xx user name';
 

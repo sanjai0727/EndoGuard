@@ -10,7 +10,7 @@
                     <check if="{{ is_array(@results) }}">
                         <repeat group="{{ @results }}" key="{{ @key }}" value="{{ @value }}">
                             <tr>
-                                <td data-item-id="{{ @key }}">{{ \Tirreno\Controllers\Admin\ManualCheck\Page::stylizeKey(@key) }}</td>
+                                <td data-item-id="{{ @key }}">{{ \EndoGuard\\Controllers\Admin\ManualCheck\Page::stylizeKey(@key) }}</td>
                                 <td>
                                     {{ is_string(@value) ? @value : json_encode(@value) }}
                                 </td>

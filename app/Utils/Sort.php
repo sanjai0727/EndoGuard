@@ -1,21 +1,21 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Utils;
+namespace EndoGuard\\Utils;
 
 class Sort {
     public static function cmpTimestamp(array $left, array $right): int {
@@ -32,7 +32,7 @@ class Sort {
         }
 
         if (($left['missing'] === true) !== ($right['missing'] === true)) {
-            return (\Tirreno\Utils\Conversion::intVal($left['missing']) <=> \Tirreno\Utils\Conversion::intVal($right['missing']));
+            return (\EndoGuard\\Utils\Conversion::intVal($left['missing']) <=> \EndoGuard\\Utils\Conversion::intVal($right['missing']));
         }
 
         return $left['uid'] <=> $right['uid'];

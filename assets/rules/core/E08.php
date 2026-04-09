@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class E08 extends \Tirreno\Assets\Rule {
+class E08 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Long domain name';
     public const DESCRIPTION = 'Email\'s domain name is too long. Long domain names are cheaply registered and rarely used for email addresses by regular users.';
     public const ATTRIBUTES = [];

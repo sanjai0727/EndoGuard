@@ -1,34 +1,34 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Pages;
+namespace EndoGuard\\Controllers\Pages;
 
 class Login extends Base {
     public ?string $page = 'Login';
 
     public function getPageParams(): array {
-        if (!\Tirreno\Utils\Variables::completedConfig()) {
+        if (!\EndoGuard\\Utils\Variables::completedConfig()) {
             $this->f3->error(422);
         }
 
         $pageParams = [
             'HTML_FILE'             => 'login.html',
             'JS'                    => 'user_main.js',
-            'ALLOW_FORGOT_PASSWORD' => \Tirreno\Utils\Variables::getForgotPasswordAllowed(),
+            'ALLOW_FORGOT_PASSWORD' => \EndoGuard\\Utils\Variables::getForgotPasswordAllowed(),
         ];
 
         if (!$this->isPostRequest()) {
@@ -36,7 +36,7 @@ class Login extends Base {
         }
 
         $params = $this->extractRequestParams(['token', 'email', 'password']);
-        $errorCode = \Tirreno\Utils\Validators::validateLogin($params);
+        $errorCode = \EndoGuard\\Utils\Validators::validateLogin($params);
 
         $pageParams['VALUES'] = $params;
         $pageParams['ERROR_CODE'] = $errorCode;
@@ -45,31 +45,31 @@ class Login extends Base {
             return parent::applyPageParams($pageParams);
         }
 
-        \Tirreno\Utils\Updates::syncUpdates();
+        \EndoGuard\\Utils\Updates::syncUpdates();
 
-        $email      = \Tirreno\Utils\Conversion::getStringRequestParam('email');
-        $password   = \Tirreno\Utils\Conversion::getStringRequestParam('password');
+        $email      = \EndoGuard\\Utils\Conversion::getStringRequestParam('email');
+        $password   = \EndoGuard\\Utils\Conversion::getStringRequestParam('password');
 
-        $model = new \Tirreno\Models\Operator();
+        $model = new \EndoGuard\\Models\Operator();
         $operatorId = $model->getActivatedByEmail($email);
 
         if ($operatorId && $model->verifyPassword($password, $operatorId)) {
             $this->f3->set('SESSION.active_user_id', $operatorId);
 
-            $this->f3->set('SESSION.active_key_id', \Tirreno\Utils\ApiKeys::getFirstKeyByOperatorId($operatorId));
+            $this->f3->set('SESSION.active_key_id', \EndoGuard\\Utils\ApiKeys::getFirstKeyByOperatorId($operatorId));
 
             // blacklist first because it uses review_queue_updated_at for cache check
-            $controller = new \Tirreno\Controllers\Admin\Blacklist\Navigation();
+            $controller = new \EndoGuard\\Controllers\Admin\Blacklist\Navigation();
             $controller->setBlacklistUsersCount(true);      // use cache
 
-            $controller = new \Tirreno\Controllers\Admin\ReviewQueue\Navigation();
+            $controller = new \EndoGuard\\Controllers\Admin\ReviewQueue\Navigation();
             $controller->setNotReviewedCount(true);         // use cache
 
-            $pageParams['VALUES'] = \Tirreno\Utils\Routes::callExtra('LOGIN', $params) ?? $params;
+            $pageParams['VALUES'] = \EndoGuard\\Utils\Routes::callExtra('LOGIN', $params) ?? $params;
             $this->f3->reroute('/');
         } else {
-            $pageParams['VALUES'] = \Tirreno\Utils\Routes::callExtra('LOGIN_FAIL', $params) ?? $params;
-            $pageParams['ERROR_CODE'] = \Tirreno\Utils\ErrorCodes::EMAIL_OR_PASSWORD_IS_NOT_CORRECT;
+            $pageParams['VALUES'] = \EndoGuard\\Utils\Routes::callExtra('LOGIN_FAIL', $params) ?? $params;
+            $pageParams['ERROR_CODE'] = \EndoGuard\\Utils\ErrorCodes::EMAIL_OR_PASSWORD_IS_NOT_CORRECT;
         }
 
         return parent::applyPageParams($pageParams);

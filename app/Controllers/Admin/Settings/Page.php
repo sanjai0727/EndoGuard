@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\Settings;
+namespace EndoGuard\\Controllers\Admin\Settings;
 
-class Page extends \Tirreno\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminSettings';
 
     public function getPageParams(): array {
@@ -28,8 +28,8 @@ class Page extends \Tirreno\Controllers\Admin\Base\Page {
             'LOAD_AUTOCOMPLETE' => true,
             'HTML_FILE'         => 'admin/settings.html',
             'JS'                => 'admin_settings.js',
-            'TIMEZONES'         => \Tirreno\Utils\Timezones::timezonesList(),
-            'CURRENT_VERSION'   => \Tirreno\Utils\VersionControl::fullVersionString(),
+            'TIMEZONES'         => \EndoGuard\\Utils\Timezones::timezonesList(),
+            'CURRENT_VERSION'   => \EndoGuard\\Utils\VersionControl::fullVersionString(),
         ];
 
         if ($this->isPostRequest()) {
@@ -41,13 +41,13 @@ class Page extends \Tirreno\Controllers\Admin\Base\Page {
 
         // set shared_operators and api_keys params after processing POST request
 
-        $currentOperator = \Tirreno\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
         $operatorId = $currentOperator->id;
 
         $coOwners = $dataController->getSharedApiKeyOperators($operatorId);
         $pageParams['SHARED_OPERATORS'] = $coOwners;
 
-        [$isOwner, $apiKeys] = \Tirreno\Utils\ApiKeys::getOperatorApiKeys($operatorId);
+        [$isOwner, $apiKeys] = \EndoGuard\\Utils\ApiKeys::getOperatorApiKeys($operatorId);
 
         $pageParams['IS_OWNER'] = $isOwner;
         $pageParams['API_KEYS'] = $apiKeys;

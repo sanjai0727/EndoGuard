@@ -1,23 +1,23 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Models\Grid\Isps;
+namespace EndoGuard\\Models\Grid\Isps;
 
-class Query extends \Tirreno\Models\Grid\Base\Query {
+class Query extends \EndoGuard\\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event_isp.id DESC';
     protected string $dateRangeField = 'event_isp.lastseen';
 
@@ -86,7 +86,7 @@ class Query extends \Tirreno\Models\Grid\Base\Query {
     private function applySearch(string &$query, array &$queryParams): void {
         $this->applyDateRange($query, $queryParams);
 
-        $search = \Tirreno\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
         $searchConditions = $this->injectIdQuery('event_isp.id', $queryParams);
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {

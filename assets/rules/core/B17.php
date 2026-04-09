@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class B17 extends \Tirreno\Assets\Rule {
+class B17 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Single country';
     public const DESCRIPTION = 'IP addresses are located in a single country.';
     public const ATTRIBUTES = ['ip'];

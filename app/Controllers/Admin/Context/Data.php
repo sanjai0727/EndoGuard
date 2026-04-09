@@ -1,53 +1,53 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\Context;
+namespace EndoGuard\\Controllers\Admin\Context;
 
-class Data extends \Tirreno\Controllers\Base {
-    private \Tirreno\Models\Context\User $userModel;
-    private \Tirreno\Models\Context\Ip $ipModel;
-    private \Tirreno\Models\Context\Device $deviceModel;
-    private \Tirreno\Models\Context\Email $emailModel;
-    private \Tirreno\Models\Context\Phone $phoneModel;
-    private \Tirreno\Models\Context\Event $eventModel;
-    private \Tirreno\Models\Context\Session $sessionModel;
-    private \Tirreno\Models\ApiKeys $keyModel;
+class Data extends \EndoGuard\\Controllers\Base {
+    private \EndoGuard\\Models\Context\User $userModel;
+    private \EndoGuard\\Models\Context\Ip $ipModel;
+    private \EndoGuard\\Models\Context\Device $deviceModel;
+    private \EndoGuard\\Models\Context\Email $emailModel;
+    private \EndoGuard\\Models\Context\Phone $phoneModel;
+    private \EndoGuard\\Models\Context\Event $eventModel;
+    private \EndoGuard\\Models\Context\Session $sessionModel;
+    private \EndoGuard\\Models\ApiKeys $keyModel;
 
-    private ?\Tirreno\Assets\Context $extraModel;
+    private ?\EndoGuard\\Assets\Context $extraModel;
 
     private array $suspiciousWordsUrl;
     private array $suspiciousWordsUserAgent;
     private array $suspiciousWordsEmail;
 
     public function __construct() {
-        $this->userModel    = new \Tirreno\Models\Context\User();
-        $this->ipModel      = new \Tirreno\Models\Context\Ip();
-        $this->deviceModel  = new \Tirreno\Models\Context\Device();
-        $this->emailModel   = new \Tirreno\Models\Context\Email();
-        $this->phoneModel   = new \Tirreno\Models\Context\Phone();
-        $this->eventModel   = new \Tirreno\Models\Context\Event();
-        $this->sessionModel = new \Tirreno\Models\Context\Session();
-        $this->keyModel     = new \Tirreno\Models\ApiKeys();
+        $this->userModel    = new \EndoGuard\\Models\Context\User();
+        $this->ipModel      = new \EndoGuard\\Models\Context\Ip();
+        $this->deviceModel  = new \EndoGuard\\Models\Context\Device();
+        $this->emailModel   = new \EndoGuard\\Models\Context\Email();
+        $this->phoneModel   = new \EndoGuard\\Models\Context\Phone();
+        $this->eventModel   = new \EndoGuard\\Models\Context\Event();
+        $this->sessionModel = new \EndoGuard\\Models\Context\Session();
+        $this->keyModel     = new \EndoGuard\\Models\ApiKeys();
 
-        $this->extraModel   = \Tirreno\Utils\Assets\ContextClass::getContextObj();
+        $this->extraModel   = \EndoGuard\\Utils\Assets\ContextClass::getContextObj();
 
-        $this->suspiciousWordsUrl       = \Tirreno\Utils\Assets\Lists\Url::getList();
-        $this->suspiciousWordsUserAgent = \Tirreno\Utils\Assets\Lists\UserAgent::getList();
-        $this->suspiciousWordsEmail     = \Tirreno\Utils\Assets\Lists\Email::getList();
+        $this->suspiciousWordsUrl       = \EndoGuard\\Utils\Assets\Lists\Url::getList();
+        $this->suspiciousWordsUserAgent = \EndoGuard\\Utils\Assets\Lists\UserAgent::getList();
+        $this->suspiciousWordsEmail     = \EndoGuard\\Utils\Assets\Lists\Email::getList();
     }
 
     public function getContextByAccountIds(array $accountIds, int $apiKey): array {
@@ -74,8 +74,8 @@ class Data extends \Tirreno\Controllers\Base {
         $extraDetails       = $this->extraModel?->getContext($accountIds, $apiKey) ?? [];
 
         $timezoneName       = $this->keyModel->getTimezoneByKeyId($apiKey);
-        $utcTime            = new \DateTime('now', \Tirreno\Utils\Timezones::getUtcTimezone());
-        $timezone           = \Tirreno\Utils\Timezones::getTimezone($timezoneName);
+        $utcTime            = new \DateTime('now', \EndoGuard\\Utils\Timezones::getUtcTimezone());
+        $timezone           = \EndoGuard\\Utils\Timezones::getTimezone($timezoneName);
         $offsetInSeconds    = $timezone->getOffset($utcTime);
 
         // get only suspicious sessions
@@ -191,10 +191,10 @@ class Data extends \Tirreno\Controllers\Base {
         $record['le_email_has_vowels']              = preg_match('/[aeoui]/i', $record['le_local_part']) > 0;
         $record['le_email_has_consonants']          = preg_match('/[bcdfghjklmnpqrstvwxyz]/i', $record['le_local_part']) > 0;
 
-        $record['le_with_long_local_part_length']   = $localPartLen > \Tirreno\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_LOCAL_PART_LENGTH;
-        $record['le_with_long_domain_length']       = $domainPartLen > \Tirreno\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_DOMAIN_LENGTH;
+        $record['le_with_long_local_part_length']   = $localPartLen > \EndoGuard\\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_LOCAL_PART_LENGTH;
+        $record['le_with_long_domain_length']       = $domainPartLen > \EndoGuard\\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_DOMAIN_LENGTH;
         $record['le_email_in_blockemails']          = $record['le_blockemails'] ?? false;
-        $record['le_is_invalid']                    = $record['le_exists'] && !\Tirreno\Utils\Conversion::filterEmail($record['le_email']);
+        $record['le_is_invalid']                    = $record['le_exists'] && !\EndoGuard\\Utils\Conversion::filterEmail($record['le_email']);
 
         $record['le_appears_on_alert_list']         = $record['le_alert_list'] ?? false;
 
@@ -230,8 +230,8 @@ class Data extends \Tirreno\Controllers\Base {
         $record['lp_fraud_detected']    = $record['lp_fraud_detected'] ?? false;
         $record['le_fraud_detected']    = $record['le_fraud_detected'] ?? false;
 
-        $record['eup_has_rare_browser'] = (bool) count(array_diff($record['eup_browser_name'], array_keys(\Tirreno\Utils\Constants::get()->RULE_REGULAR_BROWSER_NAMES)));
-        $record['eup_has_rare_os']      = (bool) count(array_diff($record['eup_os_name'], \Tirreno\Utils\Constants::get()->RULE_REGULAR_OS_NAMES));
+        $record['eup_has_rare_browser'] = (bool) count(array_diff($record['eup_browser_name'], array_keys(\EndoGuard\\Utils\Constants::get()->RULE_REGULAR_BROWSER_NAMES)));
+        $record['eup_has_rare_os']      = (bool) count(array_diff($record['eup_os_name'], \EndoGuard\\Utils\Constants::get()->RULE_REGULAR_OS_NAMES));
         $record['eup_device_count']     = count($record['eup_device']);
 
         $record['eup_vulnerable_ua']    = false;
@@ -255,15 +255,15 @@ class Data extends \Tirreno\Controllers\Base {
 
         $eventTypeCount                     = array_count_values($eventTypeFiltered);
 
-        //$accountLoginFailId = \Tirreno\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
-        $accountEmailChangeId               = \Tirreno\Utils\Constants::get()->ACCOUNT_EMAIL_CHANGE_EVENT_TYPE_ID;
-        $accountPwdChangeId                 = \Tirreno\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID;
+        //$accountLoginFailId = \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
+        $accountEmailChangeId               = \EndoGuard\\Utils\Constants::get()->ACCOUNT_EMAIL_CHANGE_EVENT_TYPE_ID;
+        $accountPwdChangeId                 = \EndoGuard\\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID;
 
         //$record['event_failed_login_attempts'] = $eventTypeCount[$accountLoginFailId] ?? 0;
         $record['event_email_changed']      = array_key_exists($accountEmailChangeId, $eventTypeCount);
         $record['event_password_changed']   = array_key_exists($accountPwdChangeId, $eventTypeCount);
 
-        $record['event_http_method_head']   = in_array(\Tirreno\Utils\Constants::get()->EVENT_REQUEST_TYPE_HEAD, $record['event_http_method']);
+        $record['event_http_method_head']   = in_array(\EndoGuard\\Utils\Constants::get()->EVENT_REQUEST_TYPE_HEAD, $record['event_http_method']);
 
         $record['event_empty_referer']      = in_array(true, $record['event_empty_referer'], true);
 
@@ -333,7 +333,7 @@ class Data extends \Tirreno\Controllers\Base {
             $diff = $dt1->diff($dt2)->format('%a');
         }
 
-        return \Tirreno\Utils\Conversion::intVal($diff, 0);
+        return \EndoGuard\\Utils\Conversion::intVal($diff, 0);
     }
 
     private function getUserFullName(array $record): string {

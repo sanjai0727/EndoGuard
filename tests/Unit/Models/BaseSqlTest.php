@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Models;
 
-use Tirreno\Models\BaseSql;
+use EndoGuard\\Models\BaseSql;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Unit tests for Tirreno\Models\BaseSql.
+ * Unit tests for EndoGuard\\Models\BaseSql.
  *
  * Covered (unit-testable without refactor):
  * - getArrayPlaceholders():

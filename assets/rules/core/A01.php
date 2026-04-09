@@ -1,16 +1,16 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class A01 extends \Tirreno\Assets\Rule {
+class A01 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'Multiple login fail';
     public const DESCRIPTION = 'User failed to login multiple times in a short term, which can be a sign of account takeover.';
     public const ATTRIBUTES = [];
 
     protected function prepareParams(array $params): array {
-        $maximumAttempts = \Tirreno\Utils\Constants::get()->RULE_MAXIMUM_NUMBER_OF_LOGIN_ATTEMPTS;
-        $loginFail = \Tirreno\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
-        $windowSize = \Tirreno\Utils\Constants::get()->RULE_LOGIN_ATTEMPTS_WINDOW;
+        $maximumAttempts = \EndoGuard\\Utils\Constants::get()->RULE_MAXIMUM_NUMBER_OF_LOGIN_ATTEMPTS;
+        $loginFail = \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
+        $windowSize = \EndoGuard\\Utils\Constants::get()->RULE_LOGIN_ATTEMPTS_WINDOW;
         $tooManyLoginAttempts = false;
         $cnt = 0;
         $start = 0;

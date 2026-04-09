@@ -1,37 +1,37 @@
 <?php
 
 /**
- * tirreno ~ open-source security framework
- * Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * EndoGuard ~ Embedded & Internal security framework
+ * Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Tirreno Technologies Sàrl (https://www.tirreno.com)
+ * @copyright     Copyright (c) EndoGuard Security Sàrl (https://www.endoguard.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.tirreno.com Tirreno(tm)
+ * @link          https://www.endoguard.io endoguard(tm)
  */
 
 declare(strict_types=1);
 
-namespace Tirreno\Controllers\Admin\Base;
+namespace EndoGuard\\Controllers\Admin\Base;
 
-abstract class Navigation extends \Tirreno\Controllers\Base {
-    protected \Tirreno\Views\Base $response;
+abstract class Navigation extends \EndoGuard\\Controllers\Base {
+    protected \EndoGuard\\Views\Base $response;
 
     protected ?object $page = null;
     protected ?object $controller = null;
-    protected ?\Tirreno\Entities\Operator $operator = null;
+    protected ?\EndoGuard\\Entities\Operator $operator = null;
     protected ?int $apiKey = null;
     protected ?int $id = null;
 
     public function __construct() {
         parent::__construct();
 
-        $this->operator = \Tirreno\Utils\Routes::getCurrentRequestOperator();
-        $this->apiKey = \Tirreno\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $this->id = \Tirreno\Utils\Conversion::getIntRequestParam('id', true);
+        $this->operator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $this->apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $this->id = \EndoGuard\\Utils\Conversion::getIntRequestParam('id', true);
     }
 
     public function showIndexPage(): void {
@@ -39,21 +39,21 @@ abstract class Navigation extends \Tirreno\Controllers\Base {
             return;
         }
 
-        \Tirreno\Utils\Routes::redirectIfUnlogged();
+        \EndoGuard\\Utils\Routes::redirectIfUnlogged();
 
-        $this->response = new \Tirreno\Views\Frontend();
+        $this->response = new \EndoGuard\\Views\Frontend();
         $this->response->data = $this->page->getPageParams();
     }
 
     public function beforeroute(): void {
         if ($this->operator) {
-            \Tirreno\Utils\Updates::syncUpdates();
+            \EndoGuard\\Utils\Updates::syncUpdates();
 
             if (!$this->apiKey) {
                 $this->f3->reroute('/logout');
             }
 
-            $messages = \Tirreno\Utils\SystemMessages::get($this->apiKey);
+            $messages = \EndoGuard\\Utils\SystemMessages::get($this->apiKey);
 
             $this->f3->set('SYSTEM_MESSAGES', $messages);
 
@@ -79,7 +79,7 @@ abstract class Navigation extends \Tirreno\Controllers\Base {
 
         $isPageAllowed = in_array($route, $allowedPages);
 
-        return !$isPageAllowed && ($message['id'] === \Tirreno\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_YET);
+        return !$isPageAllowed && ($message['id'] === \EndoGuard\\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_YET);
     }
 
     public function isPostRequest(): bool {
@@ -99,9 +99,9 @@ abstract class Navigation extends \Tirreno\Controllers\Base {
             $hive = $this->f3->hive();
             $path = $hive['PATH'];
 
-            $log = \Tirreno\Utils\Database::getDb()->log();
+            $log = \EndoGuard\\Utils\Database::getDb()->log();
             if ($log) {
-                \Tirreno\Utils\Logger::logSql($path, $log);
+                \EndoGuard\\Utils\Logger::logSql($path, $log);
             }
         }
 

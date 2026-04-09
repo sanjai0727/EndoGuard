@@ -1,8 +1,8 @@
 <?php
 
-namespace Tirreno\Rules\Core;
+namespace EndoGuard\\Rules\Core;
 
-class I08 extends \Tirreno\Assets\Rule {
+class I08 extends \EndoGuard\\Assets\Rule {
     public const NAME = 'IP belongs to Starlink';
     public const DESCRIPTION = 'IP address belongs to SpaceX satellite network.';
     public const ATTRIBUTES = ['ip'];
