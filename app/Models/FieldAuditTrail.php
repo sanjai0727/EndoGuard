@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class FieldAuditTrail extends \EndoGuard\\Models\BaseSql {
+class FieldAuditTrail extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_field_audit_trail';
 
     public function getById(int $trailId, int $apiKey): array {
@@ -112,7 +112,7 @@ class FieldAuditTrail extends \EndoGuard\\Models\BaseSql {
         $params = [
             ':api_key'  => $apiKey,
             ':weeks'    => $weeks,
-            ':week_sec' => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_WEEK,
+            ':week_sec' => \EndoGuard\Utils\Constants::get()->SECONDS_IN_WEEK,
         ];
 
         $query = (

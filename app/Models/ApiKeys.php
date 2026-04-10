@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class ApiKeys extends \EndoGuard\\Models\BaseSql {
+class ApiKeys extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_api';
 
     public function insertRecord(string $skipEnrichingAttr, bool $skipBlacklistSync, int $operatorId): int {
@@ -29,7 +29,7 @@ class ApiKeys extends \EndoGuard\\Models\BaseSql {
             ':operator_id'          => $operatorId,
             ':skip_enriching_attr'  => $skipEnrichingAttr,
             ':skip_blacklist_sync'  => $skipBlacklistSync,
-            ':key'                  => \EndoGuard\\Utils\Access::saltHash($uuid),
+            ':key'                  => \EndoGuard\Utils\Access::saltHash($uuid),
         ];
 
         $query = (
@@ -85,7 +85,7 @@ class ApiKeys extends \EndoGuard\\Models\BaseSql {
         $params = [
             ':operator_id'  => $operatorId,
             ':key_id'       => $keyId,
-            ':key'          => \EndoGuard\\Utils\Access::saltHash($uuid),
+            ':key'          => \EndoGuard\Utils\Access::saltHash($uuid),
         ];
 
         $query = (
@@ -207,7 +207,7 @@ class ApiKeys extends \EndoGuard\\Models\BaseSql {
 
         $results = json_decode($results[0]['skip_enriching_attributes']);
 
-        if (!\EndoGuard\\Utils\Variables::getEmailPhoneAllowed()) {
+        if (!\EndoGuard\Utils\Variables::getEmailPhoneAllowed()) {
             if (!in_array('email', $results, true)) {
                 $results[] = 'email';
             }
@@ -224,7 +224,7 @@ class ApiKeys extends \EndoGuard\\Models\BaseSql {
 
     public function enrichableAttributes(int $keyId): array {
         $skipAttributes = $this->getSkipEnrichingAttributes($keyId);
-        $attributes = \EndoGuard\\Utils\Constants::get()->ENRICHING_ATTRIBUTES;
+        $attributes = \EndoGuard\Utils\Constants::get()->ENRICHING_ATTRIBUTES;
         $attributes = array_diff_key($attributes, array_flip($skipAttributes));
 
         return $attributes;

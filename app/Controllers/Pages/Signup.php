@@ -15,28 +15,28 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Pages;
+namespace EndoGuard\Controllers\Pages;
 
 class Signup extends Base {
     public ?string $page = 'Signup';
 
     public function getPageParams(): array {
-        $model = new \EndoGuard\\Models\Operator();
+        $model = new \EndoGuard\Models\Operator();
         if (count($model->getAll())) {
             $this->f3->error(404);
         }
 
         $pageParams = [
             'HTML_FILE'     => 'signup.html',
-            'TIMEZONES'     => \EndoGuard\\Utils\Timezones::timezonesList(),
-            'RULES_PRESETS' => \EndoGuard\\Utils\Constants::get()->RULES_PRESETS,
+            'TIMEZONES'     => \EndoGuard\Utils\Timezones::timezonesList(),
+            'RULES_PRESETS' => \EndoGuard\Utils\Constants::get()->RULES_PRESETS,
         ];
 
         if ($this->isPostRequest()) {
-            \EndoGuard\\Utils\Updates::syncUpdates();
+            \EndoGuard\Utils\Updates::syncUpdates();
 
             $params = $this->extractRequestParams(['token', 'email', 'password', 'timezone', 'rules-preset']);
-            $errorCode = \EndoGuard\\Utils\Validators::validateSignup($params);
+            $errorCode = \EndoGuard\Utils\Validators::validateSignup($params);
 
             $pageParams['ERROR_CODE'] = $errorCode;
 
@@ -46,10 +46,10 @@ class Signup extends Base {
                 $operatorId = $this->addUser($params);
 
                 $apiKey = $this->addDefaultApiKey($operatorId);
-                (new \EndoGuard\\Controllers\Admin\Rules\Data())->applyRulesPresetById($params['rules-preset'], $apiKey);
+                (new \EndoGuard\Controllers\Admin\Rules\Data())->applyRulesPresetById($params['rules-preset'], $apiKey);
 
                 //$this->sendActivationEmail($operatorId);
-                $pageParams['SUCCESS_CODE'] = \EndoGuard\\Utils\ErrorCodes::ACCOUNT_CREATED;
+                $pageParams['SUCCESS_CODE'] = \EndoGuard\Utils\ErrorCodes::ACCOUNT_CREATED;
             }
         }
 
@@ -57,21 +57,21 @@ class Signup extends Base {
     }
 
     private function addDefaultApiKey(int $operatorId): int {
-        $skipEnrichingAttr = json_encode(array_keys(\EndoGuard\\Utils\Constants::get()->ENRICHING_ATTRIBUTES));
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $skipEnrichingAttr = json_encode(array_keys(\EndoGuard\Utils\Constants::get()->ENRICHING_ATTRIBUTES));
+        $model = new \EndoGuard\Models\ApiKeys();
 
         return $model->insertRecord($skipEnrichingAttr, true, $operatorId);
     }
 
     protected function addUser(array $data): int {
-        $model = new \EndoGuard\\Models\Operator();
+        $model = new \EndoGuard\Models\Operator();
 
         return $model->insertRecord($data['password'], $data['email'], $data['timezone']);
     }
 
     /*private function sendActivationEmail(int $operatorId): void {
-        $operator = \EndoGuard\\Entities\Operator::getById($operatorId);
-        $url = \EndoGuard\\Utils\Variables::getHostWithProtocolAndBase();
+        $operator = \EndoGuard\Entities\Operator::getById($operatorId);
+        $url = \EndoGuard\Utils\Variables::getHostWithProtocolAndBase();
 
         $toName = $operator->firstname;
         $toAddress = $operator->email;
@@ -83,6 +83,6 @@ class Signup extends Base {
         $activationUrl = sprintf('%s/account-activation/%s', $url, $activationKey);
         $message = sprintf($message, $activationUrl);
 
-        \EndoGuard\\Utils\Mailer::send($toName, $toAddress, $subject, $message);
+        \EndoGuard\Utils\Mailer::send($toName, $toAddress, $subject, $message);
     }*/
 }

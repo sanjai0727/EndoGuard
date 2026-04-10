@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Entities;
+namespace EndoGuard\Entities;
 
 class Operator {
     public int $id;
@@ -65,7 +65,7 @@ class Operator {
     }
 
     public static function getById(int $operatorId): ?self {
-        $model = new \EndoGuard\\Models\Operator();
+        $model = new \EndoGuard\Models\Operator();
         $operator = $model->getOperatorById($operatorId);
 
         if (!$operator) {

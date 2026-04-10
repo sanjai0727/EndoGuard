@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Pages;
+namespace EndoGuard\Controllers\Pages;
 
 class Error extends Base {
     public function getPageParams(array $errorData): array {

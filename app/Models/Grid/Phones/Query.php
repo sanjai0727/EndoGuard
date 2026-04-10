@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Phones;
+namespace EndoGuard\Models\Grid\Phones;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event_phone.lastseen DESC';
     protected string $dateRangeField = 'event_phone.lastseen';
 
@@ -81,7 +81,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applySearch(string &$query, array &$queryParams): void {
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
         $searchConditions = $this->injectIdQuery('event_phone.id', $queryParams);
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
@@ -94,7 +94,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
             );
 
             $queryParams[':search_value'] = '%' . $search['value'] . '%';
-            $queryParams[':offset'] = strval(\EndoGuard\\Utils\Timezones::getCurrentOperatorOffset());
+            $queryParams[':offset'] = strval(\EndoGuard\Utils\Timezones::getCurrentOperatorOffset());
         }
 
         //Add search and ids into request

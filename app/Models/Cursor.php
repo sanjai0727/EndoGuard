@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Cursor extends \EndoGuard\\Models\BaseSql {
+class Cursor extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'queue_new_events_cursor';
 
     public function getCursor(): int {

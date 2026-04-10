@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
 class User extends BaseEventsCount {
     public function getCounts(int $apiKey): array {

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
-class DomainFound extends \EndoGuard\\Models\Enrichment\Base {
+class DomainFound extends \EndoGuard\Models\Enrichment\Base {
     protected string $domain;
     protected bool $blockdomains;
     protected bool $disposable_domains;
@@ -62,7 +62,7 @@ class DomainFound extends \EndoGuard\\Models\Enrichment\Base {
 
         $dates = [$this->creation_date, $this->expiration_date, $this->closest_snapshot, $this->discovery_date];
 
-        if (($this->ip && !\EndoGuard\\Utils\Conversion::filterIp($this->ip)) || !$this->validateDates($dates)) {
+        if (($this->ip && !\EndoGuard\Utils\Conversion::filterIp($this->ip)) || !$this->validateDates($dates)) {
             throw new \Exception('Validation failed');
         }
     }
@@ -92,7 +92,7 @@ class DomainFound extends \EndoGuard\\Models\Enrichment\Base {
                 event_domain.key = :key
         ");
 
-        $model = new \EndoGuard\\Models\Domain();
+        $model = new \EndoGuard\Models\Domain();
         $model->execQuery($query, $params);
     }
 }

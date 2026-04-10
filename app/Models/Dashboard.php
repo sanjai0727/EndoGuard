@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Dashboard extends \EndoGuard\\Models\BaseSql {
+class Dashboard extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_account';
 
     public function getTotalBlockedUsers(?array $dateRange, int $apiKey): int {

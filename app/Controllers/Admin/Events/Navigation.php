@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Events;
+namespace EndoGuard\Controllers\Admin\Events;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 

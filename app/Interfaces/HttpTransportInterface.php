@@ -15,10 +15,10 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Interfaces;
+namespace EndoGuard\Interfaces;
 
 interface HttpTransportInterface {
     public function isAvailable(): bool;
 
-    public function request(\EndoGuard\\Entities\HttpRequest $request): \EndoGuard\\Entities\HttpResponse;
+    public function request(\EndoGuard\Entities\HttpRequest $request): \EndoGuard\Entities\HttpResponse;
 }

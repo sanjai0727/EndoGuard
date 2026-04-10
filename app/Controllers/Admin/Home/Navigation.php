@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Home;
+namespace EndoGuard\Controllers\Admin\Home;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,27 +26,27 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function showIndexPage(): void {
-        \EndoGuard\\Utils\Routes::redirectIfUnlogged('/login');
+        \EndoGuard\Utils\Routes::redirectIfUnlogged('/login');
 
         parent::showIndexPage();
     }
 
     public function getDashboardStat(): array {
-        $mode = \EndoGuard\\Utils\Conversion::getStringRequestParam('mode');
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $mode = \EndoGuard\Utils\Conversion::getStringRequestParam('mode');
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
 
         return $this->apiKey ? $this->controller->getStat($mode, $dateRange, $this->apiKey) : [];
     }
 
     public function getTopTen(): array {
-        $mode = \EndoGuard\\Utils\Conversion::getStringRequestParam('mode');
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $mode = \EndoGuard\Utils\Conversion::getStringRequestParam('mode');
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
 
         return $this->apiKey ? $this->controller->getTopTen($mode, $dateRange, $this->apiKey) : [];
     }
 
     public function getChart(): array {
-        $mode = \EndoGuard\\Utils\Conversion::getStringRequestParam('mode');
+        $mode = \EndoGuard\Utils\Conversion::getStringRequestParam('mode');
 
         return $this->apiKey ? $this->controller->getChart($mode, $this->apiKey) : [];
     }

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\UserDetails;
+namespace EndoGuard\Models\UserDetails;
 
-class Behaviour extends \EndoGuard\\Models\BaseSql {
+class Behaviour extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getDayDetails(int $userId, array $dateRange, int $apiKey): array {
@@ -27,11 +27,11 @@ class Behaviour extends \EndoGuard\\Models\BaseSql {
             ':start_ts'         => $dateRange['startDate'],
             ':end_ts'           => $dateRange['endDate'],
             ':offset'           => $dateRange['offset'],
-            ':failed_login'     => \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID,
-            ':success_login'    => \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_EVENT_TYPE_ID,
-            ':password_reset'   => \EndoGuard\\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID,
-            ':seconds_day'      => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY,
-            ':night_time_end'   => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_HOUR * 5,
+            ':failed_login'     => \EndoGuard\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID,
+            ':success_login'    => \EndoGuard\Utils\Constants::get()->ACCOUNT_LOGIN_EVENT_TYPE_ID,
+            ':password_reset'   => \EndoGuard\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID,
+            ':seconds_day'      => \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY,
+            ':night_time_end'   => \EndoGuard\Utils\Constants::get()->SECONDS_IN_HOUR * 5,
         ];
 
         $query = (

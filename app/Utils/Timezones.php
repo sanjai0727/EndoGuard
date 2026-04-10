@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Timezones {
     public const FORMAT = 'Y-m-d H:i:s';
@@ -49,7 +49,7 @@ class Timezones {
     }
 
     public static function localizeForActiveOperator(string &$time, bool $useMilliseconds = false): void {
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $operatorTimezone = self::getTimezone($currentOperator?->timezone);
         $utc = self::getUtcTimezone();
 
@@ -57,7 +57,7 @@ class Timezones {
     }
 
     public static function localizeTimestampsForActiveOperator(array $keys, array &$data): void {
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $operatorTimezone = self::getTimezone($currentOperator?->timezone);
         $utc = self::getUtcTimezone();
 
@@ -88,7 +88,7 @@ class Timezones {
     }
 
     public static function localizeUnixTimestamps(array &$timestamps): void {
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $operatorTimezone = self::getTimezone($currentOperator?->timezone);
         $utcTime = new \DateTime('now', self::getUtcTimezone());
         $offsetInSeconds = $operatorTimezone->getOffset($utcTime);
@@ -98,7 +98,7 @@ class Timezones {
         }
     }
 
-    public static function getOperatorOffset(?\EndoGuard\\Entities\Operator $operator): int {
+    public static function getOperatorOffset(?\EndoGuard\Entities\Operator $operator): int {
         $operatorTimezone = self::getTimezone($operator?->timezone);
         $utcTime = new \DateTime('now', self::getUtcTimezone());
 
@@ -106,7 +106,7 @@ class Timezones {
     }
 
     public static function getCurrentOperatorOffset(): int {
-        return self::getOperatorOffset(\EndoGuard\\Utils\Routes::getCurrentRequestOperator());
+        return self::getOperatorOffset(\EndoGuard\Utils\Routes::getCurrentRequestOperator());
     }
 
     public static function getServerOffset(): int {
@@ -123,7 +123,7 @@ class Timezones {
 
     public static function getLastNDaysRange(int $days = 1, int $offset = 0): array {
         $now = time();
-        $daySeconds = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY;
+        $daySeconds = \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY;
 
         $date = new \DateTime();
         $date->setTimestamp($now - ($daySeconds * $days) - (($now + $offset) % $daySeconds));
@@ -143,8 +143,8 @@ class Timezones {
         $date = new \DateTime();
         $date->setTimestamp($now + $offset);
         $date->setTime(0, 0, 0);
-        $dow = \EndoGuard\\Utils\Conversion::intValCheckEmpty($date->format('N'), 1);
-        $day = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY;
+        $dow = \EndoGuard\Utils\Conversion::intValCheckEmpty($date->format('N'), 1);
+        $day = \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY;
 
         $weekStart = $date->getTimestamp() - $offset - ($dow - 1) * $day;
 
@@ -178,8 +178,8 @@ class Timezones {
 
         $date->setTime(0, 0, 0);
 
-        $week = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_WEEK;
-        $day = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY;
+        $week = \EndoGuard\Utils\Constants::get()->SECONDS_IN_WEEK;
+        $day = \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY;
 
         return [
             'endDate'   => date(self::FORMAT, $date->getTimestamp() - $offset - $week + $day),
@@ -194,8 +194,8 @@ class Timezones {
         $date = new \DateTime();
         $date->setTimestamp($now + $offset);
         $date->setTime(0, 0, 0);
-        $dow = \EndoGuard\\Utils\Conversion::intValCheckEmpty($date->format('N'), 0);
-        $day = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY;
+        $dow = \EndoGuard\Utils\Conversion::intValCheckEmpty($date->format('N'), 0);
+        $day = \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY;
 
         return [
             'endDate'   => date(self::FORMAT, $now),
@@ -206,7 +206,7 @@ class Timezones {
 
     public static function timezonesList(): array {
         $utcTime = new \DateTime('now', self::getUtcTimezone());
-        $timezones = \EndoGuard\\Utils\Variables::getAvailableTimezones();
+        $timezones = \EndoGuard\Utils\Variables::getAvailableTimezones();
 
         foreach ($timezones as $key => $value) {
             $offset = (new \DateTimeZone($key))->getOffset($utcTime);

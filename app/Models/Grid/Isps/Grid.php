@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Isps;
+namespace EndoGuard\Models\Grid\Isps;
 
-class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
+class Grid extends \EndoGuard\Models\Grid\Base\Grid {
     public function __construct(int $apiKey) {
         parent::__construct();
 

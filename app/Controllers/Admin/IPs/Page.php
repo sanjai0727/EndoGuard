@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\IPs;
+namespace EndoGuard\Controllers\Admin\IPs;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminIps';
 
     public function getPageParams(): array {
@@ -31,7 +31,7 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
             'LOAD_AUTOCOMPLETE'     => true,
             'HTML_FILE'             => 'admin/ips.html',
             'JS'                    => 'admin_ips.js',
-            'IP_TYPES'              => \EndoGuard\\Utils\Constants::get()->IP_TYPES,
+            'IP_TYPES'              => \EndoGuard\Utils\Constants::get()->IP_TYPES,
         ];
 
         return parent::applyPageParams($pageParams);

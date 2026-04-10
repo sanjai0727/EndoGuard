@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Http;
+namespace EndoGuard\Utils\Http;
 
-final class StreamTransport implements \EndoGuard\\Interfaces\HttpTransportInterface {
+final class StreamTransport implements \EndoGuard\Interfaces\HttpTransportInterface {
     public function isAvailable(): bool {
         return function_exists('file_get_contents');
     }
 
-    public function request(\EndoGuard\\Entities\HttpRequest $request): \EndoGuard\\Entities\HttpResponse {
+    public function request(\EndoGuard\Entities\HttpRequest $request): \EndoGuard\Entities\HttpResponse {
         $options = [
             'http' => [
                 'method' => $request->method(),
@@ -52,16 +52,16 @@ final class StreamTransport implements \EndoGuard\\Interfaces\HttpTransportInter
         $code = $this->extractHttpStatus($respHeaders);
 
         if ($raw === null) {
-            $result = \EndoGuard\\Entities\HttpResponse::failure($code, 'stream_request_failed', $respHeaders);
+            $result = \EndoGuard\Entities\HttpResponse::failure($code, 'stream_request_failed', $respHeaders);
 
             return $result;
         }
 
-        return \EndoGuard\\Entities\HttpResponse::success($code, $raw, $respHeaders);
+        return \EndoGuard\Entities\HttpResponse::success($code, $raw, $respHeaders);
     }
 
     private function safeFileGetContents(string $url, ?array $options): array {
-        set_error_handler([\EndoGuard\\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
+        set_error_handler([\EndoGuard\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
 
         try {
             $context = null;

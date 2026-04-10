@@ -41,21 +41,21 @@ class Navigation extends Base {
     }
 
     public function visitSignupPage(): void {
-        \EndoGuard\\Utils\Routes::redirectIfLogged();
+        \EndoGuard\Utils\Routes::redirectIfLogged();
 
         $pageController = new \EndoGuard\Controllers\Pages\Signup();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitLoginPage(): void {
-        \EndoGuard\\Utils\Routes::redirectIfLogged();
+        \EndoGuard\Utils\Routes::redirectIfLogged();
 
         $pageController = new \EndoGuard\Controllers\Pages\Login();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitForgotPasswordPage(): void {
-        \EndoGuard\\Utils\Routes::redirectIfLogged();
+        \EndoGuard\Utils\Routes::redirectIfLogged();
 
         if (!\EndoGuard\Utils\Variables::getForgotPasswordAllowed()) {
             $this->f3->reroute('/');
@@ -66,7 +66,7 @@ class Navigation extends Base {
     }
 
     public function visitPasswordRecoveringPage(): void {
-        \EndoGuard\\Utils\Routes::redirectIfLogged();
+        \EndoGuard\Utils\Routes::redirectIfLogged();
 
         $pageController = new \EndoGuard\Controllers\Pages\PasswordRecovering();
         $this->response->data = $pageController->getPageParams();

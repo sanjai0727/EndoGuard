@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\FieldAudits;
+namespace EndoGuard\Controllers\Admin\FieldAudits;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminFieldAudits';
 
     public function getPageParams(): array {

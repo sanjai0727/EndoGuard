@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Logbook;
+namespace EndoGuard\Models\Grid\Logbook;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event_logbook.error_type DESC, event_logbook.id DESC';
     protected string $dateRangeField = 'event_logbook.started';
 
@@ -84,12 +84,12 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         //Add dates into request
         $this->applyDateRange($query, $queryParams);
 
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
         $searchConditions = '';
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
             $extra = '';
-            if (\EndoGuard\\Utils\Conversion::filterIp($search['value'])) {
+            if (\EndoGuard\Utils\Conversion::filterIp($search['value'])) {
                 $extra = ' event_logbook.ip = :search_ip_value OR ';
                 $queryParams[':search_ip_value'] = $search['value'];
             }
@@ -114,8 +114,8 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
 
     protected function applyDateRange(string &$query, array &$queryParams): void {
         // apply server offset to utc requested date range because dateRangeField is in server time zone
-        $serverOffset = \EndoGuard\\Utils\Timezones::getServerOffset();
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest($serverOffset);
+        $serverOffset = \EndoGuard\Utils\Timezones::getServerOffset();
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest($serverOffset);
 
         if ($dateRange) {
             $searchConditions = (

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Users;
+namespace EndoGuard\Models\Grid\Users;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event_account.id DESC';
     protected string $dateRangeField = 'event_account.lastseen';
 
@@ -100,7 +100,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     private function applySearch(string &$query, array &$queryParams): void {
         $this->applyDateRange($query, $queryParams);
 
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
         $searchConditions = $this->injectIdQuery('event_account.id', $queryParams);
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
@@ -120,7 +120,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
             );
 
             $queryParams[':search_value'] = '%' . $search['value'] . '%';
-            $queryParams[':offset'] = strval(\EndoGuard\\Utils\Timezones::getCurrentOperatorOffset());
+            $queryParams[':offset'] = strval(\EndoGuard\Utils\Timezones::getCurrentOperatorOffset());
         }
 
         //Add search and ids into request
@@ -128,7 +128,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applyRules(string &$query, array &$queryParams): void {
-        $ruleUids = \EndoGuard\\Utils\Conversion::getArrayRequestParam('ruleUids');
+        $ruleUids = \EndoGuard\Utils\Conversion::getArrayRequestParam('ruleUids');
         if (!$ruleUids) {
             return;
         }
@@ -143,7 +143,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applyScore(string &$query, array &$queryParams): void {
-        $scoresRanges = \EndoGuard\\Utils\Conversion::getArrayRequestParam('scoresRange');
+        $scoresRanges = \EndoGuard\Utils\Conversion::getArrayRequestParam('scoresRange');
         if (!$scoresRanges) {
             return;
         }
@@ -151,7 +151,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         $clauses = [];
         foreach ($scoresRanges as $key => $scoreBase) {
             $clauses[] = sprintf('event_account.score >= :score_base_%s AND event_account.score <= :score_base_%s + 10', $key, $key);
-            $queryParams[':score_base_' . $key] = \EndoGuard\\Utils\Conversion::intValCheckEmpty($scoreBase, 0);
+            $queryParams[':score_base_' . $key] = \EndoGuard\Utils\Conversion::intValCheckEmpty($scoreBase, 0);
         }
 
         $query .= ' AND (' . implode(' OR ', $clauses) . ')';

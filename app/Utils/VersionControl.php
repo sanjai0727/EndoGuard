@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class VersionControl {
     public const VERSION_MAJOR = 0;

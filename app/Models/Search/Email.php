@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Search;
+namespace EndoGuard\Models\Search;
 
-class Email extends \EndoGuard\\Models\BaseSql {
+class Email extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_email';
 
     public function searchByEmail(string $query, int $apiKey): array {

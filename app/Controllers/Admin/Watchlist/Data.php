@@ -15,17 +15,17 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Watchlist;
+namespace EndoGuard\Controllers\Admin\Watchlist;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getImportantUsers(int $apiKey): array {
-        $model = new \EndoGuard\\Models\Watchlist();
+        $model = new \EndoGuard\Models\Watchlist();
 
         return $model->getUsersByKey($apiKey);
     }
 
     public function removeFromWatchlist(int $accountId, int $apiKey): void {
-        $model = new \EndoGuard\\Models\Watchlist();
+        $model = new \EndoGuard\Models\Watchlist();
         $model->remove($accountId, $apiKey);
     }
 }

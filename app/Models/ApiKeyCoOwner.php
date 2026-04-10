@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class ApiKeyCoOwner extends \EndoGuard\\Models\BaseSql {
+class ApiKeyCoOwner extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_api_co_owners';
 
     public function getCoOwnershipKeyId(int $operatorId): ?int {

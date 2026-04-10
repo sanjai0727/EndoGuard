@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Logger {
     public static function log(?string $title, string|array $message): void {

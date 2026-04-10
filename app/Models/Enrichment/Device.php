@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
-class Device extends \EndoGuard\\Models\Enrichment\Base {
+class Device extends \EndoGuard\Models\Enrichment\Base {
     protected string $ua;
     protected ?string $device;
     protected ?string $browser_name;
@@ -65,7 +65,7 @@ class Device extends \EndoGuard\\Models\Enrichment\Base {
                 event_ua_parsed.key = :key
         ");
 
-        $model = new \EndoGuard\\Models\Device();
+        $model = new \EndoGuard\Models\Device();
         $model->execQuery($query, $params);
     }
 }

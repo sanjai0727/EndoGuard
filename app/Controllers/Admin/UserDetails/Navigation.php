@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\UserDetails;
+namespace EndoGuard\Controllers\Admin\UserDetails;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,7 +26,7 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getUserDetails(): array {
-        $userId = \EndoGuard\\Utils\Conversion::getIntRequestParam('userId');
+        $userId = \EndoGuard\Utils\Conversion::getIntRequestParam('userId');
         $hasAccess = $this->controller->checkIfOperatorHasAccess($userId, $this->apiKey);
 
         if (!$hasAccess) {

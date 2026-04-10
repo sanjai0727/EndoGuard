@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\TopTen;
+namespace EndoGuard\Models\TopTen;
 
-class Base extends \EndoGuard\\Models\BaseSql {
+class Base extends \EndoGuard\Models\BaseSql {
     public function getQueryParams(int $apiKey, ?array $dateRange): array {
         $queryParams = [':api_key' => $apiKey];
 

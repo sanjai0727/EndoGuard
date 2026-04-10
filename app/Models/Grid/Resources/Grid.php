@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Resources;
+namespace EndoGuard\Models\Grid\Resources;
 
-class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
+class Grid extends \EndoGuard\Models\Grid\Base\Grid {
     public function __construct(int $apiKey) {
         parent::__construct();
 
@@ -48,7 +48,7 @@ class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
 
     private function extendWithSuspiciousUrl(array $result): array {
         if (count($result)) {
-            $suspiciousUrlList = \EndoGuard\\Utils\Assets\Lists\Url::getList();
+            $suspiciousUrlList = \EndoGuard\Utils\Assets\Lists\Url::getList();
             foreach ($result as &$record) {
                 $record['suspicious'] = $this->isUrlSuspicious($suspiciousUrlList, $record['url']);
             }

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Email extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\FraudFlagUpdaterInterface {
+class Email extends \EndoGuard\Models\BaseSql implements \EndoGuard\Interfaces\FraudFlagUpdaterInterface {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getEmailDetails(int $id, int $apiKey): array {
@@ -71,7 +71,7 @@ class Email extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces
 
         $results = $this->execQuery($query, $params);
 
-        \EndoGuard\\Utils\Enrichment::calculateEmailReputation($results);
+        \EndoGuard\Utils\Enrichment::calculateEmailReputation($results);
 
         return $results[0] ?? [];
     }

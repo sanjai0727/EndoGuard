@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Base;
+namespace EndoGuard\Controllers\Admin\Base;
 
-abstract class Page extends \EndoGuard\\Controllers\Pages\Base {
+abstract class Page extends \EndoGuard\Controllers\Pages\Base {
     public ?string $page = null;
 
     abstract public function getPageParams(): array;

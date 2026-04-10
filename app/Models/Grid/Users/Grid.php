@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Users;
+namespace EndoGuard\Models\Grid\Users;
 
-class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
+class Grid extends \EndoGuard\Models\Grid\Base\Grid {
     public function __construct(int $apiKey) {
         parent::__construct();
 
@@ -75,6 +75,6 @@ class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
     protected function convertTimeToUserTimezone(array &$result): void {
         $fields = ['time', 'lastseen', 'latest_decision', 'created', 'score_updated_at'];
 
-        \EndoGuard\\Utils\Timezones::translateTimezones($result, $fields);
+        \EndoGuard\Utils\Timezones::translateTimezones($result, $fields);
     }
 }

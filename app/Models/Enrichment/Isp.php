@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
-class Isp extends \EndoGuard\\Models\Enrichment\Base {
+class Isp extends \EndoGuard\Models\Enrichment\Base {
     protected ?int $asn;
     protected ?string $name;
     protected ?string $description;
@@ -55,7 +55,7 @@ class Isp extends \EndoGuard\\Models\Enrichment\Base {
                 event_isp.key = :key
         ");
 
-        $model = new \EndoGuard\\Models\Isp();
+        $model = new \EndoGuard\Models\Isp();
         $model->execQuery($query, $params);
     }
 }

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Domains;
+namespace EndoGuard\Controllers\Admin\Domains;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminDomains';
 
     public function getPageParams(): array {

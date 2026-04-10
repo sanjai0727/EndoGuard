@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Views;
+namespace EndoGuard\Views;
 
 abstract class Base {
     public \Base $f3;

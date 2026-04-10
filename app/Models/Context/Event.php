@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Context;
+namespace EndoGuard\Models\Context;
 
 class Event extends Base {
     protected ?bool $uniqueValues = false;
@@ -23,7 +23,7 @@ class Event extends Base {
     protected function getDetails(array $accountIds, int $apiKey): array {
         [$params, $placeHolders] = $this->getRequestParams($accountIds, $apiKey);
 
-        $params[':context_limit'] = \EndoGuard\\Utils\Constants::get()->RULE_EVENT_CONTEXT_LIMIT;
+        $params[':context_limit'] = \EndoGuard\Utils\Constants::get()->RULE_EVENT_CONTEXT_LIMIT;
 
         $query = (
             "WITH ranked_events AS (

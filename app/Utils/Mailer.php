@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Mailer {
     public static function send(?string $toName, string $toAddress, string $subj, string $msg, bool $html = false): array {
@@ -30,7 +30,7 @@ class Mailer {
 
         $toName = $toName ?? '';
         $data = null;
-        if (\EndoGuard\\Utils\Variables::getMailPassword()) {
+        if (\EndoGuard\Utils\Variables::getMailPassword()) {
             $data = self::sendByMailgun($toAddress, $toName, $subj, $msg, $html);
         }
 
@@ -44,11 +44,11 @@ class Mailer {
     private static function sendByMailgun(string $toAddress, string $toName, string $subj, string $msg, bool $html): array {
         $f3 = \Base::instance();
 
-        $fromName = \EndoGuard\\Utils\Constants::get()->MAIL_FROM_NAME;
+        $fromName = \EndoGuard\Utils\Constants::get()->MAIL_FROM_NAME;
         $smtpDebug = $f3->get('SMTP_DEBUG');
-        $fromAddress = \EndoGuard\\Utils\Variables::getMailLogin();
-        $mailLogin = \EndoGuard\\Utils\Variables::getMailLogin();
-        $mailPassword = \EndoGuard\\Utils\Variables::getMailPassword();
+        $fromAddress = \EndoGuard\Utils\Variables::getMailLogin();
+        $mailLogin = \EndoGuard\Utils\Variables::getMailLogin();
+        $mailPassword = \EndoGuard\Utils\Variables::getMailPassword();
 
         if ($fromAddress === null) {
             return [
@@ -63,7 +63,7 @@ class Mailer {
             //Server settings
             $mail->SMTPDebug = $smtpDebug;                                              //Enable verbose debug output
             $mail->isSMTP();                                                            //Send using SMTP
-            $mail->Host = \EndoGuard\\Utils\Constants::get()->MAIL_HOST;                   //Set the SMTP server to send through
+            $mail->Host = \EndoGuard\Utils\Constants::get()->MAIL_HOST;                   //Set the SMTP server to send through
             $mail->SMTPAuth = true;                                                     //Enable SMTP authentication
             $mail->Username = $mailLogin;                                               //SMTP username
             $mail->Password = $mailPassword;                                            //SMTP password
@@ -96,7 +96,7 @@ class Mailer {
     }
 
     private static function sendByNativeMail(string $toAddress, string $toName, string $subj, string $msg): array {
-        $sendMailPath = \EndoGuard\\Utils\Constants::get()->MAIL_SEND_BIN;
+        $sendMailPath = \EndoGuard\Utils\Constants::get()->MAIL_SEND_BIN;
 
         if (!file_exists($sendMailPath) || !is_executable($sendMailPath)) {
             return [
@@ -105,8 +105,8 @@ class Mailer {
             ];
         }
 
-        $fromName = \EndoGuard\\Utils\Constants::get()->MAIL_FROM_NAME;
-        $fromAddress = \EndoGuard\\Utils\Variables::getMailLogin();
+        $fromName = \EndoGuard\Utils\Constants::get()->MAIL_FROM_NAME;
+        $fromAddress = \EndoGuard\Utils\Variables::getMailLogin();
 
         if ($fromAddress === null) {
             return [

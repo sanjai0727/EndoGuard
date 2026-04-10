@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
-class LocalhostIp extends \EndoGuard\\Models\Enrichment\Base {
+class LocalhostIp extends \EndoGuard\Models\Enrichment\Base {
     protected string $ip;           // ipvanyaddress
     protected int $country = 0;
     protected ?int $asn = 0;
@@ -33,7 +33,7 @@ class LocalhostIp extends \EndoGuard\\Models\Enrichment\Base {
     public function init(array $data): void {
         $this->ip = $data['value'];
 
-        if (!\EndoGuard\\Utils\Conversion::filterIp($this->ip) || $data['error'] !== \EndoGuard\\Utils\Constants::get()->ENRICHMENT_IP_IS_BOGON) {
+        if (!\EndoGuard\Utils\Conversion::filterIp($this->ip) || $data['error'] !== \EndoGuard\Utils\Constants::get()->ENRICHMENT_IP_IS_BOGON) {
             throw new \Exception('Validation failed');
         }
     }
@@ -54,13 +54,13 @@ class LocalhostIp extends \EndoGuard\\Models\Enrichment\Base {
 
     // TODO: update countries table counters
     public function updateEntityInDb(int $entityId, int $apiKey): void {
-        $ipModel = new \EndoGuard\\Models\Ip();
+        $ipModel = new \EndoGuard\Models\Ip();
 
         $previousIpData = $ipModel->getFullIpInfoById($entityId, $apiKey);
         $previousIspId = count($previousIpData) ? $previousIpData['ispid'] : null;
         $previousCountryId = count($previousIpData) ? $previousIpData['country_id'] : 0;
         // get current isp id
-        $ispModel = new \EndoGuard\\Models\Isp();
+        $ispModel = new \EndoGuard\Models\Isp();
         $newIspId = $ispModel->getIdByAsn($this->asn, $apiKey);
 
         $newIspData = [
@@ -68,7 +68,7 @@ class LocalhostIp extends \EndoGuard\\Models\Enrichment\Base {
             'name'          => $this->name,
             'description'   => $this->description,
         ];
-        $newIspModel = new \EndoGuard\\Models\Enrichment\Isp();
+        $newIspModel = new \EndoGuard\Models\Enrichment\Isp();
         $newIspModel->init($newIspData);
 
         // new isp is not in db
@@ -81,7 +81,7 @@ class LocalhostIp extends \EndoGuard\\Models\Enrichment\Base {
 
         $this->isp = $newIspId;
 
-        $countryModel = new \EndoGuard\\Models\Country();
+        $countryModel = new \EndoGuard\Models\Country();
         $newCountryId = $this->country;
 
         $countryRecord = $countryModel->getCountryById($newCountryId, $apiKey);
@@ -108,7 +108,7 @@ class LocalhostIp extends \EndoGuard\\Models\Enrichment\Base {
                 event_ip.key = :key
         ");
 
-        $model = new \EndoGuard\\Models\Ip();
+        $model = new \EndoGuard\Models\Ip();
         $model->execQuery($query, $params);
 
         // update totals only after event_ip update!

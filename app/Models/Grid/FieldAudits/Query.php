@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\FieldAudits;
+namespace EndoGuard\Models\Grid\FieldAudits;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event_field_audit.id DESC';
     protected string $dateRangeField = 'event_field_audit.lastseen';
 
@@ -77,7 +77,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         $this->applyDateRange($query, $queryParams);
 
         $searchConditions = $this->injectIdQuery('event_field_audit.id', $queryParams);
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
             $searchConditions .= (

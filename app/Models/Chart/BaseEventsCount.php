@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
-abstract class BaseEventsCount extends \EndoGuard\\Models\BaseSql {
+abstract class BaseEventsCount extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     protected array $alertTypesParams;
@@ -31,9 +31,9 @@ abstract class BaseEventsCount extends \EndoGuard\\Models\BaseSql {
     public function __construct() {
         parent::__construct();
 
-        [$this->alertTypesParams, $this->alertFlatIds]      = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->ALERT_EVENT_TYPES, 'alert');
-        [$this->editTypesParams, $this->editFlatIds]        = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->EDITING_EVENT_TYPES, 'edit');
-        [$this->normalTypesParams, $this->normalFlatIds]    = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->NORMAL_EVENT_TYPES, 'normal');
+        [$this->alertTypesParams, $this->alertFlatIds]      = $this->getArrayPlaceholders(\EndoGuard\Utils\Constants::get()->ALERT_EVENT_TYPES, 'alert');
+        [$this->editTypesParams, $this->editFlatIds]        = $this->getArrayPlaceholders(\EndoGuard\Utils\Constants::get()->EDITING_EVENT_TYPES, 'edit');
+        [$this->normalTypesParams, $this->normalFlatIds]    = $this->getArrayPlaceholders(\EndoGuard\Utils\Constants::get()->NORMAL_EVENT_TYPES, 'normal');
     }
 
     abstract public function getCounts(int $apiKey): array;
@@ -50,11 +50,11 @@ abstract class BaseEventsCount extends \EndoGuard\\Models\BaseSql {
             ];
         }
         // use offset shift because $startTs/$endTs compared with shifted ['ts']
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
-        $datesRange = \EndoGuard\\Utils\DateRange::getLatestNDatesRangeFromRequest(180, $offset);
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
+        $datesRange = \EndoGuard\Utils\DateRange::getLatestNDatesRangeFromRequest(180, $offset);
         $endTs = strtotime($datesRange['endDate']);
         $startTs = strtotime($datesRange['startDate']);
-        $step = \EndoGuard\\Utils\Constants::get()->CHART_RESOLUTION[\EndoGuard\\Utils\DateRange::getResolutionFromRequest()];
+        $step = \EndoGuard\Utils\Constants::get()->CHART_RESOLUTION[\EndoGuard\Utils\DateRange::getResolutionFromRequest()];
 
         $endTs = $endTs - ($endTs % $step);
         $startTs = $startTs - ($startTs % $step);
@@ -86,15 +86,15 @@ abstract class BaseEventsCount extends \EndoGuard\\Models\BaseSql {
 
     protected function executeOnRangeById(string $query, int $apiKey): array {
         // do not use offset because :start_time/:end_time compared with UTC event.time
-        $dateRange = \EndoGuard\\Utils\DateRange::getLatestNDatesRangeFromRequest(180);
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
+        $dateRange = \EndoGuard\Utils\DateRange::getLatestNDatesRangeFromRequest(180);
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
 
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
-            ':id'           => \EndoGuard\\Utils\Conversion::getIntRequestParam('id'),
+            ':resolution'   => \EndoGuard\Utils\DateRange::getResolutionFromRequest(),
+            ':id'           => \EndoGuard\Utils\Conversion::getIntRequestParam('id'),
             ':offset'       => strval($offset),     // str for postgres
         ];
 

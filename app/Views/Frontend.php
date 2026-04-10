@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Views;
+namespace EndoGuard\Views;
 
 class Frontend extends Base {
     public function render(): string|false|null {
@@ -23,7 +23,7 @@ class Frontend extends Base {
             $this->f3->mset($this->data);
         }
 
-        \EndoGuard\\Utils\Routes::callExtra('FRONTEND_VIEW');
+        \EndoGuard\Utils\Routes::callExtra('FRONTEND_VIEW');
 
         // Use anti-CSRF token in templates.
         $this->f3->set('CSRF', $this->f3->get('SESSION.csrf'));

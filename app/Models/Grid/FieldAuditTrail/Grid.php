@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\FieldAuditTrail;
+namespace EndoGuard\Models\Grid\FieldAuditTrail;
 
-class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
+class Grid extends \EndoGuard\Models\Grid\Base\Grid {
     public function __construct(int $apiKey) {
         parent::__construct();
 
@@ -51,6 +51,6 @@ class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
     protected function convertTimeToUserTimezone(array &$result): void {
         $fields = ['created'];
 
-        \EndoGuard\\Utils\Timezones::translateTimezones($result, $fields);
+        \EndoGuard\Utils\Timezones::translateTimezones($result, $fields);
     }
 }

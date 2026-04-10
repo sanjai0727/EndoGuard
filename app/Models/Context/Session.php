@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Context;
+namespace EndoGuard\Models\Context;
 
 class Session extends Base {
     protected ?bool $uniqueValues = false;
@@ -57,8 +57,8 @@ class Session extends Base {
     protected function getDetails(array $accountIds, int $apiKey, int $timezoneOffset = 0): array {
         [$params, $placeHolders] = $this->getRequestParams($accountIds, $apiKey);
 
-        $params[':night_start'] = gmdate('H:i:s', \EndoGuard\\Utils\Constants::get()->NIGHT_RANGE_SECONDS_START - $timezoneOffset);
-        $params[':night_end'] = gmdate('H:i:s', \EndoGuard\\Utils\Constants::get()->NIGHT_RANGE_SECONDS_END - $timezoneOffset);
+        $params[':night_start'] = gmdate('H:i:s', \EndoGuard\Utils\Constants::get()->NIGHT_RANGE_SECONDS_START - $timezoneOffset);
+        $params[':night_end'] = gmdate('H:i:s', \EndoGuard\Utils\Constants::get()->NIGHT_RANGE_SECONDS_END - $timezoneOffset);
 
         // boolean logic for defining time ranges overlap
         $query = (

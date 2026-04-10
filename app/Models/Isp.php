@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Isp extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\ApiKeyAccessAuthorizationInterface {
+class Isp extends \EndoGuard\Models\BaseSql implements \EndoGuard\Interfaces\ApiKeyAccessAuthorizationInterface {
     protected ?string $DB_TABLE_NAME = 'event_isp';
 
     public function checkAccess(int $subjectId, int $apiKey): bool {

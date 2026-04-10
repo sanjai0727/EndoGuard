@@ -62,34 +62,34 @@ class Variables {
     }
 
     public static function getLogbookLimit(): int {
-        $value = getenv('LOGBOOK_LIMIT') ?: self::getF3()->get('LOGBOOK_LIMIT') ?: \EndoGuard\\Utils\Constants::get()->LOGBOOK_LIMIT;
+        $value = getenv('LOGBOOK_LIMIT') ?: self::getF3()->get('LOGBOOK_LIMIT') ?: \EndoGuard\Utils\Constants::get()->LOGBOOK_LIMIT;
 
-        return \EndoGuard\\Utils\Conversion::intValCheckEmpty($value, \EndoGuard\\Utils\Constants::get()->LOGBOOK_LIMIT);
+        return \EndoGuard\Utils\Conversion::intValCheckEmpty($value, \EndoGuard\Utils\Constants::get()->LOGBOOK_LIMIT);
     }
 
     public static function getForgotPasswordAllowed(): bool {
         $variable = getenv('ALLOW_FORGOT_PASSWORD') ?: self::getF3()->get('ALLOW_FORGOT_PASSWORD') ?? 'false';
 
-        return \EndoGuard\\Utils\Conversion::filterBool($variable) ?? false;
+        return \EndoGuard\Utils\Conversion::filterBool($variable) ?? false;
     }
 
     public static function getEmailPhoneAllowed(): bool {
         $variable = getenv('ALLOW_EMAIL_PHONE') ?: self::getF3()->get('ALLOW_EMAIL_PHONE') ?? 'false';
 
-        return \EndoGuard\\Utils\Conversion::filterBool($variable) ?? false;
+        return \EndoGuard\Utils\Conversion::filterBool($variable) ?? false;
     }
 
     public static function getForceHttps(): bool {
         // set 'false' string if FORCE_HTTPS wasn't set due to filter_var() issues
         $variable = getenv('FORCE_HTTPS') ?: self::getF3()->get('FORCE_HTTPS') ?? 'false';
 
-        return \EndoGuard\\Utils\Conversion::filterBool($variable) ?? true;
+        return \EndoGuard\Utils\Conversion::filterBool($variable) ?? true;
     }
 
     public static function getHostWithProtocol(): string {
         $host = self::getHost();
 
-        if (!str_starts_with($host, '[') && \EndoGuard\\Utils\Conversion::filterIpGetType($host) === 6) {
+        if (!str_starts_with($host, '[') && \EndoGuard\Utils\Conversion::filterIpGetType($host) === 6) {
             $host = '[' . $host . ']';
         }
 
@@ -101,15 +101,15 @@ class Variables {
     }
 
     public static function getAccountOperationQueueBatchSize(): int {
-        return \EndoGuard\\Utils\Conversion::intValCheckEmpty(getenv('ACCOUNT_OPERATION_QUEUE_BATCH_SIZE'), \EndoGuard\\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_BATCH_SIZE);
+        return \EndoGuard\Utils\Conversion::intValCheckEmpty(getenv('ACCOUNT_OPERATION_QUEUE_BATCH_SIZE'), \EndoGuard\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_BATCH_SIZE);
     }
 
     public static function getNewEventsBatchSize(): int {
-        return \EndoGuard\\Utils\Conversion::intValCheckEmpty(getenv('NEW_EVENTS_BATCH_SIZE'), \EndoGuard\\Utils\Constants::get()->NEW_EVENTS_BATCH_SIZE);
+        return \EndoGuard\Utils\Conversion::intValCheckEmpty(getenv('NEW_EVENTS_BATCH_SIZE'), \EndoGuard\Utils\Constants::get()->NEW_EVENTS_BATCH_SIZE);
     }
 
     public static function getRuleUsersBatchSize(): int {
-        return \EndoGuard\\Utils\Conversion::intValCheckEmpty(getenv('RULE_USERS_BATCH_SIZE'), \EndoGuard\\Utils\Constants::get()->RULE_USERS_BATCH_SIZE);
+        return \EndoGuard\Utils\Conversion::intValCheckEmpty(getenv('RULE_USERS_BATCH_SIZE'), \EndoGuard\Utils\Constants::get()->RULE_USERS_BATCH_SIZE);
     }
 
     public static function getAvailableTimezones(): array {

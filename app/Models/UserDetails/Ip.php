@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\UserDetails;
+namespace EndoGuard\Models\UserDetails;
 
-class Ip extends \EndoGuard\\Models\BaseSql {
+class Ip extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_ip';
 
     public function getDetails(int $userId, int $apiKey): array {

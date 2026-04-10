@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class SystemMessages {
     public static function get(int $apiKey): array {
-        $messages = \EndoGuard\\Utils\Routes::callExtra('SYSTEM_MESSAGES') ?? [];
+        $messages = \EndoGuard\Utils\Routes::callExtra('SYSTEM_MESSAGES') ?? [];
 
         // get last event timestamp from event_account.lastseen to avoid long reindexing on login
-        $lastLogbook = (new \EndoGuard\\Models\Logbook())->getLastSucceededEvent($apiKey);
+        $lastLogbook = (new \EndoGuard\Models\Logbook())->getLastSucceededEvent($apiKey);
 
         $messages[] = self::getNoEventsMessage($lastLogbook);
         $messages[] = self::getOveruseMessage($apiKey);
@@ -39,12 +39,12 @@ class SystemMessages {
         for ($i = 0; $i < $iters; ++$i) {
             $message = $messages[$i];
             if ($message !== null) {
-                if ($message['id'] !== \EndoGuard\\Utils\ErrorCodes::CUSTOM_ERROR_FROM_DSHB_MESSAGES) {
+                if ($message['id'] !== \EndoGuard\Utils\ErrorCodes::CUSTOM_ERROR_FROM_DSHB_MESSAGES) {
                     $code = sprintf('error_%s', $message['id']);
                     $text = \Base::instance()->get($code);
 
                     $time = gmdate('Y-m-d H:i:s');
-                    \EndoGuard\\Utils\Timezones::localizeForActiveOperator($time);
+                    \EndoGuard\Utils\Timezones::localizeForActiveOperator($time);
 
                     $message['text'] = $text;
                     $message['created_at'] = $time;
@@ -71,70 +71,70 @@ class SystemMessages {
     }
 
     private static function getNoEventsMessage(array $lastLogbook): ?array {
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $takeFromCache = self::canTakeLastEventTimeFromCache($currentOperator);
         $lastEventTime = $currentOperator->lastEventTime;
 
         $interval   = \Base::instance()->get('NO_EVENTS_TIME');
-        $inInterval = \EndoGuard\\Utils\DateRange::inIntervalTillNow($lastEventTime, $interval);
+        $inInterval = \EndoGuard\Utils\DateRange::inIntervalTillNow($lastEventTime, $interval);
 
         if (!$takeFromCache || !$inInterval) {
             if (!count($lastLogbook)) {
-                return ['id' => \EndoGuard\\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_YET];
+                return ['id' => \EndoGuard\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_YET];
             }
 
             $lastEventTime = $lastLogbook['lastseen'];
 
-            $model = new \EndoGuard\\Models\Operator();
+            $model = new \EndoGuard\Models\Operator();
             $model->updateLastEventTime($lastEventTime, $currentOperator->id);
 
-            $inInterval = \EndoGuard\\Utils\DateRange::inIntervalTillNow($lastEventTime, $interval);
+            $inInterval = \EndoGuard\Utils\DateRange::inIntervalTillNow($lastEventTime, $interval);
         }
 
         if (!$inInterval) {
-            return ['id' => \EndoGuard\\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_LAST_DAY];
+            return ['id' => \EndoGuard\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_LAST_DAY];
         }
 
         return null;
     }
 
     private static function getOveruseMessage(int $apiKey): ?array {
-        $key = \EndoGuard\\Entities\ApiKey::getById($apiKey);
+        $key = \EndoGuard\Entities\ApiKey::getById($apiKey);
 
         if ($key->lastCallReached === false) {
-            return ['id' => \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_KEY_OVERUSE];
+            return ['id' => \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_KEY_OVERUSE];
         }
 
         return null;
     }
 
     private static function getInactiveCronMessage(array $lastLogbook, int $apiKey): ?array {
-        $cursorModel = new \EndoGuard\\Models\Cursor();
+        $cursorModel = new \EndoGuard\Models\Cursor();
 
         if ($cursorModel->getCursor() === 0 && count($lastLogbook)) {
-            return ['id' => \EndoGuard\\Utils\ErrorCodes::CRON_JOB_MAY_BE_OFF];
+            return ['id' => \EndoGuard\Utils\ErrorCodes::CRON_JOB_MAY_BE_OFF];
         }
 
         return null;
     }
 
     //TODO: think about custom function which receives three params: date1, date2 and diff.
-    private static function canTakeLastEventTimeFromCache(\EndoGuard\\Entities\Operator $operator): bool {
+    private static function canTakeLastEventTimeFromCache(\EndoGuard\Entities\Operator $operator): bool {
         $interval = \Base::instance()->get('LAST_EVENT_CACHE_TIME');
 
-        return !!\EndoGuard\\Utils\DateRange::inIntervalTillNow($operator->lastEventTime, $interval);
+        return !!\EndoGuard\Utils\DateRange::inIntervalTillNow($operator->lastEventTime, $interval);
     }
 
     // TODO: get message by api key?
     private static function getCustomErrorMessage(): ?array {
         $message = null;
-        $model = new \EndoGuard\\Models\Message();
+        $model = new \EndoGuard\Models\Message();
 
         $data = $model->getLastMessage();
 
         if ($data) {
             $message = [
-                'id'            => \EndoGuard\\Utils\ErrorCodes::CUSTOM_ERROR_FROM_DSHB_MESSAGES,
+                'id'            => \EndoGuard\Utils\ErrorCodes::CUSTOM_ERROR_FROM_DSHB_MESSAGES,
                 'text'          => $data['text'],
                 'created_at'    => $data['created_at'],
             ];

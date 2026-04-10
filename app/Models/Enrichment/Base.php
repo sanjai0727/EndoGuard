@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
 class Base {
     public function queryParams(): array {
@@ -68,13 +68,13 @@ class Base {
         }
 
         $ipAddr = $parts[0];
-        $netmask = \EndoGuard\\Utils\Conversion::intVal($parts[1], -1);
+        $netmask = \EndoGuard\Utils\Conversion::intVal($parts[1], -1);
 
         if ($netmask < 0) {
             return false;
         }
 
-        $ipType = \EndoGuard\\Utils\Conversion::filterIpGetType($ipAddr);
+        $ipType = \EndoGuard\Utils\Conversion::filterIpGetType($ipAddr);
 
         return $ipType === 4 ? $netmask <= 32 : ($ipType === 6 ? $netmask <= 128 : false);
     }

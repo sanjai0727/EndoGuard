@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Domains;
+namespace EndoGuard\Models\Grid\Domains;
 
-class Ids extends \EndoGuard\\Models\Grid\Base\Ids {
+class Ids extends \EndoGuard\Models\Grid\Base\Ids {
     public function getDomainsIdsBySameIpDomainId(): string {
         return (
             'SELECT DISTINCT

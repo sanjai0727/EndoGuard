@@ -15,12 +15,12 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Emails;
+namespace EndoGuard\Controllers\Admin\Emails;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
         $result = [];
-        $model = new \EndoGuard\\Models\Grid\Emails\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Emails\Grid($apiKey);
 
         $map = [
             'userId' => 'getEmailsByUserId',
@@ -32,16 +32,16 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getEmailDetails(int $id, int $apiKey): array {
-        $details = (new \EndoGuard\\Models\Email())->getEmailDetails($id, $apiKey);
+        $details = (new \EndoGuard\Models\Email())->getEmailDetails($id, $apiKey);
         $details['enrichable'] = $this->isEnrichable($apiKey);
 
         $tsColumns = ['email_created', 'email_lastseen', 'domain_lastseen', 'domain_created'];
-        \EndoGuard\\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $details);
+        \EndoGuard\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $details);
 
         return $details;
     }
 
     private function isEnrichable(int $apiKey): bool {
-        return (new \EndoGuard\\Models\ApiKeys())->attributeIsEnrichable('email', $apiKey);
+        return (new \EndoGuard\Models\ApiKeys())->attributeIsEnrichable('email', $apiKey);
     }
 }

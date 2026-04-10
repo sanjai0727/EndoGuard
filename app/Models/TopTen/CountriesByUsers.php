@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\TopTen;
+namespace EndoGuard\Models\TopTen;
 
 class CountriesByUsers extends Base {
     protected ?string $DB_TABLE_NAME = 'event';

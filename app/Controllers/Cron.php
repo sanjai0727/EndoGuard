@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers;
+namespace EndoGuard\Controllers;
 
 // can accept time params as `* * * * 0,1,2`, `0-15 * * 1 3`, but
 // not step values like `23/4 10/2 * * *`
@@ -72,10 +72,10 @@ class Cron extends \Prefab {
                     $start = self::RANGES[$i]['min'];
                     $end = self::RANGES[$i]['max'];
                 } else {
-                    $start = \EndoGuard\\Utils\Conversion::intValCheckEmpty($start, 0);
-                    $end = \EndoGuard\\Utils\Conversion::intValCheckEmpty($end, $start);
+                    $start = \EndoGuard\Utils\Conversion::intValCheckEmpty($start, 0);
+                    $end = \EndoGuard\Utils\Conversion::intValCheckEmpty($end, $start);
                 }
-                $step = \EndoGuard\\Utils\Conversion::intValCheckEmpty($step, 0);
+                $step = \EndoGuard\Utils\Conversion::intValCheckEmpty($step, 0);
 
                 if ($start > $end || $start < self::RANGES[$i]['min'] || $end > self::RANGES[$i]['max'] || $step < 1) {
                     return false;
@@ -94,11 +94,11 @@ class Cron extends \Prefab {
 
     public static function parseTimestamp(\DateTime $time): array {
         return [
-            \EndoGuard\\Utils\Conversion::intValCheckEmpty($time->format('i'), 0), // minute
-            \EndoGuard\\Utils\Conversion::intValCheckEmpty($time->format('H'), 0), // hour
-            \EndoGuard\\Utils\Conversion::intValCheckEmpty($time->format('d'), 1), // day of month
-            \EndoGuard\\Utils\Conversion::intValCheckEmpty($time->format('m'), 1), // month
-            \EndoGuard\\Utils\Conversion::intValCheckEmpty($time->format('w'), 0), // day of week
+            \EndoGuard\Utils\Conversion::intValCheckEmpty($time->format('i'), 0), // minute
+            \EndoGuard\Utils\Conversion::intValCheckEmpty($time->format('H'), 0), // hour
+            \EndoGuard\Utils\Conversion::intValCheckEmpty($time->format('d'), 1), // day of month
+            \EndoGuard\Utils\Conversion::intValCheckEmpty($time->format('m'), 1), // month
+            \EndoGuard\Utils\Conversion::intValCheckEmpty($time->format('w'), 0), // day of week
         ];
     }
 
@@ -133,15 +133,15 @@ class Cron extends \Prefab {
             return;
         }
 
-        $this->f3->set('ONERROR', \EndoGuard\\Utils\ErrorHandler::getCronErrorHandler());
-        \EndoGuard\\Utils\Database::initConnect(false);
+        $this->f3->set('ONERROR', \EndoGuard\Utils\ErrorHandler::getCronErrorHandler());
+        \EndoGuard\Utils\Database::initConnect(false);
 
         while (ob_get_level()) {
             ob_end_flush();
         }
         ob_implicit_flush(true);
 
-        \EndoGuard\\Utils\Updates::syncUpdates();
+        \EndoGuard\Utils\Updates::syncUpdates();
 
         $this->readArguments();
         $this->loadCrons();
@@ -201,7 +201,7 @@ class Cron extends \Prefab {
         }
 
         $instance->$method();
-        \EndoGuard\\Utils\Cron::printLogs($instance->getLog());
+        \EndoGuard\Utils\Cron::printLogs($instance->getLog());
     }
 
     private function isDue(\DateTime $time, string $expression): bool {

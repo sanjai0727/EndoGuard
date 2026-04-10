@@ -15,19 +15,19 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Country;
+namespace EndoGuard\Controllers\Admin\Country;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function checkIfOperatorHasAccess(int $countryId): bool {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $model = new \EndoGuard\\Models\Country();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $model = new \EndoGuard\Models\Country();
 
         return $model->checkAccess($countryId, $apiKey);
     }
 
     public function getCountryById(int $countryId): array {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $model = new \EndoGuard\\Models\Country();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $model = new \EndoGuard\Models\Country();
 
         return $model->getCountryById($countryId, $apiKey);
     }

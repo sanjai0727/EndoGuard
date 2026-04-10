@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Totals;
+namespace EndoGuard\Controllers\Admin\Totals;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,10 +26,10 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getTimeFrameTotal(): array {
-        $ids        = \EndoGuard\\Utils\Conversion::getArrayRequestParam('ids');
-        $type       = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
-        $startDate  = \EndoGuard\\Utils\Conversion::getStringRequestParam('startDate');
-        $endDate    = \EndoGuard\\Utils\Conversion::getStringRequestParam('endDate');
+        $ids        = \EndoGuard\Utils\Conversion::getArrayRequestParam('ids');
+        $type       = \EndoGuard\Utils\Conversion::getStringRequestParam('type');
+        $startDate  = \EndoGuard\Utils\Conversion::getStringRequestParam('startDate');
+        $endDate    = \EndoGuard\Utils\Conversion::getStringRequestParam('endDate');
 
         return $this->controller->getTimeFrameTotal($ids, $type, $startDate, $endDate, $this->apiKey);
     }

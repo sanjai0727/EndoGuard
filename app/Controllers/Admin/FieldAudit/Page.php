@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\FieldAudit;
+namespace EndoGuard\Controllers\Admin\FieldAudit;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminFieldAudit';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $fieldId = \EndoGuard\\Utils\Conversion::getIntUrlParam('fieldId');
+        $fieldId = \EndoGuard\Utils\Conversion::getIntUrlParam('fieldId');
 
         $hasAccess = $dataController->checkIfOperatorHasAccess($fieldId);
 

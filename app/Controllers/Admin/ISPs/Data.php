@@ -15,12 +15,12 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\ISPs;
+namespace EndoGuard\Controllers\Admin\ISPs;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
         $result = [];
-        $model = new \EndoGuard\\Models\Grid\Isps\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Isps\Grid($apiKey);
 
         $map = [
             'userId'        => 'getIspsByUserId',
@@ -34,7 +34,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
         $ids = array_column($result['data'], 'id');
         if ($ids) {
-            $model = new \EndoGuard\\Models\Isp();
+            $model = new \EndoGuard\Models\Isp();
             $model->updateTotalsByEntityIds($ids, $apiKey);
             $result['data'] = $model->refreshTotals($result['data'], $apiKey);
         }

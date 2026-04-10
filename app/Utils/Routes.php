@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Routes {
     private static function getF3(): \Base {
         return \Base::instance();
     }
 
-    public static function getCurrentRequestOperator(): ?\EndoGuard\\Entities\Operator {
+    public static function getCurrentRequestOperator(): ?\EndoGuard\Entities\Operator {
         return self::getF3()->get('CURRENT_USER');
     }
 
@@ -30,13 +30,13 @@ class Routes {
         self::getF3()->set('CURRENT_USER', self::getCurrentSessionOperator());
     }
 
-    public static function getCurrentSessionOperator(): ?\EndoGuard\\Entities\Operator {
-        $loggedInOperatorId = \EndoGuard\\Utils\Conversion::intValCheckEmpty(self::getF3()->get('SESSION.active_user_id'));
+    public static function getCurrentSessionOperator(): ?\EndoGuard\Entities\Operator {
+        $loggedInOperatorId = \EndoGuard\Utils\Conversion::intValCheckEmpty(self::getF3()->get('SESSION.active_user_id'));
 
-        return $loggedInOperatorId ? \EndoGuard\\Entities\Operator::getById($loggedInOperatorId) : null;
+        return $loggedInOperatorId ? \EndoGuard\Entities\Operator::getById($loggedInOperatorId) : null;
     }
 
-    public static function getCurrentRequestApiKey(): ?\EndoGuard\\Entities\ApiKey {
+    public static function getCurrentRequestApiKey(): ?\EndoGuard\Entities\ApiKey {
         return self::getF3()->get('CURRENT_KEY');
     }
 
@@ -44,14 +44,14 @@ class Routes {
         self::getF3()->set('CURRENT_KEY', self::getCurrentSessionApiKey());
     }
 
-    public static function getCurrentSessionApiKey(): ?\EndoGuard\\Entities\ApiKey {
+    public static function getCurrentSessionApiKey(): ?\EndoGuard\Entities\ApiKey {
         $keyId = self::getF3()->get('TEST_API_KEY_ID');
 
         if (!$keyId) {
-            $keyId = \EndoGuard\\Utils\Conversion::intValCheckEmpty(self::getF3()->get('SESSION.active_key_id'));
+            $keyId = \EndoGuard\Utils\Conversion::intValCheckEmpty(self::getF3()->get('SESSION.active_key_id'));
         }
 
-        return $keyId ? \EndoGuard\\Entities\ApiKey::getById($keyId) : null;
+        return $keyId ? \EndoGuard\Entities\ApiKey::getById($keyId) : null;
     }
 
     public static function redirectIfUnlogged(string $targetPage = '/'): void {

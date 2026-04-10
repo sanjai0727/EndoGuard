@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\User;
+namespace EndoGuard\Controllers\Admin\User;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminUser';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $userId = \EndoGuard\\Utils\Conversion::getIntUrlParam('userId');
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $userId = \EndoGuard\Utils\Conversion::getIntUrlParam('userId');
         $hasAccess = $dataController->checkIfOperatorHasAccess($userId, $apiKey);
 
         if (!$hasAccess) {
@@ -62,7 +62,7 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
 
         [$scheduledForBlacklist, $errorCode] = $dataController->getScheduledForBlacklist($userId, $apiKey);
         if ($scheduledForBlacklist) {
-            $this->f3->set('SESSION.extra_message_code', $errorCode ?? \EndoGuard\\Utils\ErrorCodes::USER_BLACKLISTING_QUEUED);
+            $this->f3->set('SESSION.extra_message_code', $errorCode ?? \EndoGuard\Utils\ErrorCodes::USER_BLACKLISTING_QUEUED);
         }
 
         return parent::applyPageParams($pageParams);

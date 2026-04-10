@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Watchlist;
+namespace EndoGuard\Controllers\Admin\Watchlist;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,10 +26,10 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function removeUserFromList(): array {
-        $userId = \EndoGuard\\Utils\Conversion::getIntRequestParam('userId');
+        $userId = \EndoGuard\Utils\Conversion::getIntRequestParam('userId');
 
         $this->controller->removeFromWatchlist($userId, $this->apiKey);
-        $successCode = \EndoGuard\\Utils\ErrorCodes::USER_REMOVED_FROM_WATCHLIST;
+        $successCode = \EndoGuard\Utils\ErrorCodes::USER_REMOVED_FROM_WATCHLIST;
 
         return [
             'success' => $successCode,

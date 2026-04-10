@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Assets\Lists;
+namespace EndoGuard\Utils\Assets\Lists;
 
 abstract class Base {
     protected static string $extensionFile = '';

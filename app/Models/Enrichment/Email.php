@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
-class Email extends \EndoGuard\\Models\Enrichment\Base {
+class Email extends \EndoGuard\Models\Enrichment\Base {
     protected string $email;
     protected bool $blockemails;
     protected bool $data_breach;
@@ -80,7 +80,7 @@ class Email extends \EndoGuard\\Models\Enrichment\Base {
                 event_email.key = :key
         ");
 
-        $model = new \EndoGuard\\Models\Device();
+        $model = new \EndoGuard\Models\Device();
         $model->execQuery($query, $params);
     }
 }

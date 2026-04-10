@@ -15,20 +15,20 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Pages;
+namespace EndoGuard\Controllers\Pages;
 
 class Login extends Base {
     public ?string $page = 'Login';
 
     public function getPageParams(): array {
-        if (!\EndoGuard\\Utils\Variables::completedConfig()) {
+        if (!\EndoGuard\Utils\Variables::completedConfig()) {
             $this->f3->error(422);
         }
 
         $pageParams = [
             'HTML_FILE'             => 'login.html',
             'JS'                    => 'user_main.js',
-            'ALLOW_FORGOT_PASSWORD' => \EndoGuard\\Utils\Variables::getForgotPasswordAllowed(),
+            'ALLOW_FORGOT_PASSWORD' => \EndoGuard\Utils\Variables::getForgotPasswordAllowed(),
         ];
 
         if (!$this->isPostRequest()) {
@@ -36,7 +36,7 @@ class Login extends Base {
         }
 
         $params = $this->extractRequestParams(['token', 'email', 'password']);
-        $errorCode = \EndoGuard\\Utils\Validators::validateLogin($params);
+        $errorCode = \EndoGuard\Utils\Validators::validateLogin($params);
 
         $pageParams['VALUES'] = $params;
         $pageParams['ERROR_CODE'] = $errorCode;
@@ -45,31 +45,31 @@ class Login extends Base {
             return parent::applyPageParams($pageParams);
         }
 
-        \EndoGuard\\Utils\Updates::syncUpdates();
+        \EndoGuard\Utils\Updates::syncUpdates();
 
-        $email      = \EndoGuard\\Utils\Conversion::getStringRequestParam('email');
-        $password   = \EndoGuard\\Utils\Conversion::getStringRequestParam('password');
+        $email      = \EndoGuard\Utils\Conversion::getStringRequestParam('email');
+        $password   = \EndoGuard\Utils\Conversion::getStringRequestParam('password');
 
-        $model = new \EndoGuard\\Models\Operator();
+        $model = new \EndoGuard\Models\Operator();
         $operatorId = $model->getActivatedByEmail($email);
 
         if ($operatorId && $model->verifyPassword($password, $operatorId)) {
             $this->f3->set('SESSION.active_user_id', $operatorId);
 
-            $this->f3->set('SESSION.active_key_id', \EndoGuard\\Utils\ApiKeys::getFirstKeyByOperatorId($operatorId));
+            $this->f3->set('SESSION.active_key_id', \EndoGuard\Utils\ApiKeys::getFirstKeyByOperatorId($operatorId));
 
             // blacklist first because it uses review_queue_updated_at for cache check
-            $controller = new \EndoGuard\\Controllers\Admin\Blacklist\Navigation();
+            $controller = new \EndoGuard\Controllers\Admin\Blacklist\Navigation();
             $controller->setBlacklistUsersCount(true);      // use cache
 
-            $controller = new \EndoGuard\\Controllers\Admin\ReviewQueue\Navigation();
+            $controller = new \EndoGuard\Controllers\Admin\ReviewQueue\Navigation();
             $controller->setNotReviewedCount(true);         // use cache
 
-            $pageParams['VALUES'] = \EndoGuard\\Utils\Routes::callExtra('LOGIN', $params) ?? $params;
+            $pageParams['VALUES'] = \EndoGuard\Utils\Routes::callExtra('LOGIN', $params) ?? $params;
             $this->f3->reroute('/');
         } else {
-            $pageParams['VALUES'] = \EndoGuard\\Utils\Routes::callExtra('LOGIN_FAIL', $params) ?? $params;
-            $pageParams['ERROR_CODE'] = \EndoGuard\\Utils\ErrorCodes::EMAIL_OR_PASSWORD_IS_NOT_CORRECT;
+            $pageParams['VALUES'] = \EndoGuard\Utils\Routes::callExtra('LOGIN_FAIL', $params) ?? $params;
+            $pageParams['ERROR_CODE'] = \EndoGuard\Utils\ErrorCodes::EMAIL_OR_PASSWORD_IS_NOT_CORRECT;
         }
 
         return parent::applyPageParams($pageParams);

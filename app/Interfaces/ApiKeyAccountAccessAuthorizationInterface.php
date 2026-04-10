@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Interfaces;
+namespace EndoGuard\Interfaces;
 
 interface ApiKeyAccountAccessAuthorizationInterface {
     public function checkAccessByExternalId(string $externalUserId, int $apiKey): bool;

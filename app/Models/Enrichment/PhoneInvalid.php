@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
-class PhoneInvalid extends \EndoGuard\\Models\Enrichment\Base {
+class PhoneInvalid extends \EndoGuard\Models\Enrichment\Base {
     protected string $phone_number;
     protected bool $invalid;
     protected string $validation_errors;
@@ -66,7 +66,7 @@ class PhoneInvalid extends \EndoGuard\\Models\Enrichment\Base {
                 event_phone.key = :key
         ");
 
-        $model = new \EndoGuard\\Models\Phone();
+        $model = new \EndoGuard\Models\Phone();
         $model->execQuery($query, $params);
     }
 }

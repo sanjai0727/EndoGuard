@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Assets;
+namespace EndoGuard\Utils\Assets;
 
 abstract class Base {
     protected static function includeOnce(string $filename): mixed {

@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Updates;
+namespace EndoGuard\Updates;
 
 class Update002 extends Base {
     public static string $version = 'v0.9.6';
@@ -239,7 +239,7 @@ class Update002 extends Base {
     }
 
     private static function getCoreRulesMetadata(): array {
-        $rules = \EndoGuard\\Utils\Assets\RulesClasses::getRulesClasses(true);
+        $rules = \EndoGuard\Utils\Assets\RulesClasses::getRulesClasses(true);
         $out = [];
 
         foreach ($rules['imported'] as $uid => $cls) {

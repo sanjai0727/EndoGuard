@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Search;
+namespace EndoGuard\Models\Search;
 
-class Domain extends \EndoGuard\\Models\BaseSql {
+class Domain extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_domain';
 
     public function searchByDomain(string $query, int $apiKey): array {

@@ -15,30 +15,30 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\IP;
+namespace EndoGuard\Controllers\Admin\IP;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function proceedPostRequest(): array {
-        return match (\EndoGuard\\Utils\Conversion::getStringRequestParam('cmd')) {
+        return match (\EndoGuard\Utils\Conversion::getStringRequestParam('cmd')) {
             'reenrichment' => $this->enrichEntity(),
             default => []
         };
     }
 
     public function enrichEntity(): array {
-        $dataController = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $enrichmentKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
+        $dataController = new \EndoGuard\Controllers\Admin\Enrichment\Data();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $enrichmentKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
 
-        $type       = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
-        $search     = \EndoGuard\\Utils\Conversion::getStringRequestParam('search', true);
-        $entityId   = \EndoGuard\\Utils\Conversion::getIntRequestParam('entityId', true);
+        $type       = \EndoGuard\Utils\Conversion::getStringRequestParam('type');
+        $search     = \EndoGuard\Utils\Conversion::getStringRequestParam('search', true);
+        $entityId   = \EndoGuard\Utils\Conversion::getIntRequestParam('entityId', true);
 
         return $dataController->enrichEntity($type, $search, $entityId, $apiKey, $enrichmentKey);
     }
 
     public function checkIfOperatorHasAccess(int $ipId, int $apiKey): bool {
-        return (new \EndoGuard\\Models\Ip())->checkAccess($ipId, $apiKey);
+        return (new \EndoGuard\Models\Ip())->checkAccess($ipId, $apiKey);
     }
 
     public function getIpDetails(int $ipId, int $apiKey): array {
@@ -61,14 +61,14 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getFullIpInfoById(int $ipId, int $apiKey): array {
-        $model = new \EndoGuard\\Models\Ip();
+        $model = new \EndoGuard\Models\Ip();
         $result = $model->getFullIpInfoById($ipId, $apiKey);
-        $result['lastseen'] = \EndoGuard\\Utils\ElapsedDate::short($result['lastseen']);
+        $result['lastseen'] = \EndoGuard\Utils\ElapsedDate::short($result['lastseen']);
 
         return $result;
     }
 
     public function isEnrichable(int $apiKey): bool {
-        return (new \EndoGuard\\Models\ApiKeys())->attributeIsEnrichable('ip', $apiKey);
+        return (new \EndoGuard\Models\ApiKeys())->attributeIsEnrichable('ip', $apiKey);
     }
 }

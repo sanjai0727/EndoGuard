@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class FieldAudit extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\ApiKeyAccessAuthorizationInterface {
+class FieldAudit extends \EndoGuard\Models\BaseSql implements \EndoGuard\Interfaces\ApiKeyAccessAuthorizationInterface {
     protected ?string $DB_TABLE_NAME = 'event_field_audit';
 
     public function getFieldById(int $fieldId, int $apiKey): array {

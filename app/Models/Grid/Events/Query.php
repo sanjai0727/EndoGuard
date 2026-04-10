@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Events;
+namespace EndoGuard\Models\Grid\Events;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event.time DESC, event.id DESC';
     protected string $dateRangeField = 'event.time';
 
@@ -220,7 +220,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         //Apply itemId into request
         $this->applyRelatedToIdSearchConitions($query);
 
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
         $searchConditions = '';
 
         // WARN only for field_id filter
@@ -237,7 +237,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         }
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
-            if (\EndoGuard\\Utils\Conversion::filterIp($search['value'])) {
+            if (\EndoGuard\Utils\Conversion::filterIp($search['value'])) {
                 $searchConditions .= (
                     ' AND
                     (
@@ -265,7 +265,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
                 );
 
                 $queryParams[':search_value'] = '%' . $search['value'] . '%';
-                $queryParams[':offset'] = strval(\EndoGuard\\Utils\Timezones::getCurrentOperatorOffset());
+                $queryParams[':offset'] = strval(\EndoGuard\Utils\Timezones::getCurrentOperatorOffset());
             }
         }
 
@@ -321,7 +321,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applyEventTypes(string &$query, array &$queryParams): void {
-        $eventTypeIds = \EndoGuard\\Utils\Conversion::getArrayRequestParam('eventTypeIds');
+        $eventTypeIds = \EndoGuard\Utils\Conversion::getArrayRequestParam('eventTypeIds');
         if (!$eventTypeIds) {
             return;
         }
@@ -336,7 +336,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applyDeviceTypes(string &$query, array &$queryParams): void {
-        $deviceTypes = \EndoGuard\\Utils\Conversion::getArrayRequestParam('deviceTypes');
+        $deviceTypes = \EndoGuard\Utils\Conversion::getArrayRequestParam('deviceTypes');
         if (!$deviceTypes) {
             return;
         }
@@ -346,7 +346,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
             if ($deviceType === 'other') {
                 $placeholders = [];
 
-                foreach (\EndoGuard\\Utils\Constants::get()->DEVICE_TYPES as $device) {
+                foreach (\EndoGuard\Utils\Constants::get()->DEVICE_TYPES as $device) {
                     if ($device !== 'unknown' && $device !== 'other') {
                         $param = ':device_exclude_' . $device;
                         $placeholders[] = $param;
@@ -370,7 +370,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applyRules(string &$query, array &$queryParams): void {
-        $ruleUids = \EndoGuard\\Utils\Conversion::getArrayRequestParam('ruleUids');
+        $ruleUids = \EndoGuard\Utils\Conversion::getArrayRequestParam('ruleUids');
         if (!$ruleUids) {
             return;
         }

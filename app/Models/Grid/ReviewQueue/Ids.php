@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\ReviewQueue;
+namespace EndoGuard\Models\Grid\ReviewQueue;
 
-class Ids extends \EndoGuard\\Models\Grid\Base\Ids {
+class Ids extends \EndoGuard\Models\Grid\Base\Ids {
 }

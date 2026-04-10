@@ -15,12 +15,12 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Devices;
+namespace EndoGuard\Controllers\Admin\Devices;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
         $result = [];
-        $model = new \EndoGuard\\Models\Grid\Devices\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Devices\Grid($apiKey);
 
         $map = [
             'ipId'          => 'getDevicesByIpId',
@@ -34,16 +34,16 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getDeviceDetails(int $id, int $apiKey): array {
-        $details = (new \EndoGuard\\Models\Device())->getFullDeviceInfoById($id, $apiKey);
+        $details = (new \EndoGuard\Models\Device())->getFullDeviceInfoById($id, $apiKey);
         $details['enrichable'] = $this->isEnrichable($apiKey);
 
         $tsColumns = ['created'];
-        \EndoGuard\\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $details);
+        \EndoGuard\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $details);
 
         return $details;
     }
 
     private function isEnrichable(int $apiKey): bool {
-        return (new \EndoGuard\\Models\ApiKeys())->attributeIsEnrichable('ua', $apiKey);
+        return (new \EndoGuard\Models\ApiKeys())->attributeIsEnrichable('ua', $apiKey);
     }
 }

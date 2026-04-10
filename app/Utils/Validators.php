@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Validators {
     private static function getF3(): \Base {
@@ -28,7 +28,7 @@ class Validators {
     }
 
     protected static function getSafeInt(string $key, array $params): ?int {
-        return isset($params[$key]) ? \EndoGuard\\Utils\Conversion::intVal($params[$key]) : null;
+        return isset($params[$key]) ? \EndoGuard\Utils\Conversion::intVal($params[$key]) : null;
     }
 
     protected static function checkInterval(string $key, array $params, int $start, int $end): bool {
@@ -46,38 +46,38 @@ class Validators {
 
     // basic validators
     protected static function validateCsrf(array $params): int|false {
-        return \EndoGuard\\Utils\Access::CSRFTokenValid($params, self::getF3()) ?: false;
+        return \EndoGuard\Utils\Access::CSRFTokenValid($params, self::getF3()) ?: false;
     }
 
     protected static function validateEmailPresence(array $params): int|false {
         return !self::getSafeString('email', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::EMAIL_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::EMAIL_DOES_NOT_EXIST
             : false;
     }
 
     protected static function validatePasswordPresence(array $params): int|false {
         return !self::getSafeString('password', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::PASSWORD_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::PASSWORD_DOES_NOT_EXIST
             : false;
     }
 
     protected static function validateTimezone(array $params): int|false {
         return !self::getSafeString('timezone', $params)
-            || !array_key_exists($params['timezone'], \EndoGuard\\Utils\Variables::getAvailableTimezones())
-            ? \EndoGuard\\Utils\ErrorCodes::TIME_ZONE_DOES_NOT_EXIST
+            || !array_key_exists($params['timezone'], \EndoGuard\Utils\Variables::getAvailableTimezones())
+            ? \EndoGuard\Utils\ErrorCodes::TIME_ZONE_DOES_NOT_EXIST
             : false;
     }
 
     protected static function validateEmailCorrect(array $params): int|false {
         return !self::getSafeString('email', $params)
             || !\Audit::instance()->email($params['email'], true)
-            ? \EndoGuard\\Utils\ErrorCodes::EMAIL_IS_NOT_CORRECT
+            ? \EndoGuard\Utils\ErrorCodes::EMAIL_IS_NOT_CORRECT
             : false;
     }
 
     protected static function validateApiKeyPresence(array $params): int|false {
         return !self::getSafeInt('keyId', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::API_KEY_ID_DOESNT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::API_KEY_ID_DOESNT_EXIST
             : false;
     }
 
@@ -85,49 +85,49 @@ class Validators {
         $keyId = self::getSafeInt('keyId', $params);
 
         return !$keyId
-            || !\EndoGuard\\Utils\Access::checkCurrentOperatorApiKeyAccess($keyId)
-            ? \EndoGuard\\Utils\ErrorCodes::API_KEY_ID_INVALID
+            || !\EndoGuard\Utils\Access::checkCurrentOperatorApiKeyAccess($keyId)
+            ? \EndoGuard\Utils\ErrorCodes::API_KEY_ID_INVALID
             : false;
     }
 
     protected static function validateEmailNew(array $params): int|false {
         return !self::getSafeString('email', $params)
-            || (new \EndoGuard\\Models\Operator())->getByEmail($params['email'])
-            ? \EndoGuard\\Utils\ErrorCodes::EMAIL_ALREADY_EXIST
+            || (new \EndoGuard\Models\Operator())->getByEmail($params['email'])
+            ? \EndoGuard\Utils\ErrorCodes::EMAIL_ALREADY_EXIST
             : false;
         /*if ($operatorsModel->loaded()) {*/
     }
 
     protected static function validateNewPasswordPresence(array $params): int|false {
         return !self::getSafeString('new-password', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::NEW_PASSWORD_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::NEW_PASSWORD_DOES_NOT_EXIST
             : false;
     }
 
     protected static function validatePasswordLength(array $params): int|false {
         return !self::getSafeString('password', $params)
             || strlen($params['password']) < self::getF3()->get('MIN_PASSWORD_LENGTH')
-            ? \EndoGuard\\Utils\ErrorCodes::PASSWORD_IS_TOO_SHORT
+            ? \EndoGuard\Utils\ErrorCodes::PASSWORD_IS_TOO_SHORT
             : false;
     }
 
     protected static function validateNewPasswordLength(array $params): int|false {
         return !self::getSafeString('new-password', $params)
             || strlen($params['new-password']) < self::getF3()->get('MIN_PASSWORD_LENGTH')
-            ? \EndoGuard\\Utils\ErrorCodes::PASSWORD_IS_TOO_SHORT
+            ? \EndoGuard\Utils\ErrorCodes::PASSWORD_IS_TOO_SHORT
             : false;
     }
 
     protected static function validateCurrentPasswordPresence(array $params): int|false {
         return !self::getSafeString('current-password', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::CURRENT_PASSWORD_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::CURRENT_PASSWORD_DOES_NOT_EXIST
             : false;
     }
 
     protected static function validateEmailChanged(array $params): int|false {
         return !self::getSafeString('email', $params)
-            || strtolower($params['email']) === strtolower(\EndoGuard\\Utils\Routes::getCurrentRequestOperator()->email ?? '')
-            ? \EndoGuard\\Utils\ErrorCodes::EMAIL_IS_NOT_NEW
+            || strtolower($params['email']) === strtolower(\EndoGuard\Utils\Routes::getCurrentRequestOperator()->email ?? '')
+            ? \EndoGuard\Utils\ErrorCodes::EMAIL_IS_NOT_NEW
             : false;
     }
 
@@ -135,7 +135,7 @@ class Validators {
         return !isset($params['enrichedAttributes'])
             || !is_array($params['enrichedAttributes'])
             || array_diff(array_keys($params['enrichedAttributes']), $attributes)
-            ? \EndoGuard\\Utils\ErrorCodes::UNKNOWN_ENRICHMENT_ATTRIBUTES
+            ? \EndoGuard\Utils\ErrorCodes::UNKNOWN_ENRICHMENT_ATTRIBUTES
             : false;
     }
 
@@ -143,14 +143,14 @@ class Validators {
         return !isset($params['review-reminder-frequency'])
             || !$params['review-reminder-frequency']
             || (!is_int($params['review-reminder-frequency']) && !is_string($params['review-reminder-frequency']))
-            || !in_array($params['review-reminder-frequency'], \EndoGuard\\Utils\Constants::get()->NOTIFICATION_REMINDER_TYPES)
-            ? \EndoGuard\\Utils\ErrorCodes::INVALID_REMINDER_FREQUENCY
+            || !in_array($params['review-reminder-frequency'], \EndoGuard\Utils\Constants::get()->NOTIFICATION_REMINDER_TYPES)
+            ? \EndoGuard\Utils\ErrorCodes::INVALID_REMINDER_FREQUENCY
             : false;
     }
 
     private static function validatePasswordConfirmationPresence(array $params): int|false {
         return !self::getSafeString('password-confirmation', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::PASSWORD_CONFIRMATION_MISSING
+            ? \EndoGuard\Utils\ErrorCodes::PASSWORD_CONFIRMATION_MISSING
             : false;
     }
 
@@ -158,26 +158,26 @@ class Validators {
         return !self::getSafeString('password-confirmation', $params)
             || !self::getSafeString('new-password', $params)
             || $params['new-password'] !== $params['password-confirmation']
-            ? \EndoGuard\\Utils\ErrorCodes::PASSWORDS_ARE_NOT_EQUAL
+            ? \EndoGuard\Utils\ErrorCodes::PASSWORDS_ARE_NOT_EQUAL
             : false;
     }
 
     private static function validatePasswordRenewKeyPresence(?array $params): int|false {
         return $params === null
             || !self::getSafeString('renewKey', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::RENEW_KEY_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::RENEW_KEY_DOES_NOT_EXIST
             : false;
     }
 
     private static function validateOperatorIdPresence(array $params): int|false {
         return !self::getSafeInt('operatorId', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::API_KEY_ID_DOESNT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::API_KEY_ID_DOESNT_EXIST
             : false;
     }
 
     private static function validateRetention(array $params): int|false {
         return !self::checkInterval('retention-policy', $params, 0, 12)
-            ? \EndoGuard\\Utils\ErrorCodes::RETENTION_POLICY_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::RETENTION_POLICY_DOES_NOT_EXIST
             : false;
     }
 
@@ -185,13 +185,13 @@ class Validators {
         return (isset($params['blacklist-threshold'])
             && $params['blacklist-threshold'] !== ''
             && !self::checkInterval('blacklist-threshold', $params, 0, 98))
-            ? \EndoGuard\\Utils\ErrorCodes::INVALID_BLACKLIST_THRESHOLD
+            ? \EndoGuard\Utils\ErrorCodes::INVALID_BLACKLIST_THRESHOLD
             : false;
     }
 
     private static function validateReviewQueueThreshold(array $params): int|false {
         return !self::checkInterval('review-queue-threshold', $params, 0, 99)
-            ? \EndoGuard\\Utils\ErrorCodes::INVALID_REVIEW_QUEUE_THRESHOLD
+            ? \EndoGuard\Utils\ErrorCodes::INVALID_REVIEW_QUEUE_THRESHOLD
             : false;
     }
 
@@ -202,20 +202,20 @@ class Validators {
         return $reviewQueueThreshold === null
             || ($blacklistThreshold !== null
             && $reviewQueueThreshold <= $blacklistThreshold)
-            ? \EndoGuard\\Utils\ErrorCodes::INVALID_THRESHOLDS_COMBINATION
+            ? \EndoGuard\Utils\ErrorCodes::INVALID_THRESHOLDS_COMBINATION
             : false;
     }
 
     private static function validateRulesPresetId(array $params): int|false {
-        return !array_key_exists($params['rules-preset'], \EndoGuard\\Utils\Constants::get()->RULES_PRESETS)
-            ? \EndoGuard\\Utils\ErrorCodes::INVALID_RULES_PRESET_ID
+        return !array_key_exists($params['rules-preset'], \EndoGuard\Utils\Constants::get()->RULES_PRESETS)
+            ? \EndoGuard\Utils\ErrorCodes::INVALID_RULES_PRESET_ID
             : false;
     }
 
     private static function validateSearchEnrichment(?string $enrichmentKey): int|false {
         return !$enrichmentKey
-            || !\EndoGuard\\Utils\Variables::getEnrichmentApi()
-            ? \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_KEY_NOT_EXISTS
+            || !\EndoGuard\Utils\Variables::getEnrichmentApi()
+            ? \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_KEY_NOT_EXISTS
             : false;
     }
 
@@ -226,25 +226,25 @@ class Validators {
         return !$type
             || !is_array($types)
             || !array_key_exists($type, $types)
-            ? \EndoGuard\\Utils\ErrorCodes::TYPE_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::TYPE_DOES_NOT_EXIST
             : false;
     }
 
     private static function validateSearchValue(array $params): int|false {
         return !self::getSafeString('search', $params)
-            ? \EndoGuard\\Utils\ErrorCodes::SEARCH_QUERY_DOES_NOT_EXIST
+            ? \EndoGuard\Utils\ErrorCodes::SEARCH_QUERY_DOES_NOT_EXIST
             : false;
     }
 
     private static function validateCurrentPassword(array $params): int|false {
-        $operatorId = \EndoGuard\\Utils\Access::getCurrentOperatorId();
+        $operatorId = \EndoGuard\Utils\Access::getCurrentOperatorId();
         if (!$operatorId) {
-            return \EndoGuard\\Utils\ErrorCodes::CURRENT_PASSWORD_IS_NOT_CORRECT;
+            return \EndoGuard\Utils\ErrorCodes::CURRENT_PASSWORD_IS_NOT_CORRECT;
         }
 
-        $model = new \EndoGuard\\Models\Operator();
+        $model = new \EndoGuard\Models\Operator();
         if (!$model->verifyPassword($params['current-password'], $operatorId)) {
-            return \EndoGuard\\Utils\ErrorCodes::CURRENT_PASSWORD_IS_NOT_CORRECT;
+            return \EndoGuard\Utils\ErrorCodes::CURRENT_PASSWORD_IS_NOT_CORRECT;
         }
 
         return false;
@@ -252,17 +252,17 @@ class Validators {
 
     private static function validateBelongingCoOwner(array $params): int|false {
         $operatorId = self::getSafeInt('operatorId', $params);
-        $keyId = \EndoGuard\\Utils\Access::getCurrentOperatorApiKeyId();
+        $keyId = \EndoGuard\Utils\Access::getCurrentOperatorApiKeyId();
 
         if (!$operatorId || !$keyId) {
-            return \EndoGuard\\Utils\ErrorCodes::OPERATOR_IS_NOT_A_CO_OWNER;
+            return \EndoGuard\Utils\ErrorCodes::OPERATOR_IS_NOT_A_CO_OWNER;
         }
 
-        $coOwnerModel = new \EndoGuard\\Models\ApiKeyCoOwner();
+        $coOwnerModel = new \EndoGuard\Models\ApiKeyCoOwner();
         $key = $coOwnerModel->getCoOwnershipKeyId($operatorId);
 
         if (!$key || $key !== $keyId) {
-            return \EndoGuard\\Utils\ErrorCodes::OPERATOR_IS_NOT_A_CO_OWNER;
+            return \EndoGuard\Utils\ErrorCodes::OPERATOR_IS_NOT_A_CO_OWNER;
         }
         return false;
     }
@@ -409,10 +409,10 @@ class Validators {
             return $errorCode;
         }
 
-        $forgotPasswordModel = new \EndoGuard\\Models\ForgotPassword();
+        $forgotPasswordModel = new \EndoGuard\Models\ForgotPassword();
         $createdAt = $forgotPasswordModel->getUnusedByRenewKey($params['renewKey']);
         if (!$createdAt) {
-            return \EndoGuard\\Utils\ErrorCodes::RENEW_KEY_IS_NOT_CORRECT;
+            return \EndoGuard\Utils\ErrorCodes::RENEW_KEY_IS_NOT_CORRECT;
         }
 
         $currentTime = time();
@@ -420,7 +420,7 @@ class Validators {
         $lifeTime = self::getF3()->get('RENEW_PASSWORD_LINK_TIME');
 
         if ($currentTime > $linkTime + $lifeTime) {
-            return \EndoGuard\\Utils\ErrorCodes::RENEW_KEY_WAS_EXPIRED;
+            return \EndoGuard\Utils\ErrorCodes::RENEW_KEY_WAS_EXPIRED;
         }
 
         return false;

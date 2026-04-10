@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Context;
+namespace EndoGuard\Models\Context;
 
-abstract class Base extends \EndoGuard\\Models\BaseSql {
+abstract class Base extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
     protected ?bool $uniqueValues = null;
 

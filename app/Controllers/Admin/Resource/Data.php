@@ -15,20 +15,20 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Resource;
+namespace EndoGuard\Controllers\Admin\Resource;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function checkIfOperatorHasAccess(int $resourceId): bool {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $model = new \EndoGuard\\Models\Resource();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $model = new \EndoGuard\Models\Resource();
 
         return $model->checkAccess($resourceId, $apiKey);
     }
 
     public function getResourceById(int $resourceId): array {
-        $model = new \EndoGuard\\Models\Resource();
+        $model = new \EndoGuard\Models\Resource();
         $result = $model->getResourceById($resourceId);
-        $result['lastseen'] = \EndoGuard\\Utils\ElapsedDate::short($result['lastseen']);
+        $result['lastseen'] = \EndoGuard\Utils\ElapsedDate::short($result['lastseen']);
 
         return $result;
     }

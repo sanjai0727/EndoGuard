@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Ip extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\ApiKeyAccessAuthorizationInterface, \EndoGuard\\Interfaces\FraudFlagUpdaterInterface {
+class Ip extends \EndoGuard\Models\BaseSql implements \EndoGuard\Interfaces\ApiKeyAccessAuthorizationInterface, \EndoGuard\Interfaces\FraudFlagUpdaterInterface {
     protected ?string $DB_TABLE_NAME = 'event_ip';
 
     public function getIdByValue(string $ipAddress, int $apiKey): ?int {

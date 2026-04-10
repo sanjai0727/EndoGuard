@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class DateRange {
     private static function getF3(): \Base {
@@ -23,7 +23,7 @@ class DateRange {
     }
 
     public static function isQueueTimeouted(string $updated): bool {
-        return !self::inIntervalTillNow($updated, \EndoGuard\\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_AUTO_UNCLOG_AFTER_SEC);
+        return !self::inIntervalTillNow($updated, \EndoGuard\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_AUTO_UNCLOG_AFTER_SEC);
     }
 
     public static function getDatesRangeByGivenDates(string $startDate, string $endDate, int $offset): array {
@@ -35,9 +35,9 @@ class DateRange {
 
     public static function getDatesRangeFromRequest(int $offset = 0): ?array {
         $dates      = null;
-        $dateTo     = \EndoGuard\\Utils\Conversion::getStringRequestParam('dateTo', true);
-        $dateFrom   = \EndoGuard\\Utils\Conversion::getStringRequestParam('dateFrom', true);
-        $keepDates  = \EndoGuard\\Utils\Conversion::getIntRequestParam('keepDates', true);
+        $dateTo     = \EndoGuard\Utils\Conversion::getStringRequestParam('dateTo', true);
+        $dateFrom   = \EndoGuard\Utils\Conversion::getStringRequestParam('dateFrom', true);
+        $keepDates  = \EndoGuard\Utils\Conversion::getIntRequestParam('keepDates', true);
 
         if ($dateTo && $dateFrom) {
             $dates = self::getDatesRangeByGivenDates($dateFrom, $dateTo, $offset);
@@ -53,7 +53,7 @@ class DateRange {
     }
 
     public static function getLatestNDatesRangeFromRequest(int $days, int $offset = 0): array {
-        $day = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY;
+        $day = \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY;
 
         return [
             'endDate'   => date('Y-m-d 23:59:59', time() + $offset),
@@ -62,9 +62,9 @@ class DateRange {
     }
 
     public static function getResolutionFromRequest(): string {
-        $resolution = \EndoGuard\\Utils\Conversion::getStringRequestParam('resolution', true) ?? 'day';
+        $resolution = \EndoGuard\Utils\Conversion::getStringRequestParam('resolution', true) ?? 'day';
 
-        return array_key_exists($resolution, \EndoGuard\\Utils\Constants::get()->CHART_RESOLUTION) ? $resolution : 'day';
+        return array_key_exists($resolution, \EndoGuard\Utils\Constants::get()->CHART_RESOLUTION) ? $resolution : 'day';
     }
 
     public static function inIntervalTillNow(?string $time, int $interval): ?bool {

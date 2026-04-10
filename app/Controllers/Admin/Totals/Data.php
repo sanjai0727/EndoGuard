@@ -15,11 +15,11 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Totals;
+namespace EndoGuard\Controllers\Admin\Totals;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getTimeFrameTotal(array $ids, string $type, string $startDate, string $endDate, int $apiKey): array {
-        $processErrorMessage = ['ERROR_CODE' => \EndoGuard\\Utils\ErrorCodes::TOTALS_INVALID_TYPE];
+        $processErrorMessage = ['ERROR_CODE' => \EndoGuard\Utils\ErrorCodes::TOTALS_INVALID_TYPE];
 
         if (!in_array($type, ['ip', 'isp', 'domain', 'country', 'resource', 'field', 'userAgent'])) {
             return $processErrorMessage;
@@ -29,25 +29,25 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
         switch ($type) {
             case 'ip':
-                $model = new \EndoGuard\\Models\Ip();
+                $model = new \EndoGuard\Models\Ip();
                 break;
             case 'isp':
-                $model = new \EndoGuard\\Models\Isp();
+                $model = new \EndoGuard\Models\Isp();
                 break;
             case 'domain':
-                $model = new \EndoGuard\\Models\Domain();
+                $model = new \EndoGuard\Models\Domain();
                 break;
             case 'country':
-                $model = new \EndoGuard\\Models\Country();
+                $model = new \EndoGuard\Models\Country();
                 break;
             case 'resource':
-                $model = new \EndoGuard\\Models\Resource();
+                $model = new \EndoGuard\Models\Resource();
                 break;
             case 'field':
-                $model = new \EndoGuard\\Models\FieldAudit();
+                $model = new \EndoGuard\Models\FieldAudit();
                 break;
             case 'userAgent':
-                $model = new \EndoGuard\\Models\UserAgent();
+                $model = new \EndoGuard\Models\UserAgent();
                 break;
         }
 

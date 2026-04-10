@@ -15,17 +15,17 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Logbook extends \EndoGuard\\Models\BaseSql {
+class Logbook extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_logbook';
 
     public function getLastSucceededEvent(int $apiKey): array {
         $params = [
             ':api_key'          => $apiKey,
             ':endpoint'         => '/sensor/',
-            ':success'          => \EndoGuard\\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_SUCCESS,
-            ':validation_error' => \EndoGuard\\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_VALIDATION_ERROR,
+            ':success'          => \EndoGuard\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_SUCCESS,
+            ':validation_error' => \EndoGuard\Utils\Constants::get()->LOGBOOK_ERROR_TYPE_VALIDATION_ERROR,
         ];
 
         $query = (
@@ -121,7 +121,7 @@ class Logbook extends \EndoGuard\\Models\BaseSql {
     public function rotateRequests(?int $apiKey): int {
         $params = [
             ':key'      => $apiKey,
-            ':limit'    => \EndoGuard\\Utils\Variables::getLogbookLimit(),
+            ':limit'    => \EndoGuard\Utils\Variables::getLogbookLimit(),
         ];
 
         $query = (

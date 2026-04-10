@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class ReviewQueue extends \EndoGuard\\Models\BaseSql {
+class ReviewQueue extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_account';
 
     public function getCount(int $apiKey): int {

@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Pages;
+namespace EndoGuard\Controllers\Pages;
 
 class PasswordRecovering extends Base {
     public ?string $page = 'PasswordRecovering';
@@ -25,27 +25,27 @@ class PasswordRecovering extends Base {
             'HTML_FILE' => 'passwordRecovering.html',
         ];
 
-        $errorCode = \EndoGuard\\Utils\Validators::validatePasswordRecovering($this->f3->get('PARAMS'));
+        $errorCode = \EndoGuard\Utils\Validators::validatePasswordRecovering($this->f3->get('PARAMS'));
         $pageParams['SUCCESS_CODE'] = $errorCode;
 
         if ($this->isPostRequest()) {
             $params = $this->extractRequestParams(['token', 'new-password', 'password-confirmation']);
-            $errorCode = \EndoGuard\\Utils\Validators::validatePasswordRecoveringPost($params);
+            $errorCode = \EndoGuard\Utils\Validators::validatePasswordRecoveringPost($params);
 
             $pageParams['SUCCESS_CODE'] = 0;
             $pageParams['ERROR_CODE'] = $errorCode;
 
             if (!$errorCode) {
-                $forgotPasswordModel = new \EndoGuard\\Models\ForgotPassword();
+                $forgotPasswordModel = new \EndoGuard\Models\ForgotPassword();
                 $operatorId = $forgotPasswordModel->useByRenewKey($this->f3->get('PARAMS.renewKey'));
 
-                $password = \EndoGuard\\Utils\Conversion::getStringRequestParam('new-password');
+                $password = \EndoGuard\Utils\Conversion::getStringRequestParam('new-password');
 
-                $model = new \EndoGuard\\Models\Operator();
+                $model = new \EndoGuard\Models\Operator();
                 $model->updatePassword($password, $operatorId);
                 $model->activateByOperatorId($operatorId);
 
-                $pageParams['SUCCESS_CODE'] = \EndoGuard\\Utils\ErrorCodes::ACCOUNT_ACTIVATED;
+                $pageParams['SUCCESS_CODE'] = \EndoGuard\Utils\ErrorCodes::ACCOUNT_ACTIVATED;
             }
         }
 

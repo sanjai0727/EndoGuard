@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Assets;
+namespace EndoGuard\Utils\Assets;
 
 class ConstantsClass extends Base {
     protected static function getDirectory(): string {
@@ -27,10 +27,10 @@ class ConstantsClass extends Base {
     }
 
     protected static function getNamespace(): string {
-        return '\\EndoGuard\\\Dashboard';
+        return '\\EndoGuard\\Dashboard';
     }
 
-    public static function getConstantsObj(): ?\EndoGuard\\Assets\Constants {
+    public static function getConstantsObj(): ?\EndoGuard\Assets\Constants {
         $obj = null;
 
         $filename   = self::getClassFilename('Constants.php');

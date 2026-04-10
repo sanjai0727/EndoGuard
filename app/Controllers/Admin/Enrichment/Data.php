@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Enrichment;
+namespace EndoGuard\Controllers\Admin\Enrichment;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function enrichEntity(string $type, ?string $search, ?int $entityId, int $apiKey, ?string $enrichmentKey): array {
         if ($enrichmentKey === null) {
-            return ['ERROR_CODE' => \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_KEY_NOT_EXISTS];
+            return ['ERROR_CODE' => \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_KEY_NOT_EXISTS];
         }
-        set_error_handler([\EndoGuard\\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
+        set_error_handler([\EndoGuard\Utils\ErrorHandler::class, 'exceptionErrorHandler']);
         $search = $search !== null ? ['value' => $search] : null;
         $result = $this->enrichEntityProcess($type, $search, $entityId, $apiKey, $enrichmentKey);
         restore_error_handler();
@@ -31,11 +31,11 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     private function enrichEntityProcess(string $type, ?array $search, ?int $entityId, int $apiKey, ?string $enrichmentKey): array {
-        $processErrorMessage = ['ERROR_CODE' => \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_UNKNOWN_ERROR];
+        $processErrorMessage = ['ERROR_CODE' => \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_UNKNOWN_ERROR];
 
         if ($type === 'device') {
             if ($entityId !== null) {
-                $model = new \EndoGuard\\Models\Device();
+                $model = new \EndoGuard\Models\Device();
                 $device = $model->getFullDeviceInfoById($entityId, $apiKey);
                 if ($device !== []) {
                     $entityId = $device['ua_id'];
@@ -48,11 +48,11 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
             }
         }
 
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $attributes = $model->enrichableAttributes($apiKey);
 
         if (!array_key_exists($type, $attributes)) {
-            return ['ERROR_CODE' => \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_ATTR_UNAVAILABLE];
+            return ['ERROR_CODE' => \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_ATTR_UNAVAILABLE];
         }
 
         $modelDb = null;
@@ -60,27 +60,27 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
         $extraModel = null;
         switch ($type) {
             case 'ip':
-                $modelDb        = new \EndoGuard\\Models\Ip();
-                $modelResult    = new \EndoGuard\\Models\Enrichment\Ip();
-                $extraModel     = new \EndoGuard\\Models\Enrichment\LocalhostIp();
+                $modelDb        = new \EndoGuard\Models\Ip();
+                $modelResult    = new \EndoGuard\Models\Enrichment\Ip();
+                $extraModel     = new \EndoGuard\Models\Enrichment\LocalhostIp();
                 break;
             case 'email':
-                $modelDb        = new \EndoGuard\\Models\Email();
-                $modelResult    = new \EndoGuard\\Models\Enrichment\Email();
+                $modelDb        = new \EndoGuard\Models\Email();
+                $modelResult    = new \EndoGuard\Models\Enrichment\Email();
                 break;
             case 'domain':
-                $modelDb        = new \EndoGuard\\Models\Domain();
-                $modelResult    = new \EndoGuard\\Models\Enrichment\DomainFound();
-                $extraModel     = new \EndoGuard\\Models\Enrichment\DomainNotFound();
+                $modelDb        = new \EndoGuard\Models\Domain();
+                $modelResult    = new \EndoGuard\Models\Enrichment\DomainFound();
+                $extraModel     = new \EndoGuard\Models\Enrichment\DomainNotFound();
                 break;
             case 'phone':
-                $modelDb        = new \EndoGuard\\Models\Phone();
-                $modelResult    = new \EndoGuard\\Models\Enrichment\PhoneValid();
-                $extraModel     = new \EndoGuard\\Models\Enrichment\PhoneInvalid();
+                $modelDb        = new \EndoGuard\Models\Phone();
+                $modelResult    = new \EndoGuard\Models\Enrichment\PhoneValid();
+                $extraModel     = new \EndoGuard\Models\Enrichment\PhoneInvalid();
                 break;
             case 'ua':
-                $modelDb        = new \EndoGuard\\Models\Device();
-                $modelResult    = new \EndoGuard\\Models\Enrichment\Device();
+                $modelDb        = new \EndoGuard\Models\Device();
+                $modelResult    = new \EndoGuard\Models\Enrichment\Device();
                 break;
         }
 
@@ -98,21 +98,21 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
         try {
             [$statusCode, $response,] = $this->enrichEntityByValue($type, $value, $enrichmentKey);
-            $error = \EndoGuard\\Utils\ApiResponseFormats::getErrorResponseFormat();
-            $apiError = \EndoGuard\\Utils\ApiResponseFormats::matchResponse($response[$type] ?? [], $error) ? $response[$type]['error'] : null;
+            $error = \EndoGuard\Utils\ApiResponseFormats::getErrorResponseFormat();
+            $apiError = \EndoGuard\Utils\ApiResponseFormats::matchResponse($response[$type] ?? [], $error) ? $response[$type]['error'] : null;
         } catch (\ErrorException $e) {
             return $processErrorMessage;
         }
 
         if ($statusCode === 403) {
-            return ['ERROR_CODE' => \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_KEY_OVERUSE];
+            return ['ERROR_CODE' => \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_KEY_OVERUSE];
         }
 
         if ($type === 'ip') {
             // do not raise on bogon ip
-            if ($apiError === \EndoGuard\\Utils\Constants::get()->ENRICHMENT_IP_IS_NOT_FOUND) {
-                return ['ERROR_CODE' => \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_IP_NOT_FOUND];
-            } elseif ($apiError !== null && $apiError !== \EndoGuard\\Utils\Constants::get()->ENRICHMENT_IP_IS_BOGON || $statusCode !== 200 || $response[$type] === null) {
+            if ($apiError === \EndoGuard\Utils\Constants::get()->ENRICHMENT_IP_IS_NOT_FOUND) {
+                return ['ERROR_CODE' => \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_IP_NOT_FOUND];
+            } elseif ($apiError !== null && $apiError !== \EndoGuard\Utils\Constants::get()->ENRICHMENT_IP_IS_BOGON || $statusCode !== 200 || $response[$type] === null) {
                 return $processErrorMessage;
             }
         } elseif ($apiError !== null || $statusCode !== 200 || $response[$type] === null) {
@@ -150,7 +150,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
     private function validateResponse(string $requestType, int $statusCode, ?array $result, string $errorMessage): bool|string|int {
         if (!is_array($result)) {
-            return \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_UNKNOWN_ERROR;
+            return \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_UNKNOWN_ERROR;
         }
 
         if ($statusCode === 200 && is_array($result[$requestType])) {
@@ -172,11 +172,11 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
         }
 
         if (strlen($errorMessage) > 0) {
-            \EndoGuard\\Utils\Logger::log('Enrichment API web error', $errorMessage);
+            \EndoGuard\Utils\Logger::log('Enrichment API web error', $errorMessage);
         }
 
         if (!isset($messages) || strlen($messages) < 1) {
-            return \EndoGuard\\Utils\ErrorCodes::ENRICHMENT_API_UNKNOWN_ERROR;
+            return \EndoGuard\Utils\ErrorCodes::ENRICHMENT_API_UNKNOWN_ERROR;
         }
 
         return $messages;
@@ -186,7 +186,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
         $postFields = [
             $type => $value['value'],
         ];
-        $response = \EndoGuard\\Utils\Network::sendApiRequest($postFields, '/query', 'POST', $enrichmentKey);
+        $response = \EndoGuard\Utils\Network::sendApiRequest($postFields, '/query', 'POST', $enrichmentKey);
         $code = $response->code();
         $result = $response->body();
 
@@ -198,7 +198,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getNotCheckedEntitiesCount(int $apiKey): array {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $models = $model->enrichableAttributes($apiKey);
         $result = [];
 
@@ -210,7 +210,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getNotCheckedExists(int $apiKey): bool {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $models = $model->enrichableAttributes($apiKey);
 
         foreach ($models as $model) {
@@ -223,7 +223,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getNotCheckedEntitiesByUserId(int $userId, int $apiKey): array {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $models = $model->enrichableAttributes($apiKey);
         $result = [];
 

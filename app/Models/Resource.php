@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Resource extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\ApiKeyAccessAuthorizationInterface {
+class Resource extends \EndoGuard\Models\BaseSql implements \EndoGuard\Interfaces\ApiKeyAccessAuthorizationInterface {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getResourceById(int $resourceId): array {
@@ -117,7 +117,7 @@ class Resource extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfa
 
         $totalIp = $this->execQuery($query, $params);
 
-        $params[':field_edit'] = \EndoGuard\\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID;
+        $params[':field_edit'] = \EndoGuard\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID;
         $query = (
             "SELECT
                 event.url   AS id,
@@ -171,7 +171,7 @@ class Resource extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfa
 
         [$params, $flatIds] = $this->getArrayPlaceholders($ids);
         $params[':key'] = $apiKey;
-        $params[':field_edit'] = \EndoGuard\\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID;
+        $params[':field_edit'] = \EndoGuard\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID;
         $extraClause = $force ? '' : ' AND event_url.lastseen >= event_url.updated';
 
         $query = (
@@ -214,7 +214,7 @@ class Resource extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfa
     public function updateAllTotals(int $apiKey): int {
         $params = [
             ':key'          => $apiKey,
-            ':field_edit'   => \EndoGuard\\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID,
+            ':field_edit'   => \EndoGuard\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID,
         ];
 
         $query = (

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Logbook;
+namespace EndoGuard\Models\Grid\Logbook;
 
-class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
+class Grid extends \EndoGuard\Models\Grid\Base\Grid {
     public function __construct(int $apiKey) {
         parent::__construct();
 
@@ -32,9 +32,9 @@ class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
 
     protected function convertTimeToUserTimezone(array &$result): void {
         $field = 'created';
-        \EndoGuard\\Utils\Timezones::translateTimezones($result, [$field], true);
+        \EndoGuard\Utils\Timezones::translateTimezones($result, [$field], true);
 
-        $serverOffset = \EndoGuard\\Utils\Timezones::getServerOffset();
+        $serverOffset = \EndoGuard\Utils\Timezones::getServerOffset();
 
         foreach ($result as $idx => $row) {
             if (!isset($row[$field])) {
@@ -42,7 +42,7 @@ class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
             }
 
             // substract server time
-            $result[$idx][$field] = \EndoGuard\\Utils\Timezones::addOffset($row[$field], -$serverOffset, true);
+            $result[$idx][$field] = \EndoGuard\Utils\Timezones::addOffset($row[$field], -$serverOffset, true);
         }
     }
 }

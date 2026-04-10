@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Assets;
+namespace EndoGuard\Utils\Assets;
 
 class ContextClass extends Base {
     protected static function getDirectory(): string {
@@ -27,10 +27,10 @@ class ContextClass extends Base {
     }
 
     protected static function getNamespace(): string {
-        return '\\EndoGuard\\\Rules\\Custom';
+        return '\\EndoGuard\\Rules\\Custom';
     }
 
-    public static function getContextObj(): ?\EndoGuard\\Assets\Context {
+    public static function getContextObj(): ?\EndoGuard\Assets\Context {
         $obj = null;
 
         $filename   = self::getClassFilename('Context.php');

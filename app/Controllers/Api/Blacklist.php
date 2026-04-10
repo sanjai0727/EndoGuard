@@ -15,13 +15,13 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Api;
+namespace EndoGuard\Controllers\Api;
 
 class Blacklist extends Endpoint {
     public function search(): void {
         $value = $this->getBodyProp('value', 'string');
 
-        $model = new \EndoGuard\\Models\BlacklistItems();
+        $model = new \EndoGuard\Models\BlacklistItems();
         $itemFound = $model->searchBlacklistedItem($value, $this->apiKeyId);
 
         $this->data = [

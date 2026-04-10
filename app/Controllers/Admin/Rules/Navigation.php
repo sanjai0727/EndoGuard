@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Rules;
+namespace EndoGuard\Controllers\Admin\Rules;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,8 +26,8 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function saveRule(): array {
-        $ruleUid = \EndoGuard\\Utils\Conversion::getStringRequestParam('rule');
-        $score = \EndoGuard\\Utils\Conversion::getIntRequestParam('value');
+        $ruleUid = \EndoGuard\Utils\Conversion::getStringRequestParam('rule');
+        $score = \EndoGuard\Utils\Conversion::getIntRequestParam('value');
 
         $this->controller->saveUserRule($ruleUid, $score, $this->apiKey);
 
@@ -38,14 +38,14 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
         set_time_limit(0);
         ini_set('max_execution_time', '0');
 
-        $ruleUid = \EndoGuard\\Utils\Conversion::getStringRequestParam('ruleUid');
+        $ruleUid = \EndoGuard\Utils\Conversion::getStringRequestParam('ruleUid');
 
         [$allUsersCnt, $users] = $this->controller->checkRule($ruleUid, $this->apiKey);
         $proportion = $this->controller->getRuleProportion($allUsersCnt, count($users));
         $this->controller->saveRuleProportion($ruleUid, $proportion, $this->apiKey);
 
         return [
-            'users'                 => array_slice($users, 0, \EndoGuard\\Utils\Constants::get()->RULE_CHECK_USERS_PASSED_TO_CLIENT),
+            'users'                 => array_slice($users, 0, \EndoGuard\Utils\Constants::get()->RULE_CHECK_USERS_PASSED_TO_CLIENT),
             'count'                 => count($users),
             'section'               => $allUsersCnt,
             'proportion'            => $proportion,

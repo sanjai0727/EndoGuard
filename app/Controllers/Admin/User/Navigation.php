@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\User;
+namespace EndoGuard\Controllers\Admin\User;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,8 +26,8 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function manageUser(): array {
-        $accountId  = \EndoGuard\\Utils\Conversion::getIntRequestParam('userId');
-        $cmd        = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
+        $accountId  = \EndoGuard\Utils\Conversion::getIntRequestParam('userId');
+        $cmd        = \EndoGuard\Utils\Conversion::getStringRequestParam('type');
         $hasAccess  = $this->controller->checkIfOperatorHasAccess($accountId, $this->apiKey);
 
         if (!$hasAccess) {
@@ -39,27 +39,27 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
         switch ($cmd) {
             case 'add':
                 $this->controller->addToWatchlist($accountId, $this->apiKey);
-                $successCode = \EndoGuard\\Utils\ErrorCodes::USER_ADDED_TO_WATCHLIST;
+                $successCode = \EndoGuard\Utils\ErrorCodes::USER_ADDED_TO_WATCHLIST;
                 break;
 
             case 'remove':
                 $this->controller->removeFromWatchlist($accountId, $this->apiKey);
-                $successCode = \EndoGuard\\Utils\ErrorCodes::USER_REMOVED_FROM_WATCHLIST;
+                $successCode = \EndoGuard\Utils\ErrorCodes::USER_REMOVED_FROM_WATCHLIST;
                 break;
 
             case 'fraud':
                 $this->controller->addToBlacklistQueue($accountId, true, false, true, $this->apiKey);   // recalculate
-                $successCode = \EndoGuard\\Utils\ErrorCodes::USER_FRAUD_FLAG_SET;
+                $successCode = \EndoGuard\Utils\ErrorCodes::USER_FRAUD_FLAG_SET;
                 break;
 
             case 'legit':
                 $this->controller->addToBlacklistQueue($accountId, false, false, true, $this->apiKey);  // recalculate
-                $successCode = \EndoGuard\\Utils\ErrorCodes::USER_FRAUD_FLAG_UNSET;
+                $successCode = \EndoGuard\Utils\ErrorCodes::USER_FRAUD_FLAG_UNSET;
                 break;
 
             case 'reviewed':
                 $this->controller->setReviewedFlag($accountId, true, $this->apiKey);
-                $successCode = \EndoGuard\\Utils\ErrorCodes::USER_REVIEWED_FLAG_SET;
+                $successCode = \EndoGuard\Utils\ErrorCodes::USER_REVIEWED_FLAG_SET;
                 break;
         }
 
@@ -67,7 +67,7 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getUserScoreDetails(): array {
-        $userId = \EndoGuard\\Utils\Conversion::getIntRequestParam('userId');
+        $userId = \EndoGuard\Utils\Conversion::getIntRequestParam('userId');
 
         return $this->controller->getUserScoreDetails($userId, $this->apiKey);
     }

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Emails;
+namespace EndoGuard\Models\Grid\Emails;
 
-class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
+class Grid extends \EndoGuard\Models\Grid\Base\Grid {
     public function __construct(int $apiKey) {
         parent::__construct();
 
@@ -33,12 +33,12 @@ class Grid extends \EndoGuard\\Models\Grid\Base\Grid {
     }
 
     protected function calculateCustomParams(array &$result): void {
-        \EndoGuard\\Utils\Enrichment::calculateEmailReputation($result);
+        \EndoGuard\Utils\Enrichment::calculateEmailReputation($result);
     }
 
     protected function convertTimeToUserTimezone(array &$result): void {
         $fields = ['lastseen'];
 
-        \EndoGuard\\Utils\Timezones::translateTimezones($result, $fields);
+        \EndoGuard\Utils\Timezones::translateTimezones($result, $fields);
     }
 }

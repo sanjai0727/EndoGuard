@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class ForgotPassword extends \EndoGuard\\Models\BaseSql {
+class ForgotPassword extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_operators_forgot_password';
 
     public function insertRecord(int $operatorId): string {
@@ -38,7 +38,7 @@ class ForgotPassword extends \EndoGuard\\Models\BaseSql {
 
         $this->execQuery($query, $params);
 
-        $renewKey = \EndoGuard\\Utils\Access::pseudoRandString(32);
+        $renewKey = \EndoGuard\Utils\Access::pseudoRandString(32);
 
         $params = [
             ':operator_id'  => $operatorId,

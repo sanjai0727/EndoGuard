@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Entities;
+namespace EndoGuard\Entities;
 
 class User {
     public int $id;
@@ -69,7 +69,7 @@ class User {
     }
 
     public static function getById(int $accountId, int $apiKey): ?self {
-        $model = new \EndoGuard\\Models\User();
+        $model = new \EndoGuard\Models\User();
         $user = $model->getUserById($accountId, $apiKey);
 
         if (!$user) {

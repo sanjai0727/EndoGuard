@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Api;
+namespace EndoGuard\Models\Api;
 
-class Users extends \EndoGuard\\Models\BaseSql {
+class Users extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_account';
 
     public function getUsersByApiKey(?int $userId, int $apiKey): array {
         $params = [
             ':api_key' => $apiKey,
-            ':user_url' => \EndoGuard\\Utils\Variables::getHostWithProtocolAndBase() . '/id/',
+            ':user_url' => \EndoGuard\Utils\Variables::getHostWithProtocolAndBase() . '/id/',
         ];
 
         $query = (

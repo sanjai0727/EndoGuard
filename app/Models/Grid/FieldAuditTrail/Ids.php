@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\FieldAuditTrail;
+namespace EndoGuard\Models\Grid\FieldAuditTrail;
 
-class Ids extends \EndoGuard\\Models\Grid\Base\Ids {
+class Ids extends \EndoGuard\Models\Grid\Base\Ids {
     public function getDataIdsByUserId(): string {
         return (
             'SELECT

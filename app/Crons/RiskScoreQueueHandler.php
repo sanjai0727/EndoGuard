@@ -15,25 +15,25 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class RiskScoreQueueHandler extends BaseQueue {
-    private \EndoGuard\\Controllers\Admin\Rules\Data $rulesController;
+    private \EndoGuard\Controllers\Admin\Rules\Data $rulesController;
 
     public function __construct() {
-        $this->rulesController = new \EndoGuard\\Controllers\Admin\Rules\Data();
+        $this->rulesController = new \EndoGuard\Controllers\Admin\Rules\Data();
         $this->rulesController->buildEvaluationModels();
     }
 
     public function process(): void {
-        $batchSize = \EndoGuard\\Utils\Variables::getAccountOperationQueueBatchSize();
-        $queueModel = new \EndoGuard\\Models\Queue();
-        $keys = $queueModel->getNextBatchKeys(\EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $batchSize);
+        $batchSize = \EndoGuard\Utils\Variables::getAccountOperationQueueBatchSize();
+        $queueModel = new \EndoGuard\Models\Queue();
+        $keys = $queueModel->getNextBatchKeys(\EndoGuard\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $batchSize);
 
-        parent::baseProcess(\EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
+        parent::baseProcess(\EndoGuard\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
 
-        $blacklist = new \EndoGuard\\Controllers\Admin\Blacklist\Data();
-        $reviewQueue = new \EndoGuard\\Controllers\Admin\ReviewQueue\Data();
+        $blacklist = new \EndoGuard\Controllers\Admin\Blacklist\Data();
+        $reviewQueue = new \EndoGuard\Controllers\Admin\ReviewQueue\Data();
 
         foreach ($keys as $key) {
             $blacklist->setBlacklistUsersCount(false, $key);

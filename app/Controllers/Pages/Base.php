@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Pages;
+namespace EndoGuard\Controllers\Pages;
 
 abstract class Base {
     protected \Base $f3;
@@ -31,7 +31,7 @@ abstract class Base {
 
         $this->f3->set('CSRF', $this->f3->get('SESSION.csrf'));
 
-        \EndoGuard\\Utils\Routes::callExtra('PAGE_BASE');
+        \EndoGuard\Utils\Routes::callExtra('PAGE_BASE');
     }
 
     public function isPostRequest(): bool {
@@ -46,9 +46,9 @@ abstract class Base {
     }
 
     public function getInternalPageTitleWithPostfix(string $title): string {
-        $title = $title ? $title : \EndoGuard\\Utils\Constants::get()->UNAUTHORIZED_USERID;
+        $title = $title ? $title : \EndoGuard\Utils\Constants::get()->UNAUTHORIZED_USERID;
         $safeTitle = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
-        $title = sprintf('%s %s', $safeTitle, \EndoGuard\\Utils\Constants::get()->PAGE_TITLE_POSTFIX);
+        $title = sprintf('%s %s', $safeTitle, \EndoGuard\Utils\Constants::get()->PAGE_TITLE_POSTFIX);
 
         return $title;
     }
@@ -62,7 +62,7 @@ abstract class Base {
 
     public function applyPageParams(array $params): array {
         $time = gmdate('Y-m-d H:i:s');
-        \EndoGuard\\Utils\Timezones::localizeForActiveOperator($time);
+        \EndoGuard\Utils\Timezones::localizeForActiveOperator($time);
 
         $errorCode = $params['ERROR_CODE'] ?? null;
         $successCode = $params['SUCCESS_CODE'] ?? null;
@@ -97,22 +97,22 @@ abstract class Base {
             $params['SUCCESS_MESSAGE_TIMESTAMP'] = $time;
         }
 
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         if ($currentOperator) {
             $cnt = $currentOperator->reviewQueueCnt ?? 0;
-            $params['NUMBER_OF_NOT_REVIEWED_USERS'] = \EndoGuard\\Utils\Conversion::formatKiloValue($cnt);
+            $params['NUMBER_OF_NOT_REVIEWED_USERS'] = \EndoGuard\Utils\Conversion::formatKiloValue($cnt);
 
             $cnt = $currentOperator->blacklistUsersCnt ?? 0;
-            $params['NUMBER_OF_BLACKLIST_USERS'] = \EndoGuard\\Utils\Conversion::formatKiloValue($cnt);
+            $params['NUMBER_OF_BLACKLIST_USERS'] = \EndoGuard\Utils\Conversion::formatKiloValue($cnt);
 
-            $controller = new \EndoGuard\\Controllers\Admin\Home\Data();
+            $controller = new \EndoGuard\Controllers\Admin\Home\Data();
             $params += $controller->getCurrentTime($currentOperator);
         }
 
-        $params['ALLOW_EMAIL_PHONE'] = \EndoGuard\\Utils\Variables::getEmailPhoneAllowed();
+        $params['ALLOW_EMAIL_PHONE'] = \EndoGuard\Utils\Variables::getEmailPhoneAllowed();
 
         $page = $this->page;
-        \EndoGuard\\Utils\DictManager::load($page);
+        \EndoGuard\Utils\DictManager::load($page);
 
         $code = $this->f3->get('SESSION.extra_message_code');
         if ($code !== null) {
@@ -128,7 +128,7 @@ abstract class Base {
             ];
         }
 
-        $params = \EndoGuard\\Utils\Routes::callExtra('APPLY_PAGE_PARAMS', $params, $page) ?? $params;
+        $params = \EndoGuard\Utils\Routes::callExtra('APPLY_PAGE_PARAMS', $params, $page) ?? $params;
 
         return $params;
     }

@@ -15,37 +15,37 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\UserAgent;
+namespace EndoGuard\Controllers\Admin\UserAgent;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function proceedPostRequest(): array {
-        return match (\EndoGuard\\Utils\Conversion::getStringRequestParam('cmd')) {
+        return match (\EndoGuard\Utils\Conversion::getStringRequestParam('cmd')) {
             'reenrichment' => $this->enrichEntity(),
             default => []
         };
     }
 
     public function enrichEntity(): array {
-        $dataController = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $enrichmentKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
+        $dataController = new \EndoGuard\Controllers\Admin\Enrichment\Data();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $enrichmentKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
 
-        $type       = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
-        $search     = \EndoGuard\\Utils\Conversion::getStringRequestParam('search', true);
-        $entityId   = \EndoGuard\\Utils\Conversion::getIntRequestParam('entityId', true);
+        $type       = \EndoGuard\Utils\Conversion::getStringRequestParam('type');
+        $search     = \EndoGuard\Utils\Conversion::getStringRequestParam('search', true);
+        $entityId   = \EndoGuard\Utils\Conversion::getIntRequestParam('entityId', true);
 
         return $dataController->enrichEntity($type, $search, $entityId, $apiKey, $enrichmentKey);
     }
 
     public function checkIfOperatorHasAccess(int $userAgentId, int $apiKey): bool {
-        return (new \EndoGuard\\Models\UserAgent())->checkAccess($userAgentId, $apiKey);
+        return (new \EndoGuard\Models\UserAgent())->checkAccess($userAgentId, $apiKey);
     }
 
     public function getUserAgentDetails(int $userAgentId, int $apiKey): array {
-        return (new \EndoGuard\\Models\UserAgent())->getFullUserAgentInfoById($userAgentId, $apiKey);
+        return (new \EndoGuard\Models\UserAgent())->getFullUserAgentInfoById($userAgentId, $apiKey);
     }
 
     public function isEnrichable(int $apiKey): bool {
-        return (new \EndoGuard\\Models\ApiKeys())->attributeIsEnrichable('ua', $apiKey);
+        return (new \EndoGuard\Models\ApiKeys())->attributeIsEnrichable('ua', $apiKey);
     }
 }

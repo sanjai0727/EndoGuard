@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\UserAgent;
+namespace EndoGuard\Controllers\Admin\UserAgent;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,7 +26,7 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getUserAgentDetails(): array {
-        $userAgentId = \EndoGuard\\Utils\Conversion::getIntRequestParam('userAgentId');
+        $userAgentId = \EndoGuard\Utils\Conversion::getIntRequestParam('userAgentId');
         $hasAccess = $this->controller->checkIfOperatorHasAccess($userAgentId, $this->apiKey);
         if (!$hasAccess) {
             $this->f3->error(404);

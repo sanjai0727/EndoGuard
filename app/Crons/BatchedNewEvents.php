@@ -15,11 +15,11 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class BatchedNewEvents extends Base {
     protected function readyToProcess(): bool {
-        $model = new \EndoGuard\\Models\Cursor();
+        $model = new \EndoGuard\Models\Cursor();
 
         // was not locked; locking now
         if ($model->safeLock()) {
@@ -28,7 +28,7 @@ class BatchedNewEvents extends Base {
 
         $result = $model->getLock();
 
-        if (\EndoGuard\\Utils\DateRange::isQueueTimeouted($result['updated'])) {
+        if (\EndoGuard\Utils\DateRange::isQueueTimeouted($result['updated'])) {
             return false;
         }
 
@@ -44,11 +44,11 @@ class BatchedNewEvents extends Base {
             return;
         }
 
-        $model = new \EndoGuard\\Models\Cursor();
+        $model = new \EndoGuard\Models\Cursor();
 
         try {
             $cursor = $model->getCursor();
-            $next = $model->getNextCursor($cursor, \EndoGuard\\Utils\Variables::getNewEventsBatchSize());
+            $next = $model->getNextCursor($cursor, \EndoGuard\Utils\Variables::getNewEventsBatchSize());
 
             if (!$next) {
                 $this->addLog('No new events.');
@@ -57,11 +57,11 @@ class BatchedNewEvents extends Base {
                 return;
             }
 
-            $accounts = (new \EndoGuard\\Models\Events())->getDistinctAccounts($cursor, $next);
+            $accounts = (new \EndoGuard\Models\Events())->getDistinctAccounts($cursor, $next);
 
-            \EndoGuard\\Utils\Routes::callExtra('BATCHING_NEW_EVENTS', $cursor, $next);
+            \EndoGuard\Utils\Routes::callExtra('BATCHING_NEW_EVENTS', $cursor, $next);
 
-            (new \EndoGuard\\Models\Queue())->addBatch($accounts, \EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
+            (new \EndoGuard\Models\Queue())->addBatch($accounts, \EndoGuard\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE);
 
             $model->updateCursor($next);
 

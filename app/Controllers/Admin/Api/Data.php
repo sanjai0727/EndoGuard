@@ -15,19 +15,19 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Api;
+namespace EndoGuard\Controllers\Admin\Api;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     protected array $ENRICHED_ATTRIBUTES = [];
 
     public function __construct() {
         parent::__construct();
 
-        $this->ENRICHED_ATTRIBUTES = array_keys(\EndoGuard\\Utils\Constants::get()->ENRICHING_ATTRIBUTES);
+        $this->ENRICHED_ATTRIBUTES = array_keys(\EndoGuard\Utils\Constants::get()->ENRICHING_ATTRIBUTES);
     }
 
     public function proceedPostRequest(): array {
-        return match (\EndoGuard\\Utils\Conversion::getStringRequestParam('cmd')) {
+        return match (\EndoGuard\Utils\Conversion::getStringRequestParam('cmd')) {
             'resetKey'          => $this->resetApiKey(),
             'updateApiUsage'    => $this->updateApiUsage(),
             'enrichAll'         => $this->enrichAll(),
@@ -36,12 +36,12 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getUsageStats(int $operatorId): array {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $apiKeys = $model->getKeys($operatorId);
 
         $isOwner = true;
         if (!$apiKeys) {
-            $coOwnerModel = new \EndoGuard\\Models\ApiKeyCoOwner();
+            $coOwnerModel = new \EndoGuard\Models\ApiKeyCoOwner();
             $key = $coOwnerModel->getCoOwnershipKeyId($operatorId);
 
             if ($key) {
@@ -87,7 +87,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getOperatorApiKeysDetails(int $operatorId): array {
-        [$isOwner, $apiKeys] = \EndoGuard\\Utils\ApiKeys::getOperatorApiKeys($operatorId);
+        [$isOwner, $apiKeys] = \EndoGuard\Utils\ApiKeys::getOperatorApiKeys($operatorId);
 
         $resultKeys = [];
 
@@ -108,7 +108,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     private function getSubscriptionStats(string $token): array {
-        $response = \EndoGuard\\Utils\Network::sendApiRequest(null, '/usage-stats', 'GET', $token);
+        $response = \EndoGuard\Utils\Network::sendApiRequest(null, '/usage-stats', 'GET', $token);
         $code = $response->code();
         $result = $response->body();
 
@@ -122,17 +122,17 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
         $pageParams = [];
         $params = $this->extractRequestParams(['token', 'keyId']);
         // TODO: valid only for owners?
-        $errorCode = \EndoGuard\\Utils\Validators::validateResetApiKey($params);
+        $errorCode = \EndoGuard\Utils\Validators::validateResetApiKey($params);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $keyId = \EndoGuard\\Utils\Conversion::getIntRequestParam('keyId');
+            $keyId = \EndoGuard\Utils\Conversion::getIntRequestParam('keyId');
 
-            $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+            $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
             $operatorId = $currentOperator->id;
 
-            $model = new \EndoGuard\\Models\ApiKeys();
+            $model = new \EndoGuard\Models\ApiKeys();
             $model->resetKey($keyId, $operatorId);
 
             $pageParams['SUCCESS_MESSAGE'] = $this->f3->get('AdminApi_reset_success_message');
@@ -144,18 +144,18 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     public function enrichAll(): array {
         $pageParams = [];
         $params = $this->extractRequestParams(['token']);
-        $enrichmentKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
-        $errorCode = \EndoGuard\\Utils\Validators::validateEnrichAll($params, $enrichmentKey);
+        $enrichmentKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
+        $errorCode = \EndoGuard\Utils\Validators::validateEnrichAll($params, $enrichmentKey);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+            $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
 
-            $model = new \EndoGuard\\Models\Users();
+            $model = new \EndoGuard\Models\Users();
             $accountsToEnrich = $model->notCheckedUsers($apiKey);
 
-            (new \EndoGuard\\Models\Queue())->addBatchIds($accountsToEnrich, \EndoGuard\\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
+            (new \EndoGuard\Models\Queue())->addBatchIds($accountsToEnrich, \EndoGuard\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
 
             $pageParams['SUCCESS_MESSAGE'] = $this->f3->get('AdminApi_manual_enrichment_success_message');
         }
@@ -177,33 +177,33 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
         $pageParams = [];
         // apiToken, exchangeBlacklist optional
         $params = $this->extractRequestParams(['token', 'keyId', 'enrichedAttributes']);
-        $errorCode = \EndoGuard\\Utils\Validators::validateUpdateApiUsage($params, $this->ENRICHED_ATTRIBUTES);
+        $errorCode = \EndoGuard\Utils\Validators::validateUpdateApiUsage($params, $this->ENRICHED_ATTRIBUTES);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
         } else {
-            $keyId = \EndoGuard\\Utils\Conversion::getIntRequestParam('keyId');
+            $keyId = \EndoGuard\Utils\Conversion::getIntRequestParam('keyId');
 
-            $model = new \EndoGuard\\Models\ApiKeys();
+            $model = new \EndoGuard\Models\ApiKeys();
             $model->getKeyById($keyId);
 
-            $apiToken = \EndoGuard\\Utils\Conversion::getStringRequestParam('apiToken', true);
+            $apiToken = \EndoGuard\Utils\Conversion::getStringRequestParam('apiToken', true);
 
             if ($apiToken !== null) {
                 $apiToken = trim($apiToken);
                 [$code, , $error] = $this->getSubscriptionStats($apiToken);
                 if (strlen($error) > 0 || $code > 201) {
-                    $pageParams['ERROR_CODE'] = \EndoGuard\\Utils\ErrorCodes::SUBSCRIPTION_KEY_INVALID_UPDATE;
+                    $pageParams['ERROR_CODE'] = \EndoGuard\Utils\ErrorCodes::SUBSCRIPTION_KEY_INVALID_UPDATE;
                     return $pageParams;
                 }
                 $model->updateInternalToken($apiToken, $keyId);
             }
 
-            $enrichedAttributes = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('enrichedAttributes');
+            $enrichedAttributes = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('enrichedAttributes');
             $skipEnrichingAttr = array_diff($this->ENRICHED_ATTRIBUTES, array_keys($enrichedAttributes));
             $model->updateSkipEnrichingAttributes($skipEnrichingAttr, $keyId);
 
-            $skipBlacklistSync = !\EndoGuard\\Utils\Conversion::getStringRequestParam('exchangeBlacklist');
+            $skipBlacklistSync = !\EndoGuard\Utils\Conversion::getStringRequestParam('exchangeBlacklist');
             $model->updateSkipBlacklistSynchronisation($skipBlacklistSync, $keyId);
 
             $pageParams['SUCCESS_MESSAGE'] = $this->f3->get('AdminApi_data_enrichment_success_message');
@@ -213,17 +213,17 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getNotCheckedEntitiesForLoggedUser(): bool {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $controller = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $controller = new \EndoGuard\Controllers\Admin\Enrichment\Data();
 
         return $controller->getNotCheckedExists($apiKey);
     }
 
     public function getScheduledForEnrichment(): bool {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $model = new \EndoGuard\\Models\Queue();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $model = new \EndoGuard\Models\Queue();
 
         // do not use isInQueue() to prevent true on failed state
-        return $model->actionIsInQueueProcessing(\EndoGuard\\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
+        return $model->actionIsInQueueProcessing(\EndoGuard\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE, $apiKey);
     }
 }

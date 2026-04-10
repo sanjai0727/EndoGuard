@@ -15,11 +15,11 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Home;
+namespace EndoGuard\Controllers\Admin\Home;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getChart(string $mode, int $apiKey): array {
-        $modelMap = \EndoGuard\\Utils\Constants::get()->CHART_MODEL_MAP;
+        $modelMap = \EndoGuard\Utils\Constants::get()->CHART_MODEL_MAP;
 
         $model = array_key_exists($mode, $modelMap) ? new $modelMap[$mode]() : null;
 
@@ -27,7 +27,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getStat(string $mode, ?array $dateRange, int $apiKey): array {
-        $model = new \EndoGuard\\Models\Dashboard();
+        $model = new \EndoGuard\Models\Dashboard();
 
         $result = [
             'total'         => null,
@@ -69,7 +69,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getTopTen(string $mode, ?array $dateRange, int $apiKey): array {
-        $modelMap = \EndoGuard\\Utils\Constants::get()->TOP_TEN_MODELS_MAP;
+        $modelMap = \EndoGuard\Utils\Constants::get()->TOP_TEN_MODELS_MAP;
 
         $model = array_key_exists($mode, $modelMap) ? new $modelMap[$mode]() : null;
         $data = $model ? $model->getList($apiKey, $dateRange) : [];
@@ -83,13 +83,13 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
         ];
     }
 
-    public function getCurrentTime(\EndoGuard\\Entities\Operator $operator): array {
-        $offset = \EndoGuard\\Utils\Timezones::getOperatorOffset($operator);
+    public function getCurrentTime(\EndoGuard\Entities\Operator $operator): array {
+        $offset = \EndoGuard\Utils\Timezones::getOperatorOffset($operator);
         $now = time() + $offset;
-        $day = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY;
+        $day = \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY;
         $firstJan = mktime(0, 0, 0, 1, 1, intval(gmdate('Y')));
 
-        $day = \EndoGuard\\Utils\Conversion::intVal(ceil(($now - $firstJan) / $day), 0);
+        $day = \EndoGuard\Utils\Conversion::intVal(ceil(($now - $firstJan) / $day), 0);
 
         return [
             'clock_offset'      => $offset,
@@ -100,7 +100,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getConstants(): array {
-        $constants = \EndoGuard\\Utils\Assets\ConstantsClass::getConstantsObj();
+        $constants = \EndoGuard\Utils\Assets\ConstantsClass::getConstantsObj();
 
         return $constants ? $constants::listConstants() : [];
     }

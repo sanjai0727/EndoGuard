@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\ISP;
+namespace EndoGuard\Controllers\Admin\ISP;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,7 +26,7 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getIspDetails(): array {
-        $ispId = \EndoGuard\\Utils\Conversion::getIntRequestParam('ispId');
+        $ispId = \EndoGuard\Utils\Conversion::getIntRequestParam('ispId');
         $hasAccess = $this->controller->checkIfOperatorHasAccess($ispId, $this->apiKey);
 
         if (!$hasAccess) {

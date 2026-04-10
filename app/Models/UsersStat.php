@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class UsersStat extends \EndoGuard\\Models\BaseSql {
+class UsersStat extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getStatByPeriod(int $apiKey, int $userId, ?array $dateRange = null): array {

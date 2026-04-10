@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Base;
+namespace EndoGuard\Controllers\Admin\Base;
 
-abstract class Data extends \EndoGuard\\Controllers\Base {
+abstract class Data extends \EndoGuard\Controllers\Base {
     protected function idMapIterate(array $map, object $model, ?string $default = 'getAll', mixed ...$extra): array {
         $result = [];
 
         foreach ($map as $param => $method) {
-            $id = \EndoGuard\\Utils\Conversion::getIntRequestParam($param, true);
+            $id = \EndoGuard\Utils\Conversion::getIntRequestParam($param, true);
             if ($id !== null) {
                 $result = $model->$method($id, ...$extra);
             }

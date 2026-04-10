@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class SessionStat extends \EndoGuard\\Models\BaseSql {
+class SessionStat extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_session_stat';
 
     public function updateTotalsByAccountIds(array $ids, int $apiKey): ?int {

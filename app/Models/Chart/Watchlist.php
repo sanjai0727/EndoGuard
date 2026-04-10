@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
 class Watchlist extends Base {
     private array $userIds = [];

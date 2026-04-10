@@ -15,13 +15,13 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Access {
     public static function cleanHost(): void {
         $f3 = \Base::instance();
 
-        $host = \EndoGuard\\Utils\Variables::getHostWithProtocol();
+        $host = \EndoGuard\Utils\Variables::getHostWithProtocol();
         $host = strtolower(parse_url($host, PHP_URL_HOST));
 
         $f3->set('HOST', $host);
@@ -34,21 +34,21 @@ class Access {
         $csrf = $f3->get('SESSION.csrf');
 
         if (!isset($token) || $token === '' || !isset($csrf) || $csrf === '' || $token !== $csrf) {
-            return \EndoGuard\\Utils\ErrorCodes::CSRF_ATTACK_DETECTED;
+            return \EndoGuard\Utils\ErrorCodes::CSRF_ATTACK_DETECTED;
         }
 
         return false;
     }
 
     public static function checkApiKeyAccess(int $keyId, int $operatorId): bool {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $keyExists = $model->existsByKeyAndOperatorId($keyId, $operatorId);
 
         if ($keyExists) {
             return true;
         }
 
-        $coOwnerModel = new \EndoGuard\\Models\ApiKeyCoOwner();
+        $coOwnerModel = new \EndoGuard\Models\ApiKeyCoOwner();
         $key = $coOwnerModel->getCoOwnershipKeyId($operatorId);
 
         return boolval($key);
@@ -61,22 +61,22 @@ class Access {
     }
 
     public static function getCurrentOperatorId(): ?int {
-        return \EndoGuard\\Utils\Routes::getCurrentRequestOperator()?->id;
+        return \EndoGuard\Utils\Routes::getCurrentRequestOperator()?->id;
     }
 
     public static function getCurrentOperatorApiKeyId(): ?int {
-        return \EndoGuard\\Utils\Routes::getCurrentRequestApiKey()?->id;
+        return \EndoGuard\Utils\Routes::getCurrentRequestApiKey()?->id;
     }
 
     public static function hashPassword(string $password): string {
-        $pepper = \EndoGuard\\Utils\Variables::getPepper();
+        $pepper = \EndoGuard\Utils\Variables::getPepper();
         $pepperedPassword = hash_hmac('sha256', $password, $pepper);
 
         return password_hash($pepperedPassword, PASSWORD_DEFAULT);
     }
 
     public static function verifyPassword(string $unverified, string $password): bool {
-        $pepper = \EndoGuard\\Utils\Variables::getPepper();
+        $pepper = \EndoGuard\Utils\Variables::getPepper();
         $pepperedPassword = hash_hmac('sha256', $unverified, $pepper);
 
         return password_verify($pepperedPassword, $password);

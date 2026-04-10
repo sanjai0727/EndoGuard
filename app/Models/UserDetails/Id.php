@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\UserDetails;
+namespace EndoGuard\Models\UserDetails;
 
-class Id extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\ApiKeyAccessAuthorizationInterface {
+class Id extends \EndoGuard\Models\BaseSql implements \EndoGuard\Interfaces\ApiKeyAccessAuthorizationInterface {
     protected ?string $DB_TABLE_NAME = 'event_account';
 
     public function checkAccess(int $subjectId, int $apiKey): bool {
@@ -83,7 +83,7 @@ class Id extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\Ap
         $result = $results[0] ?? [];
 
         $tsColumns = ['created', 'lastseen', 'score_updated_at', 'latest_decision', 'updated', 'added_to_review'];
-        \EndoGuard\\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $result);
+        \EndoGuard\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $result);
 
         return $result;
     }

@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Context;
+namespace EndoGuard\Models\Context;
 
 class Device extends Base {
     protected ?bool $uniqueValues = false;

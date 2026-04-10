@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class OperatorsRules extends \EndoGuard\\Models\BaseSql {
+class OperatorsRules extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_operators_rules';
 
     public function getAllValidRulesByOperator(int $apiKey): array {

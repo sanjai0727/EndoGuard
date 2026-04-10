@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Devices;
+namespace EndoGuard\Models\Grid\Devices;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event_device.created DESC';
     protected string $dateRangeField = 'event_device.lastseen';
 

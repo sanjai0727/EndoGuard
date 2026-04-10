@@ -15,12 +15,12 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\FieldAuditTrail;
+namespace EndoGuard\Controllers\Admin\FieldAuditTrail;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
         $result = [];
-        $model = new \EndoGuard\\Models\Grid\FieldAuditTrail\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\FieldAuditTrail\Grid($apiKey);
 
         $map = [
             'userId'        => 'getDataByUserId',
@@ -32,7 +32,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
         $ids = array_column($result['data'], 'field_audit_id');
         if ($ids) {
-            $model = new \EndoGuard\\Models\FieldAudit();
+            $model = new \EndoGuard\Models\FieldAudit();
             $model->updateTotalsByEntityIds($ids, $apiKey);
             $result['data'] = $model->refreshTotals($result['data'], $apiKey);
         }
@@ -42,12 +42,12 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
     public function getFieldEventDetails(int $id, int $apiKey): array {
         $result = [];
-        $model = new \EndoGuard\\Models\FieldAuditTrail();
+        $model = new \EndoGuard\Models\FieldAuditTrail();
         $trailResult = $model->getById($id, $apiKey);
 
         if ($trailResult) {
             $eventId = $trailResult['event_id'];
-            $controller = new \EndoGuard\\Controllers\Admin\Events\Data();
+            $controller = new \EndoGuard\Controllers\Admin\Events\Data();
             $result = $controller->getEventDetails($eventId, $apiKey);
 
             if ($result) {

@@ -15,19 +15,19 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Countries;
+namespace EndoGuard\Controllers\Admin\Countries;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
         $result = [];
 
-        $model = new \EndoGuard\\Models\Grid\Countries\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Countries\Grid($apiKey);
 
         $result = $model->getAll();
 
         $ids = array_column($result['data'], 'id');
         if ($ids) {
-            $model = new \EndoGuard\\Models\Country();
+            $model = new \EndoGuard\Models\Country();
             $model->updateTotalsByEntityIds($ids, $apiKey);
             $result['data'] = $model->refreshTotals($result['data'], $apiKey);
         }
@@ -38,7 +38,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     public function getMap(int $apiKey): array {
         $result = [];
 
-        $model = new \EndoGuard\\Models\Map();
+        $model = new \EndoGuard\Models\Map();
 
         $map = [
             'userId'        => 'getCountriesByUserId',

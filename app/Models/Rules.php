@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Rules extends \EndoGuard\\Models\BaseSql {
+class Rules extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_rules';
 
     public function getAll(): array {

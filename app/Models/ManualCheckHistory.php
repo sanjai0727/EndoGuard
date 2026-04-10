@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class ManualCheckHistory extends \EndoGuard\\Models\BaseSql {
+class ManualCheckHistory extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_manual_check_history';
 
     public function getLastByOperatorId(int $operatorId, int $limit = 15): array {

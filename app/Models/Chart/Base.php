@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
-abstract class Base extends \EndoGuard\\Models\BaseSql {
+abstract class Base extends \EndoGuard\Models\BaseSql {
     protected function concatDataLines(array $data1, string $field1, array $data2, string $field2, array $data3 = [], ?string $field3 = null): array {
         $data0 = [];
         $iters = count($data1);
@@ -77,7 +77,7 @@ abstract class Base extends \EndoGuard\\Models\BaseSql {
         }
 
         // TODO: tmp order troubles fix
-        usort($data0, [\EndoGuard\\Utils\Sort::class, 'cmpTimestamp']);
+        usort($data0, [\EndoGuard\Utils\Sort::class, 'cmpTimestamp']);
 
         return $data0;
     }
@@ -86,14 +86,14 @@ abstract class Base extends \EndoGuard\\Models\BaseSql {
         $cnt = count($params);
         $data = array_fill(0, $cnt, []);
 
-        $step = \EndoGuard\\Utils\Constants::get()->CHART_RESOLUTION[\EndoGuard\\Utils\DateRange::getResolutionFromRequest()];
+        $step = \EndoGuard\Utils\Constants::get()->CHART_RESOLUTION[\EndoGuard\Utils\DateRange::getResolutionFromRequest()];
         // use offset shift because $startTs/$endTs compared with shifted ['ts']
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest($offset);
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest($offset);
 
         if (!$dateRange) {
             $now = time() + $offset;
-            $week = \EndoGuard\\Utils\Constants::get()->SECONDS_IN_WEEK;
+            $week = \EndoGuard\Utils\Constants::get()->SECONDS_IN_WEEK;
             if (count($params[0]) === 0) {
                 $dateRange = [
                     'endDate' => date('Y-m-d H:i:s', $now),
@@ -133,7 +133,7 @@ abstract class Base extends \EndoGuard\\Models\BaseSql {
 
     protected function execute(string $query, int $apiKey): array {
         // do not use offset because :start_time/:end_time compared with UTC db timestamps
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
 
         // Search request does not contain daterange param
         if (!$dateRange) {
@@ -143,13 +143,13 @@ abstract class Base extends \EndoGuard\\Models\BaseSql {
             ];
         }
 
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
 
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
+            ':resolution'   => \EndoGuard\Utils\DateRange::getResolutionFromRequest(),
             ':offset'       => strval($offset),     // str for postgres
         ];
 

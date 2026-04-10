@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\ManualCheck;
+namespace EndoGuard\Controllers\Admin\ManualCheck;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminManualCheck';
 
     public function getPageParams(): array {
@@ -30,7 +30,7 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
             'JS'                => 'admin_manual_check.js',
         ];
 
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $operatorId = $currentOperator->id;
 
         if ($this->isPostRequest()) {

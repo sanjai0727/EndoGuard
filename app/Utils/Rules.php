@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Rules {
     public static function checkPhoneCountryMatchIp(array $params): ?bool {
@@ -30,7 +30,7 @@ class Rules {
         $deviceCreated = new \DateTime($params['event_device_created'][$idx]);
         $deviceLastseen = new \DateTime($params['event_device_lastseen'][$idx]);
 
-        return abs($deviceLastseen->getTimestamp() - $deviceCreated->getTimestamp()) < \EndoGuard\\Utils\Constants::get()->RULE_NEW_DEVICE_MAX_AGE_IN_SECONDS;
+        return abs($deviceLastseen->getTimestamp() - $deviceCreated->getTimestamp()) < \EndoGuard\Utils\Constants::get()->RULE_NEW_DEVICE_MAX_AGE_IN_SECONDS;
     }
 
     public static function countryIsNewByIpId(array $params, int $ipId): bool {

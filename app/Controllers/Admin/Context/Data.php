@@ -15,39 +15,39 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Context;
+namespace EndoGuard\Controllers\Admin\Context;
 
-class Data extends \EndoGuard\\Controllers\Base {
-    private \EndoGuard\\Models\Context\User $userModel;
-    private \EndoGuard\\Models\Context\Ip $ipModel;
-    private \EndoGuard\\Models\Context\Device $deviceModel;
-    private \EndoGuard\\Models\Context\Email $emailModel;
-    private \EndoGuard\\Models\Context\Phone $phoneModel;
-    private \EndoGuard\\Models\Context\Event $eventModel;
-    private \EndoGuard\\Models\Context\Session $sessionModel;
-    private \EndoGuard\\Models\ApiKeys $keyModel;
+class Data extends \EndoGuard\Controllers\Base {
+    private \EndoGuard\Models\Context\User $userModel;
+    private \EndoGuard\Models\Context\Ip $ipModel;
+    private \EndoGuard\Models\Context\Device $deviceModel;
+    private \EndoGuard\Models\Context\Email $emailModel;
+    private \EndoGuard\Models\Context\Phone $phoneModel;
+    private \EndoGuard\Models\Context\Event $eventModel;
+    private \EndoGuard\Models\Context\Session $sessionModel;
+    private \EndoGuard\Models\ApiKeys $keyModel;
 
-    private ?\EndoGuard\\Assets\Context $extraModel;
+    private ?\EndoGuard\Assets\Context $extraModel;
 
     private array $suspiciousWordsUrl;
     private array $suspiciousWordsUserAgent;
     private array $suspiciousWordsEmail;
 
     public function __construct() {
-        $this->userModel    = new \EndoGuard\\Models\Context\User();
-        $this->ipModel      = new \EndoGuard\\Models\Context\Ip();
-        $this->deviceModel  = new \EndoGuard\\Models\Context\Device();
-        $this->emailModel   = new \EndoGuard\\Models\Context\Email();
-        $this->phoneModel   = new \EndoGuard\\Models\Context\Phone();
-        $this->eventModel   = new \EndoGuard\\Models\Context\Event();
-        $this->sessionModel = new \EndoGuard\\Models\Context\Session();
-        $this->keyModel     = new \EndoGuard\\Models\ApiKeys();
+        $this->userModel    = new \EndoGuard\Models\Context\User();
+        $this->ipModel      = new \EndoGuard\Models\Context\Ip();
+        $this->deviceModel  = new \EndoGuard\Models\Context\Device();
+        $this->emailModel   = new \EndoGuard\Models\Context\Email();
+        $this->phoneModel   = new \EndoGuard\Models\Context\Phone();
+        $this->eventModel   = new \EndoGuard\Models\Context\Event();
+        $this->sessionModel = new \EndoGuard\Models\Context\Session();
+        $this->keyModel     = new \EndoGuard\Models\ApiKeys();
 
-        $this->extraModel   = \EndoGuard\\Utils\Assets\ContextClass::getContextObj();
+        $this->extraModel   = \EndoGuard\Utils\Assets\ContextClass::getContextObj();
 
-        $this->suspiciousWordsUrl       = \EndoGuard\\Utils\Assets\Lists\Url::getList();
-        $this->suspiciousWordsUserAgent = \EndoGuard\\Utils\Assets\Lists\UserAgent::getList();
-        $this->suspiciousWordsEmail     = \EndoGuard\\Utils\Assets\Lists\Email::getList();
+        $this->suspiciousWordsUrl       = \EndoGuard\Utils\Assets\Lists\Url::getList();
+        $this->suspiciousWordsUserAgent = \EndoGuard\Utils\Assets\Lists\UserAgent::getList();
+        $this->suspiciousWordsEmail     = \EndoGuard\Utils\Assets\Lists\Email::getList();
     }
 
     public function getContextByAccountIds(array $accountIds, int $apiKey): array {
@@ -74,8 +74,8 @@ class Data extends \EndoGuard\\Controllers\Base {
         $extraDetails       = $this->extraModel?->getContext($accountIds, $apiKey) ?? [];
 
         $timezoneName       = $this->keyModel->getTimezoneByKeyId($apiKey);
-        $utcTime            = new \DateTime('now', \EndoGuard\\Utils\Timezones::getUtcTimezone());
-        $timezone           = \EndoGuard\\Utils\Timezones::getTimezone($timezoneName);
+        $utcTime            = new \DateTime('now', \EndoGuard\Utils\Timezones::getUtcTimezone());
+        $timezone           = \EndoGuard\Utils\Timezones::getTimezone($timezoneName);
         $offsetInSeconds    = $timezone->getOffset($utcTime);
 
         // get only suspicious sessions
@@ -191,10 +191,10 @@ class Data extends \EndoGuard\\Controllers\Base {
         $record['le_email_has_vowels']              = preg_match('/[aeoui]/i', $record['le_local_part']) > 0;
         $record['le_email_has_consonants']          = preg_match('/[bcdfghjklmnpqrstvwxyz]/i', $record['le_local_part']) > 0;
 
-        $record['le_with_long_local_part_length']   = $localPartLen > \EndoGuard\\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_LOCAL_PART_LENGTH;
-        $record['le_with_long_domain_length']       = $domainPartLen > \EndoGuard\\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_DOMAIN_LENGTH;
+        $record['le_with_long_local_part_length']   = $localPartLen > \EndoGuard\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_LOCAL_PART_LENGTH;
+        $record['le_with_long_domain_length']       = $domainPartLen > \EndoGuard\Utils\Constants::get()->RULE_EMAIL_MAXIMUM_DOMAIN_LENGTH;
         $record['le_email_in_blockemails']          = $record['le_blockemails'] ?? false;
-        $record['le_is_invalid']                    = $record['le_exists'] && !\EndoGuard\\Utils\Conversion::filterEmail($record['le_email']);
+        $record['le_is_invalid']                    = $record['le_exists'] && !\EndoGuard\Utils\Conversion::filterEmail($record['le_email']);
 
         $record['le_appears_on_alert_list']         = $record['le_alert_list'] ?? false;
 
@@ -230,8 +230,8 @@ class Data extends \EndoGuard\\Controllers\Base {
         $record['lp_fraud_detected']    = $record['lp_fraud_detected'] ?? false;
         $record['le_fraud_detected']    = $record['le_fraud_detected'] ?? false;
 
-        $record['eup_has_rare_browser'] = (bool) count(array_diff($record['eup_browser_name'], array_keys(\EndoGuard\\Utils\Constants::get()->RULE_REGULAR_BROWSER_NAMES)));
-        $record['eup_has_rare_os']      = (bool) count(array_diff($record['eup_os_name'], \EndoGuard\\Utils\Constants::get()->RULE_REGULAR_OS_NAMES));
+        $record['eup_has_rare_browser'] = (bool) count(array_diff($record['eup_browser_name'], array_keys(\EndoGuard\Utils\Constants::get()->RULE_REGULAR_BROWSER_NAMES)));
+        $record['eup_has_rare_os']      = (bool) count(array_diff($record['eup_os_name'], \EndoGuard\Utils\Constants::get()->RULE_REGULAR_OS_NAMES));
         $record['eup_device_count']     = count($record['eup_device']);
 
         $record['eup_vulnerable_ua']    = false;
@@ -255,15 +255,15 @@ class Data extends \EndoGuard\\Controllers\Base {
 
         $eventTypeCount                     = array_count_values($eventTypeFiltered);
 
-        //$accountLoginFailId = \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
-        $accountEmailChangeId               = \EndoGuard\\Utils\Constants::get()->ACCOUNT_EMAIL_CHANGE_EVENT_TYPE_ID;
-        $accountPwdChangeId                 = \EndoGuard\\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID;
+        //$accountLoginFailId = \EndoGuard\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
+        $accountEmailChangeId               = \EndoGuard\Utils\Constants::get()->ACCOUNT_EMAIL_CHANGE_EVENT_TYPE_ID;
+        $accountPwdChangeId                 = \EndoGuard\Utils\Constants::get()->ACCOUNT_PASSWORD_CHANGE_EVENT_TYPE_ID;
 
         //$record['event_failed_login_attempts'] = $eventTypeCount[$accountLoginFailId] ?? 0;
         $record['event_email_changed']      = array_key_exists($accountEmailChangeId, $eventTypeCount);
         $record['event_password_changed']   = array_key_exists($accountPwdChangeId, $eventTypeCount);
 
-        $record['event_http_method_head']   = in_array(\EndoGuard\\Utils\Constants::get()->EVENT_REQUEST_TYPE_HEAD, $record['event_http_method']);
+        $record['event_http_method_head']   = in_array(\EndoGuard\Utils\Constants::get()->EVENT_REQUEST_TYPE_HEAD, $record['event_http_method']);
 
         $record['event_empty_referer']      = in_array(true, $record['event_empty_referer'], true);
 
@@ -333,7 +333,7 @@ class Data extends \EndoGuard\\Controllers\Base {
             $diff = $dt1->diff($dt2)->format('%a');
         }
 
-        return \EndoGuard\\Utils\Conversion::intVal($diff, 0);
+        return \EndoGuard\Utils\Conversion::intVal($diff, 0);
     }
 
     private function getUserFullName(array $record): string {

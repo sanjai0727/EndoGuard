@@ -15,23 +15,23 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Base;
+namespace EndoGuard\Controllers\Admin\Base;
 
-abstract class Navigation extends \EndoGuard\\Controllers\Base {
-    protected \EndoGuard\\Views\Base $response;
+abstract class Navigation extends \EndoGuard\Controllers\Base {
+    protected \EndoGuard\Views\Base $response;
 
     protected ?object $page = null;
     protected ?object $controller = null;
-    protected ?\EndoGuard\\Entities\Operator $operator = null;
+    protected ?\EndoGuard\Entities\Operator $operator = null;
     protected ?int $apiKey = null;
     protected ?int $id = null;
 
     public function __construct() {
         parent::__construct();
 
-        $this->operator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
-        $this->apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $this->id = \EndoGuard\\Utils\Conversion::getIntRequestParam('id', true);
+        $this->operator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
+        $this->apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $this->id = \EndoGuard\Utils\Conversion::getIntRequestParam('id', true);
     }
 
     public function showIndexPage(): void {
@@ -39,21 +39,21 @@ abstract class Navigation extends \EndoGuard\\Controllers\Base {
             return;
         }
 
-        \EndoGuard\\Utils\Routes::redirectIfUnlogged();
+        \EndoGuard\Utils\Routes::redirectIfUnlogged();
 
-        $this->response = new \EndoGuard\\Views\Frontend();
+        $this->response = new \EndoGuard\Views\Frontend();
         $this->response->data = $this->page->getPageParams();
     }
 
     public function beforeroute(): void {
         if ($this->operator) {
-            \EndoGuard\\Utils\Updates::syncUpdates();
+            \EndoGuard\Utils\Updates::syncUpdates();
 
             if (!$this->apiKey) {
                 $this->f3->reroute('/logout');
             }
 
-            $messages = \EndoGuard\\Utils\SystemMessages::get($this->apiKey);
+            $messages = \EndoGuard\Utils\SystemMessages::get($this->apiKey);
 
             $this->f3->set('SYSTEM_MESSAGES', $messages);
 
@@ -79,7 +79,7 @@ abstract class Navigation extends \EndoGuard\\Controllers\Base {
 
         $isPageAllowed = in_array($route, $allowedPages);
 
-        return !$isPageAllowed && ($message['id'] === \EndoGuard\\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_YET);
+        return !$isPageAllowed && ($message['id'] === \EndoGuard\Utils\ErrorCodes::THERE_ARE_NO_EVENTS_YET);
     }
 
     public function isPostRequest(): bool {
@@ -99,9 +99,9 @@ abstract class Navigation extends \EndoGuard\\Controllers\Base {
             $hive = $this->f3->hive();
             $path = $hive['PATH'];
 
-            $log = \EndoGuard\\Utils\Database::getDb()->log();
+            $log = \EndoGuard\Utils\Database::getDb()->log();
             if ($log) {
-                \EndoGuard\\Utils\Logger::logSql($path, $log);
+                \EndoGuard\Utils\Logger::logSql($path, $log);
             }
         }
 

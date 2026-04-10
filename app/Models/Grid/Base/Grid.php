@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Base;
+namespace EndoGuard\Models\Grid\Base;
 
-class Grid extends \EndoGuard\\Models\BaseSql {
+class Grid extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     protected ?object $idsModel = null;
@@ -31,7 +31,7 @@ class Grid extends \EndoGuard\\Models\BaseSql {
         $data = $this->getData();
         $total = $this->getTotal();
 
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
 
         return [
             'data' => $data,
@@ -66,7 +66,7 @@ class Grid extends \EndoGuard\\Models\BaseSql {
     }
 
     protected function convertTimeToUserTimezone(array &$result): void {
-        \EndoGuard\\Utils\Timezones::translateTimezones($result);
+        \EndoGuard\Utils\Timezones::translateTimezones($result);
     }
 
     protected function calculateCustomParams(array &$result): void {

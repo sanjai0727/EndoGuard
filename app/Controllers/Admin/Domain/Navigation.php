@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Domain;
+namespace EndoGuard\Controllers\Admin\Domain;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,7 +26,7 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getDomainDetails(): array {
-        $domainId = \EndoGuard\\Utils\Conversion::getIntRequestParam('domainId');
+        $domainId = \EndoGuard\Utils\Conversion::getIntRequestParam('domainId');
         $hasAccess = $this->controller->checkIfOperatorHasAccess($domainId, $this->apiKey);
 
         if (!$hasAccess) {

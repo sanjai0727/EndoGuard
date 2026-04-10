@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Domain;
+namespace EndoGuard\Controllers\Admin\Domain;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminDomain';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $domainId = \EndoGuard\\Utils\Conversion::getIntUrlParam('domainId');
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $domainId = \EndoGuard\Utils\Conversion::getIntUrlParam('domainId');
         $hasAccess = $dataController->checkIfOperatorHasAccess($domainId, $apiKey);
 
         if (!$hasAccess) {

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Phone extends \EndoGuard\\Models\BaseSql {
+class Phone extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_phone';
 
     public function getPhoneDetails(int $id, int $apiKey): array {

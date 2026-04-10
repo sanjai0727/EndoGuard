@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class DeletionQueueHandler extends BaseQueue {
     public function process(): void {
-        parent::baseProcess(\EndoGuard\\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE);
+        parent::baseProcess(\EndoGuard\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE);
     }
 
     protected function processItem(array $item): void {
-        $user = new \EndoGuard\\Models\User();
+        $user = new \EndoGuard\Models\User();
         $user->deleteAllUserData($item['event_account'], $item['key']);
     }
 }

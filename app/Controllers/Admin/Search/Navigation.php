@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Search;
+namespace EndoGuard\Controllers\Admin\Search;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,7 +26,7 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getSearchResults(): array {
-        $query = \EndoGuard\\Utils\Conversion::getStringRequestParam('query');
+        $query = \EndoGuard\Utils\Conversion::getStringRequestParam('query');
 
         return $this->controller->getSearchResults($query, $this->apiKey);
     }

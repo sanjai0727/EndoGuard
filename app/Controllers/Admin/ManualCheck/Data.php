@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\ManualCheck;
+namespace EndoGuard\Controllers\Admin\ManualCheck;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function proceedPostRequest(): array {
         return $this->performSearch();
     }
@@ -29,9 +29,9 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
             'SEARCH_VALUES' => $params,
         ];
 
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $enrichmentKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
-        $errorCode = \EndoGuard\\Utils\Validators::validateSearch($params, $enrichmentKey);
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $enrichmentKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
+        $errorCode = \EndoGuard\Utils\Validators::validateSearch($params, $enrichmentKey);
 
         if ($errorCode) {
             $pageParams['ERROR_CODE'] = $errorCode;
@@ -39,10 +39,10 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
             return $pageParams;
         }
 
-        $type   = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
-        $search = \EndoGuard\\Utils\Conversion::getStringRequestParam('search');
+        $type   = \EndoGuard\Utils\Conversion::getStringRequestParam('type');
+        $search = \EndoGuard\Utils\Conversion::getStringRequestParam('search');
 
-        $controller = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
+        $controller = new \EndoGuard\Controllers\Admin\Enrichment\Data();
         $result = $controller->enrichEntity($type, $search, null, $apiKey, $enrichmentKey);
 
         if (isset($result['ERROR_CODE'])) {
@@ -51,7 +51,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
             return $pageParams;
         }
 
-        $operatorId = \EndoGuard\\Utils\Routes::getCurrentRequestOperator()->id;
+        $operatorId = \EndoGuard\Utils\Routes::getCurrentRequestOperator()->id;
         $this->saveSearch($search, $type, $operatorId);
 
         // TODO: return alert_list back in next release
@@ -74,12 +74,12 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     private function saveSearch(string $query, string $type, int $operatorId): void {
-        $history = new \EndoGuard\\Models\ManualCheckHistory();
+        $history = new \EndoGuard\Models\ManualCheckHistory();
         $history->insertRecord($query, $type, $operatorId);
     }
 
     public function getSearchHistory(int $operatorId): ?array {
-        $model = new \EndoGuard\\Models\ManualCheckHistory();
+        $model = new \EndoGuard\Models\ManualCheckHistory();
 
         return $model->getLastByOperatorId($operatorId);
     }

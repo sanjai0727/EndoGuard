@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Blacklist;
+namespace EndoGuard\Models\Grid\Blacklist;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'created DESC, type ASC, value ASC';
     protected string $dateRangeField = 'blacklist.created';
 
@@ -197,7 +197,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         $this->applyDateRange($query, $queryParams);
 
         $searchConditions = '';
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
             $searchConditions .= (
@@ -214,7 +214,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
             );
 
             $queryParams[':search_value'] = '%' . $search['value'] . '%';
-            $queryParams[':offset'] = strval(\EndoGuard\\Utils\Timezones::getCurrentOperatorOffset());
+            $queryParams[':offset'] = strval(\EndoGuard\Utils\Timezones::getCurrentOperatorOffset());
         }
 
         //Add search into request
@@ -224,13 +224,13 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     private function applyEntityTypes(string &$query, array &$queryParams): void {
         $searchCondition = '';
 
-        $entityTypeIds = \EndoGuard\\Utils\Conversion::getArrayRequestParam('entityTypeIds');
+        $entityTypeIds = \EndoGuard\Utils\Conversion::getArrayRequestParam('entityTypeIds');
         if ($entityTypeIds) {
             $clauses = [];
 
             foreach ($entityTypeIds as $key => $entityTypeId) {
                 $clauses[] = 'extra.type = :entity_type_' . $key;
-                $queryParams[':entity_type_' . $key] = strtolower(\EndoGuard\\Utils\Constants::get()->ENTITY_TYPES[$entityTypeId]);
+                $queryParams[':entity_type_' . $key] = strtolower(\EndoGuard\Utils\Constants::get()->ENTITY_TYPES[$entityTypeId]);
             }
 
             $searchCondition = ' AND (' . implode(' OR ', $clauses) . ')';

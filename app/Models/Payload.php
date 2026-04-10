@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Payload extends \EndoGuard\\Models\BaseSql {
+class Payload extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_payload';
 
     public function getByEventId(int $eventId, int $apiKey): ?string {

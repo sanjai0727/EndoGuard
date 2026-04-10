@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
 class SessionStat extends Base {
     protected ?string $DB_TABLE_NAME = 'event_session';
@@ -34,11 +34,11 @@ class SessionStat extends Base {
         }
 
         // use offset shift because $startTs/$endTs compared with shifted ['ts']
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
-        $datesRange = \EndoGuard\\Utils\DateRange::getLatestNDatesRangeFromRequest(14, $offset);
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
+        $datesRange = \EndoGuard\Utils\DateRange::getLatestNDatesRangeFromRequest(14, $offset);
         $endTs = strtotime($datesRange['endDate']);
         $startTs = strtotime($datesRange['startDate']);
-        $step = \EndoGuard\\Utils\Constants::get()->CHART_RESOLUTION[\EndoGuard\\Utils\DateRange::getResolutionFromRequest()];
+        $step = \EndoGuard\Utils\Constants::get()->CHART_RESOLUTION[\EndoGuard\Utils\DateRange::getResolutionFromRequest()];
 
         $endTs = $endTs - ($endTs % $step);
         $startTs = $startTs - ($startTs % $step);
@@ -94,16 +94,16 @@ class SessionStat extends Base {
 
     protected function executeOnRangeById(string $query, int $apiKey): array {
         // do not use offset because :start_time/:end_time compared with UTC event.time
-        $dateRange = \EndoGuard\\Utils\DateRange::getLatestNDatesRangeFromRequest(14);
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
+        $dateRange = \EndoGuard\Utils\DateRange::getLatestNDatesRangeFromRequest(14);
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
 
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            //':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
-            ':resolution'   => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_DAY,
-            ':id'           => \EndoGuard\\Utils\Conversion::getIntRequestParam('id'),
+            //':resolution'   => \EndoGuard\Utils\DateRange::getResolutionFromRequest(),
+            ':resolution'   => \EndoGuard\Utils\Constants::get()->SECONDS_IN_DAY,
+            ':id'           => \EndoGuard\Utils\Conversion::getIntRequestParam('id'),
             ':offset'       => strval($offset),     // str for postgres
         ];
 

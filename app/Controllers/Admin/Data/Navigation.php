@@ -15,10 +15,10 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Data;
+namespace EndoGuard\Controllers\Admin\Data;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
-    private \EndoGuard\\Controllers\Admin\Data\Data $dataController;
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
+    private \EndoGuard\Controllers\Admin\Data\Data $dataController;
 
     public function beforeroute(): void {
         $errorCode = $this->validateCsrfToken();
@@ -26,10 +26,10 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
             $this->f3->error(403);
         }
 
-        \EndoGuard\\Utils\Routes::redirectIfUnlogged();
+        \EndoGuard\Utils\Routes::redirectIfUnlogged();
 
         $this->dataController = new Data();
-        $this->response = new \EndoGuard\\Views\Json();
+        $this->response = new \EndoGuard\Views\Json();
     }
 
     // POST requests

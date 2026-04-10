@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Entities;
+namespace EndoGuard\Entities;
 
 class ApiKey {
     public int $id;
@@ -60,7 +60,7 @@ class ApiKey {
     }
 
     public static function getById(int $apiKey): ?self {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $key = $model->getKeyById($apiKey);
 
         if (!$key) {

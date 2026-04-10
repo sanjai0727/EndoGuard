@@ -15,13 +15,13 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 abstract class BaseQueue extends Base {
     abstract protected function processItem(array $item): void;
 
     protected function readyToProcess(string $action): bool {
-        $model = new \EndoGuard\\Models\Queue();
+        $model = new \EndoGuard\Models\Queue();
 
         $result = $model->checkExecuting($action);
 
@@ -29,7 +29,7 @@ abstract class BaseQueue extends Base {
             return true;    // no executing action
         }
 
-        if (!\EndoGuard\\Utils\DateRange::isQueueTimeouted($result['updated'])) {
+        if (!\EndoGuard\Utils\DateRange::isQueueTimeouted($result['updated'])) {
             return false;   // previous job still executing
         }
 
@@ -44,21 +44,21 @@ abstract class BaseQueue extends Base {
         $prefix = '';
 
         switch ($action) {
-            case \EndoGuard\\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE:
+            case \EndoGuard\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE:
                 $prefix = 'Deletion';
                 break;
-            case \EndoGuard\\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE:
+            case \EndoGuard\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE:
                 $prefix = 'Blacklist';
                 break;
-            case \EndoGuard\\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE:
+            case \EndoGuard\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE:
                 $prefix = 'Enrichment';
                 break;
-            case \EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE:
+            case \EndoGuard\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE:
                 $prefix = 'Risk score';
                 break;
         }
 
-        $model = new \EndoGuard\\Models\Queue();
+        $model = new \EndoGuard\Models\Queue();
 
         if (!$prefix || !$this->readyToProcess($action)) {
             $this->addLog($prefix . ' queue is already being executed by another cron job.');
@@ -75,10 +75,10 @@ abstract class BaseQueue extends Base {
         $batch = [];
         $bottom = false;
 
-        $model = new \EndoGuard\\Models\Queue();
+        $model = new \EndoGuard\Models\Queue();
 
         while (!$bottom) {
-            $batchSize = \EndoGuard\\Utils\Variables::getAccountOperationQueueBatchSize();
+            $batchSize = \EndoGuard\Utils\Variables::getAccountOperationQueueBatchSize();
             $this->addLog(sprintf('Fetching next batch (%s) in queue.', $batchSize));
 
             // status waiting action deletion, older first
@@ -106,13 +106,13 @@ abstract class BaseQueue extends Base {
                 }
 
                 // exit if took too long
-                $batchTimeout = (time() - $start) > \EndoGuard\\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_EXECUTE_TIME_SEC;
+                $batchTimeout = (time() - $start) > \EndoGuard\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_EXECUTE_TIME_SEC;
                 if ($batchTimeout) {
                     break;
                 }
             }
             // exit if took too long
-            $bottom = (time() - $start) > \EndoGuard\\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_EXECUTE_TIME_SEC;
+            $bottom = (time() - $start) > \EndoGuard\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_EXECUTE_TIME_SEC;
         }
 
         $model->setCompleted($success);
@@ -126,7 +126,7 @@ abstract class BaseQueue extends Base {
                 'trace'     => $errors[0],
                 'sql_log'   => '',
             ];
-            \EndoGuard\\Utils\ErrorHandler::saveErrorInformation(\Base::instance(), $errObj);
+            \EndoGuard\Utils\ErrorHandler::saveErrorInformation(\Base::instance(), $errObj);
         }
 
         $this->addLog(sprintf(

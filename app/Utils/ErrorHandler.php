@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class ErrorHandler {
     public static function getErrorDetails(\Base $f3): array {
@@ -60,7 +60,7 @@ class ErrorHandler {
     }
 
     public static function saveErrorInformation(\Base $f3, array $errorData): void {
-        \EndoGuard\\Utils\Logger::log(null, $errorData['message']);
+        \EndoGuard\Utils\Logger::log(null, $errorData['message']);
 
         $errorTraceArray = explode('<br>', $errorData['trace']);
         $printErrorTraceToLog = $f3->get('PRINT_ERROR_TRACE_TO_LOG');
@@ -68,24 +68,24 @@ class ErrorHandler {
             $iters = count($errorTraceArray);
 
             for ($i = 0; $i < $iters; ++$i) {
-                \EndoGuard\\Utils\Logger::log(null, $errorTraceArray[$i]);
+                \EndoGuard\Utils\Logger::log(null, $errorTraceArray[$i]);
             }
         }
 
-        $database = \EndoGuard\\Utils\Database::getDb();
-        if ($database && \EndoGuard\\Utils\Routes::getCurrentRequestOperator()) {
+        $database = \EndoGuard\Utils\Database::getDb();
+        if ($database && \EndoGuard\Utils\Routes::getCurrentRequestOperator()) {
             $errorData['sql_log'] = $database->log();
-            $logModel = new \EndoGuard\\Models\Log();
+            $logModel = new \EndoGuard\Models\Log();
             $logModel->insertRecord($errorData);
 
-            \EndoGuard\\Utils\Logger::log('SQL', $errorData['sql_log']);
+            \EndoGuard\Utils\Logger::log('SQL', $errorData['sql_log']);
         }
 
         if ($errorData['code'] === 500) {
             $toName = 'Admin';
-            $toAddress = \EndoGuard\\Utils\Variables::getAdminEmail();
+            $toAddress = \EndoGuard\Utils\Variables::getAdminEmail();
             if ($toAddress === null) {
-                \EndoGuard\\Utils\Logger::log('Log mail error', 'ADMIN_EMAIL is not set');
+                \EndoGuard\Utils\Logger::log('Log mail error', 'ADMIN_EMAIL is not set');
 
                 return;
             }
@@ -97,12 +97,12 @@ class ErrorHandler {
             $errorMessage = $errorData['message'];
             $errorTrace = $errorData['trace'];
 
-            $hosts = json_encode(\EndoGuard\\Utils\Variables::getHosts());
+            $hosts = json_encode(\EndoGuard\Utils\Variables::getHosts());
 
             $message = $f3->get('error_email_body_template');
             $message = sprintf($message, $currentTime, $hosts, $errorMessage, $errorTrace);
 
-            \EndoGuard\\Utils\Mailer::send($toName, $toAddress, $subject, $message, true);
+            \EndoGuard\Utils\Mailer::send($toName, $toAddress, $subject, $message, true);
         }
     }
 
@@ -151,8 +151,8 @@ class ErrorHandler {
                 return;
             }
 
-            $response = new \EndoGuard\\Views\Frontend();
-            $pageController = new \EndoGuard\\Controllers\Pages\Error();
+            $response = new \EndoGuard\Views\Frontend();
+            $pageController = new \EndoGuard\Controllers\Pages\Error();
 
             $errorData['message'] = 'ERROR_' . $errorData['code'];
             $errorData['raw'] = false;
@@ -163,17 +163,17 @@ class ErrorHandler {
             }
 
             if ($errorData['code'] === 400) {
-                $errorData['message'] = 'Error code ' . \EndoGuard\\Utils\ErrorCodes::INVALID_HOSTNAME;
-                $errorData['extra_message'] = 'Visit page via correct hostname: ' . \EndoGuard\\Utils\Variables::getHostWithProtocol() . $f3->get('PATH');
+                $errorData['message'] = 'Error code ' . \EndoGuard\Utils\ErrorCodes::INVALID_HOSTNAME;
+                $errorData['extra_message'] = 'Visit page via correct hostname: ' . \EndoGuard\Utils\Variables::getHostWithProtocol() . $f3->get('PATH');
             }
 
             if ($errorData['code'] === 503) {
-                $errorData['message'] = 'Error code ' . \EndoGuard\\Utils\ErrorCodes::FAILED_DB_CONNECT;
+                $errorData['message'] = 'Error code ' . \EndoGuard\Utils\ErrorCodes::FAILED_DB_CONNECT;
                 $errorData['extra_message'] = 'Database connection failed.';
             }
 
             if ($errorData['code'] === 422) {
-                $errorData['message'] = 'Error code ' . \EndoGuard\\Utils\ErrorCodes::INCOMPLETE_CONFIG;
+                $errorData['message'] = 'Error code ' . \EndoGuard\Utils\ErrorCodes::INCOMPLETE_CONFIG;
                 $errorData['extra_message'] = 'App configuration is incomplete. Check config/local/config.local.ini and possible environment overrides.';
             }
 

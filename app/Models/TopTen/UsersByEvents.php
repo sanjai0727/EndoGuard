@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\TopTen;
+namespace EndoGuard\Models\TopTen;
 
 class UsersByEvents extends Base {
     protected ?string $DB_TABLE_NAME = 'event';
@@ -63,7 +63,7 @@ class UsersByEvents extends Base {
 
         foreach ($results as $row) {
             $tsColumns = ['score_updated_at'];
-            \EndoGuard\\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $row);
+            \EndoGuard\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $row);
         }
 
         return $results;

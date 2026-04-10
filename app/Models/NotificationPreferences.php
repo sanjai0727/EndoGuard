@@ -15,16 +15,16 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class NotificationPreferences extends \EndoGuard\\Models\BaseSql {
+class NotificationPreferences extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_operators';
 
     public function operatorsToNotify(): array {
         $params = [
-            ':daily'    => \EndoGuard\\Utils\Constants::get()->DAILY_NOTIFICATION_REMINDER,
-            ':weekly'   => \EndoGuard\\Utils\Constants::get()->WEEKLY_NOTIFICATION_REMINDER,
-            ':off'      => \EndoGuard\\Utils\Constants::get()->NO_NOTIFICATION_REMINDER,
+            ':daily'    => \EndoGuard\Utils\Constants::get()->DAILY_NOTIFICATION_REMINDER,
+            ':weekly'   => \EndoGuard\Utils\Constants::get()->WEEKLY_NOTIFICATION_REMINDER,
+            ':off'      => \EndoGuard\Utils\Constants::get()->NO_NOTIFICATION_REMINDER,
         ];
 
         $query = (

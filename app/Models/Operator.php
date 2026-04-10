@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Operator extends \EndoGuard\\Models\BaseSql {
+class Operator extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_operators';
 
     public function insertRecord(?string $password, string $email, string $timezone): int {
         $params = [
-            ':password' => $password ? \EndoGuard\\Utils\Access::hashPassword($password) : $password,
+            ':password' => $password ? \EndoGuard\Utils\Access::hashPassword($password) : $password,
             ':email'    => $email,
             ':timezone' => $timezone,
             ':active'   => 1,
@@ -43,7 +43,7 @@ class Operator extends \EndoGuard\\Models\BaseSql {
 
     public function updatePassword(string $password, int $operatorId): void {
         $params = [
-            ':password'     => \EndoGuard\\Utils\Access::hashPassword($password),
+            ':password'     => \EndoGuard\Utils\Access::hashPassword($password),
             ':operator_id'  => $operatorId,
         ];
 
@@ -337,7 +337,7 @@ class Operator extends \EndoGuard\\Models\BaseSql {
             return false;
         }
 
-        return \EndoGuard\\Utils\Access::verifyPassword($password, $operatorPassword);
+        return \EndoGuard\Utils\Access::verifyPassword($password, $operatorPassword);
     }
 
     public function getAll(): array {

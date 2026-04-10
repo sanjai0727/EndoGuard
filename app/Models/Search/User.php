@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Search;
+namespace EndoGuard\Models\Search;
 
-class User extends \EndoGuard\\Models\BaseSql {
+class User extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_account';
 
     public function searchByUserId(string $query, int $apiKey): array {

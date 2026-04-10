@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Pages;
+namespace EndoGuard\Controllers\Pages;
 
 class Logout extends Base {
     public ?string $page = 'Logout';
@@ -29,7 +29,7 @@ class Logout extends Base {
         if ($this->isPostRequest()) {
             $params = $this->extractRequestParams(['token']);
 
-            $errorCode = \EndoGuard\\Utils\Access::CSRFTokenValid($params, $this->f3);
+            $errorCode = \EndoGuard\Utils\Access::CSRFTokenValid($params, $this->f3);
 
             if (!$errorCode) {
                 $this->f3->clear('SESSION');

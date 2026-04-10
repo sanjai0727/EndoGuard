@@ -15,18 +15,18 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Rules;
+namespace EndoGuard\Controllers\Admin\Rules;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminRules';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
         $rules = $dataController->getRulesForApiKey($apiKey);
         $searchPlacholder = $this->f3->get('AdminRules_search_placeholder');
 
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $operatorId = $currentOperator->id;
 
         $ruleValues = [
@@ -42,7 +42,7 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
             'LOAD_AUTOCOMPLETE'     => true,
             'HTML_FILE'             => 'admin/rules.html',
             'JS'                    => 'admin_rules.js',
-            'RULES_PRESETS'         => \EndoGuard\\Utils\Constants::get()->RULES_PRESETS,
+            'RULES_PRESETS'         => \EndoGuard\Utils\Constants::get()->RULES_PRESETS,
             'RULE_VALUES'           => $ruleValues,
             'RULES'                 => $rules,
             'SEARCH_PLACEHOLDER'    => $searchPlacholder,
@@ -56,7 +56,7 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
         }
 
         // set api_keys param after processing POST request
-        [$isOwner, $apiKeys] = \EndoGuard\\Utils\ApiKeys::getOperatorApiKeys($operatorId);
+        [$isOwner, $apiKeys] = \EndoGuard\Utils\ApiKeys::getOperatorApiKeys($operatorId);
 
         $pageParams['IS_OWNER'] = $isOwner;
         $pageParams['API_KEYS'] = $apiKeys;

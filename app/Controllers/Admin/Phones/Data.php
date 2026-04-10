@@ -15,12 +15,12 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Phones;
+namespace EndoGuard\Controllers\Admin\Phones;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
         $result = [];
-        $model = new \EndoGuard\\Models\Grid\Phones\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Phones\Grid($apiKey);
 
         $map = [
             'userId' => 'getPhonesByUserId',
@@ -30,7 +30,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
         $ids = array_column($result['data'], 'id');
         if ($ids) {
-            $model = new \EndoGuard\\Models\Phone();
+            $model = new \EndoGuard\Models\Phone();
             $model->updateTotalsByEntityIds($ids, $apiKey);
             $result['data'] = $model->refreshTotals($result['data'], $apiKey);
         }
@@ -39,16 +39,16 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function getPhoneDetails(int $id, int $apiKey): array {
-        $details = (new \EndoGuard\\Models\Phone())->getPhoneDetails($id, $apiKey);
+        $details = (new \EndoGuard\Models\Phone())->getPhoneDetails($id, $apiKey);
         $details['enrichable'] = $this->isEnrichable($apiKey);
 
         $tsColumns = ['created', 'lastseen'];
-        \EndoGuard\\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $details);
+        \EndoGuard\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $details);
 
         return $details;
     }
 
     private function isEnrichable(int $apiKey): bool {
-        return (new \EndoGuard\\Models\ApiKeys())->attributeIsEnrichable('phone', $apiKey);
+        return (new \EndoGuard\Models\ApiKeys())->attributeIsEnrichable('phone', $apiKey);
     }
 }

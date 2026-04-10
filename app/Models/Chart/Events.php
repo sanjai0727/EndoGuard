@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
 class Events extends Base {
     protected ?string $DB_TABLE_NAME = 'event';
@@ -32,22 +32,22 @@ class Events extends Base {
     }
 
     private function getFirstLine(int $apiKey): array {
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
         if (!$dateRange) {
             $dateRange = [
                 'endDate' => date('Y-m-d H:i:s'),
                 'startDate' => date('Y-m-d H:i:s', 0),
             ];
         }
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
-        [$alertTypesParams, $alertFlatIds]      = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->ALERT_EVENT_TYPES, 'alert');
-        [$editTypesParams, $editFlatIds]        = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->EDITING_EVENT_TYPES, 'edit');
-        [$normalTypesParams, $normalFlatIds]    = $this->getArrayPlaceholders(\EndoGuard\\Utils\Constants::get()->NORMAL_EVENT_TYPES, 'normal');
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
+        [$alertTypesParams, $alertFlatIds]      = $this->getArrayPlaceholders(\EndoGuard\Utils\Constants::get()->ALERT_EVENT_TYPES, 'alert');
+        [$editTypesParams, $editFlatIds]        = $this->getArrayPlaceholders(\EndoGuard\Utils\Constants::get()->EDITING_EVENT_TYPES, 'edit');
+        [$normalTypesParams, $normalFlatIds]    = $this->getArrayPlaceholders(\EndoGuard\Utils\Constants::get()->NORMAL_EVENT_TYPES, 'normal');
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
+            ':resolution'   => \EndoGuard\Utils\DateRange::getResolutionFromRequest(),
             ':offset'       => strval($offset),
         ];
         $params = array_merge($params, $alertTypesParams);

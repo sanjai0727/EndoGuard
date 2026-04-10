@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Event extends \EndoGuard\\Models\BaseSql {
+class Event extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getLastEvent(int $apiKey): array {
@@ -208,8 +208,8 @@ class Event extends \EndoGuard\\Models\BaseSql {
 
         $results = $this->execQuery($query, $params);
 
-        \EndoGuard\\Utils\Enrichment::calculateIpType($results);
-        \EndoGuard\\Utils\Enrichment::calculateEmailReputation($results);
+        \EndoGuard\Utils\Enrichment::calculateIpType($results);
+        \EndoGuard\Utils\Enrichment::calculateEmailReputation($results);
         //$this->translateTimezones($results, ['event_time', 'domain_creation_date']);
 
         if (count($results)) {
@@ -218,7 +218,7 @@ class Event extends \EndoGuard\\Models\BaseSql {
             $spamlist = $results['ip_type'] === 'Spam list';
             $results['spamlist'] = $spamlist;
 
-            $model = new \EndoGuard\\Models\User();
+            $model = new \EndoGuard\Models\User();
             $results['score_details'] = $model->getApplicableRulesByAccountId($results['accountid'], $apiKey, true);
             $results['score_calculated'] = $results['score'] !== null;
         }

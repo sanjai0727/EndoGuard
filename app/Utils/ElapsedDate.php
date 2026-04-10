@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class ElapsedDate {
     //https://gist.github.com/fazlurr/473a46d6d2e967119e77b5339dd10bc2

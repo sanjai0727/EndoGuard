@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Phones;
+namespace EndoGuard\Models\Grid\Phones;
 
-class Ids extends \EndoGuard\\Models\Grid\Base\Ids {
+class Ids extends \EndoGuard\Models\Grid\Base\Ids {
     public function getPhonesIdsByUserId(): string {
         return (
             'SELECT DISTINCT

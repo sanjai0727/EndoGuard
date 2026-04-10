@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Entities;
+namespace EndoGuard\Entities;
 
 final class HttpResponse {
     private bool $ok;

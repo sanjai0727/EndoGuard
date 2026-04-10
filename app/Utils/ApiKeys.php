@@ -15,34 +15,34 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class ApiKeys {
     public static function getCurrentOperatorApiKeyId(): ?int {
-        $key = \EndoGuard\\Utils\Routes::getCurrentRequestApiKey();
+        $key = \EndoGuard\Utils\Routes::getCurrentRequestApiKey();
 
         return $key ? $key->id : null;
     }
 
     public static function getCurrentOperatorApiKeyString(): ?string {
-        $key = \EndoGuard\\Utils\Routes::getCurrentRequestApiKey();
+        $key = \EndoGuard\Utils\Routes::getCurrentRequestApiKey();
 
         return $key ? $key->key : null;
     }
 
     public static function getCurrentOperatorEnrichmentKeyString(): ?string {
-        $key = \EndoGuard\\Utils\Routes::getCurrentRequestApiKey();
+        $key = \EndoGuard\Utils\Routes::getCurrentRequestApiKey();
 
         return $key ? $key->token : null;
     }
 
     public static function getOperatorApiKeys(int $operatorId): array {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $apiKeys = $model->getKeys($operatorId);
 
         $isOwner = true;
         if (!$apiKeys) {
-            $coOwnerModel = new \EndoGuard\\Models\ApiKeyCoOwner();
+            $coOwnerModel = new \EndoGuard\Models\ApiKeyCoOwner();
             $keyId = $coOwnerModel->getCoOwnershipKeyId($operatorId);
 
             if ($keyId) {
@@ -55,11 +55,11 @@ class ApiKeys {
     }
 
     public static function getFirstKeyByOperatorId(int $operatorId): ?int {
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $apiKeys = $model->getKeys($operatorId);
 
         if (!$apiKeys) {
-            $coOwnerModel = new \EndoGuard\\Models\ApiKeyCoOwner();
+            $coOwnerModel = new \EndoGuard\Models\ApiKeyCoOwner();
             $keyId = $coOwnerModel->getCoOwnershipKeyId($operatorId);
 
             if ($keyId) {

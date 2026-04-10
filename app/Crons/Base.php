@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 abstract class Base {
     protected array $log = [];
@@ -27,7 +27,7 @@ abstract class Base {
     }
 
     protected function addLog(string $msg): void {
-        $this->log[] = \EndoGuard\\Utils\Logger::logCronLine($msg, $this->getName());
+        $this->log[] = \EndoGuard\Utils\Logger::logCronLine($msg, $this->getName());
     }
 
     protected function getName(): string {

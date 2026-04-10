@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class User extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\ApiKeyAccessAuthorizationInterface, \EndoGuard\\Interfaces\ApiKeyAccountAccessAuthorizationInterface {
+class User extends \EndoGuard\Models\BaseSql implements \EndoGuard\Interfaces\ApiKeyAccessAuthorizationInterface, \EndoGuard\Interfaces\ApiKeyAccountAccessAuthorizationInterface {
     protected ?string $DB_TABLE_NAME = 'event_account';
 
     public function checkAccess(int $userId, int $apiKey): bool {
@@ -149,29 +149,29 @@ class User extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\
         ];
 
         try {
-            $model = new \EndoGuard\\Models\Events();
+            $model = new \EndoGuard\Models\Events();
             $entities = $model->uniqueEntitiesByUserId($userId, $apiKey);
 
             $this->db->begin();
             $this->db->exec($queries, array_fill(0, 6, $params));
 
             // force update totals for ips before isps and countries!
-            $model = new \EndoGuard\\Models\Ip();
+            $model = new \EndoGuard\Models\Ip();
             $model->updateTotalsByEntityIds($entities['ip_ids'], $apiKey, true);
 
-            $model = new \EndoGuard\\Models\Isp();
+            $model = new \EndoGuard\Models\Isp();
             $model->updateTotalsByEntityIds($entities['isp_ids'], $apiKey, true);
 
-            $model = new \EndoGuard\\Models\Country();
+            $model = new \EndoGuard\Models\Country();
             $model->updateTotalsByEntityIds($entities['country_ids'], $apiKey, true);
 
-            $model = new \EndoGuard\\Models\Resource();
+            $model = new \EndoGuard\Models\Resource();
             $model->updateTotalsByEntityIds($entities['url_ids'], $apiKey, true);
 
-            $model = new \EndoGuard\\Models\Domain();
+            $model = new \EndoGuard\Models\Domain();
             $model->updateTotalsByEntityIds($entities['domain_ids'], $apiKey, true);
 
-            $model = new \EndoGuard\\Models\Phone();
+            $model = new \EndoGuard\Models\Phone();
             // it is always a force update
             $model->updateTotalsByValues($entities['phone_numbers'], $apiKey);
 
@@ -254,7 +254,7 @@ class User extends \EndoGuard\\Models\BaseSql implements \EndoGuard\\Interfaces\
 
         $results = $this->execQuery($query, $params);
 
-        usort($results, [\EndoGuard\\Utils\Sort::class, 'cmpScore']);
+        usort($results, [\EndoGuard\Utils\Sort::class, 'cmpScore']);
 
         return $results;
     }

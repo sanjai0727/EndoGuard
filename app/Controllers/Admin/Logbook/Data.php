@@ -15,16 +15,16 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Logbook;
+namespace EndoGuard\Controllers\Admin\Logbook;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
-        $model = new \EndoGuard\\Models\Grid\Logbook\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Logbook\Grid($apiKey);
 
         return $model->getAll();
     }
 
     public function getLogbookDetails(int $id, int $apiKey): array {
-        return (new \EndoGuard\\Models\Logbook())->getLogbookDetails($id, $apiKey);
+        return (new \EndoGuard\Models\Logbook())->getLogbookDetails($id, $apiKey);
     }
 }

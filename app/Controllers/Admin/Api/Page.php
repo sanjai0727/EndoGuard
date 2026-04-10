@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Api;
+namespace EndoGuard\Controllers\Admin\Api;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminApi';
 
     public function getPageParams(): array {
         $dataController = new Data();
 
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $operatorId = $currentOperator->id;
 
         $scheduledForEnrichment = $dataController->getScheduledForEnrichment();
@@ -33,7 +33,7 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
             'LOAD_DATATABLE'            => true,
             'HTML_FILE'                 => 'admin/api.html',
             'JS'                        => 'admin_api.js',
-            'API_URL'                   => \EndoGuard\\Utils\Variables::getHostWithProtocolAndBase() . '/sensor/',
+            'API_URL'                   => \EndoGuard\Utils\Variables::getHostWithProtocolAndBase() . '/sensor/',
         ];
 
         if ($this->isPostRequest()) {

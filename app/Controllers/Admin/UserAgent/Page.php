@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\UserAgent;
+namespace EndoGuard\Controllers\Admin\UserAgent;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminUserAgent';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $userAgentId = \EndoGuard\\Utils\Conversion::getIntUrlParam('userAgentId');
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $userAgentId = \EndoGuard\Utils\Conversion::getIntUrlParam('userAgentId');
         $hasAccess = $dataController->checkIfOperatorHasAccess($userAgentId, $apiKey);
 
         if (!$hasAccess) {

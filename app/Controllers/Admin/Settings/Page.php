@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Settings;
+namespace EndoGuard\Controllers\Admin\Settings;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminSettings';
 
     public function getPageParams(): array {
@@ -28,8 +28,8 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
             'LOAD_AUTOCOMPLETE' => true,
             'HTML_FILE'         => 'admin/settings.html',
             'JS'                => 'admin_settings.js',
-            'TIMEZONES'         => \EndoGuard\\Utils\Timezones::timezonesList(),
-            'CURRENT_VERSION'   => \EndoGuard\\Utils\VersionControl::fullVersionString(),
+            'TIMEZONES'         => \EndoGuard\Utils\Timezones::timezonesList(),
+            'CURRENT_VERSION'   => \EndoGuard\Utils\VersionControl::fullVersionString(),
         ];
 
         if ($this->isPostRequest()) {
@@ -41,13 +41,13 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
 
         // set shared_operators and api_keys params after processing POST request
 
-        $currentOperator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $currentOperator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
         $operatorId = $currentOperator->id;
 
         $coOwners = $dataController->getSharedApiKeyOperators($operatorId);
         $pageParams['SHARED_OPERATORS'] = $coOwners;
 
-        [$isOwner, $apiKeys] = \EndoGuard\\Utils\ApiKeys::getOperatorApiKeys($operatorId);
+        [$isOwner, $apiKeys] = \EndoGuard\Utils\ApiKeys::getOperatorApiKeys($operatorId);
 
         $pageParams['IS_OWNER'] = $isOwner;
         $pageParams['API_KEYS'] = $apiKeys;

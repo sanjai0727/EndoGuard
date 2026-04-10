@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Interfaces;
+namespace EndoGuard\Interfaces;
 
 interface FraudFlagUpdaterInterface {
     public function updateFraudFlag(array $ids, bool $fraud, int $apiKey): void;

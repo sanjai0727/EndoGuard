@@ -15,17 +15,17 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class EnrichmentQueueHandler extends BaseQueue {
-    private \EndoGuard\\Controllers\Admin\Enrichment\Data $controller;
+    private \EndoGuard\Controllers\Admin\Enrichment\Data $controller;
 
     public function __construct() {
-        $this->controller = new \EndoGuard\\Controllers\Admin\Enrichment\Data();
+        $this->controller = new \EndoGuard\Controllers\Admin\Enrichment\Data();
     }
 
     public function process(): void {
-        parent::baseProcess(\EndoGuard\\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE);
+        parent::baseProcess(\EndoGuard\Utils\Constants::get()->ENRICHMENT_QUEUE_ACTION_TYPE);
     }
 
     protected function processItem(array $item): void {
@@ -35,7 +35,7 @@ class EnrichmentQueueHandler extends BaseQueue {
 
         $entities = $this->controller->getNotCheckedEntitiesByUserId($userId, $apiKey);
 
-        $key = (new \EndoGuard\\Models\ApiKeys())->getKeyById($apiKey);
+        $key = (new \EndoGuard\Models\ApiKeys())->getKeyById($apiKey);
         $subscriptionKey = $key['token'];
 
         // TODO: check key ?

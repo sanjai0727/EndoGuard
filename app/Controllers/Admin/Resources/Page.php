@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Resources;
+namespace EndoGuard\Controllers\Admin\Resources;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminResources';
 
     public function getPageParams(): array {
@@ -31,7 +31,7 @@ class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
             'LOAD_AUTOCOMPLETE'     => true,
             'HTML_FILE'             => 'admin/resources.html',
             'JS'                    => 'admin_resources.js',
-            'FILE_TYPES'            => \EndoGuard\\Utils\Assets\Lists\FileExtensions::getKeys(),
+            'FILE_TYPES'            => \EndoGuard\Utils\Assets\Lists\FileExtensions::getKeys(),
         ];
 
         return parent::applyPageParams($pageParams);

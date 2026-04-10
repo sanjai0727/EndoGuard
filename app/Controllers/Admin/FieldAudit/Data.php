@@ -15,23 +15,23 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\FieldAudit;
+namespace EndoGuard\Controllers\Admin\FieldAudit;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function checkIfOperatorHasAccess(int $fieldId): bool {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $model = new \EndoGuard\\Models\FieldAudit();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $model = new \EndoGuard\Models\FieldAudit();
 
         return $model->checkAccess($fieldId, $apiKey);
     }
 
     public function getFieldById(int $fieldId): array {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
 
-        $model = new \EndoGuard\\Models\FieldAudit();
+        $model = new \EndoGuard\Models\FieldAudit();
         $result = $model->getFieldById($fieldId, $apiKey);
-        $result['lastseen'] = \EndoGuard\\Utils\ElapsedDate::short($result['lastseen']);
-        $result['created'] = \EndoGuard\\Utils\ElapsedDate::short($result['created']);
+        $result['lastseen'] = \EndoGuard\Utils\ElapsedDate::short($result['lastseen']);
+        $result['created'] = \EndoGuard\Utils\ElapsedDate::short($result['created']);
 
         return $result;
     }

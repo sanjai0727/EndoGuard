@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Countries;
+namespace EndoGuard\Models\Grid\Countries;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = null;
     protected string $dateRangeField = 'event_country.lastseen';
 
@@ -82,7 +82,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         //Add dates into request
         $this->applyDateRange($query, $queryParams);
 
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
         $searchConditions = '';
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {

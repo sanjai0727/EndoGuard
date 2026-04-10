@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Enrichment {
     public static function calculateIpType(array &$records): void {
@@ -77,7 +77,7 @@ class Enrichment {
             $reputation = 'none';
 
             if ($record['data_breach'] !== null) {
-                $reputationLevel = \EndoGuard\\Utils\Conversion::intVal($record['data_breach'], 0) + \EndoGuard\\Utils\Conversion::intVal(!$record['blockemails'], 0);
+                $reputationLevel = \EndoGuard\Utils\Conversion::intVal($record['data_breach'], 0) + \EndoGuard\Utils\Conversion::intVal(!$record['blockemails'], 0);
                 $reputation = match ($reputationLevel) {
                     2       => 'high',
                     1       => 'medium',

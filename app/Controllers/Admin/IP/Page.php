@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\IP;
+namespace EndoGuard\Controllers\Admin\IP;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminIp';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $ipId = \EndoGuard\\Utils\Conversion::getIntUrlParam('ipId');
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $ipId = \EndoGuard\Utils\Conversion::getIntUrlParam('ipId');
         $hasAccess = $dataController->checkIfOperatorHasAccess($ipId, $apiKey);
 
         if (!$hasAccess) {

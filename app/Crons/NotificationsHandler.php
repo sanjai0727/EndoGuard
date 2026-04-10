@@ -15,11 +15,11 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class NotificationsHandler extends Base {
     public function process(): void {
-        $model = new \EndoGuard\\Models\NotificationPreferences();
+        $model = new \EndoGuard\Models\NotificationPreferences();
 
         $operators = $model->operatorsToNotify();
 
@@ -27,12 +27,12 @@ class NotificationsHandler extends Base {
         $failed = 0;
 
         foreach ($operators as $operator) {
-            if (\EndoGuard\\Utils\Cron::checkTimezone($operator['timezone'] ?? '')) {
+            if (\EndoGuard\Utils\Cron::checkTimezone($operator['timezone'] ?? '')) {
                 try {
                     $name   = $operator['firstname'] ?? '';
                     $email  = $operator['email'] ?? '';
                     $review = $operator['review_queue_cnt'] ?? 0;
-                    if (!\EndoGuard\\Utils\Cron::sendUnreviewedItemsReminderEmail($name, $email, $review)) {
+                    if (!\EndoGuard\Utils\Cron::sendUnreviewedItemsReminderEmail($name, $email, $review)) {
                         $this->addLog(sprintf('Username `%s` is not email; review count is %s', $email, $review));
                     }
                     $model->updateUnreviewedReminder($operator['id']);

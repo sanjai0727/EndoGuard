@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\TopTen;
+namespace EndoGuard\Models\TopTen;
 
 class UsersByLoginFail extends Base {
     protected ?string $DB_TABLE_NAME = 'event';
@@ -27,7 +27,7 @@ class UsersByLoginFail extends Base {
         $queryConditions[] = 'event.type = :event_type';
         $queryConditions = join(' AND ', $queryConditions);
 
-        $params[':event_type'] = \EndoGuard\\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
+        $params[':event_type'] = \EndoGuard\Utils\Constants::get()->ACCOUNT_LOGIN_FAIL_EVENT_TYPE_ID;
 
         $query = (
             "SELECT
@@ -66,7 +66,7 @@ class UsersByLoginFail extends Base {
 
         foreach ($results as $row) {
             $tsColumns = ['score_updated_at'];
-            \EndoGuard\\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $row);
+            \EndoGuard\Utils\Timezones::localizeTimestampsForActiveOperator($tsColumns, $row);
         }
 
         return $results;

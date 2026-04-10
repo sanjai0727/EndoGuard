@@ -15,17 +15,17 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\UserAgents;
+namespace EndoGuard\Controllers\Admin\UserAgents;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
-        $model = new \EndoGuard\\Models\Grid\UserAgents\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\UserAgents\Grid($apiKey);
 
         $result = $model->getAll();
 
         $ids = array_column($result['data'], 'id');
         if ($ids) {
-            $model = new \EndoGuard\\Models\UserAgent();
+            $model = new \EndoGuard\Models\UserAgent();
             $result['data'] = $model->getTotals($result['data'], $apiKey);
         }
 

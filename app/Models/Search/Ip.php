@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Search;
+namespace EndoGuard\Models\Search;
 
-class Ip extends \EndoGuard\\Models\BaseSql {
+class Ip extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_ip';
 
     public function searchByIp(string $query, int $apiKey): array {

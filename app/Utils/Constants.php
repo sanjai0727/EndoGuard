@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Constants {
     private static array $instances = [];
@@ -177,28 +177,28 @@ class Constants {
     protected int $FIELD_EDIT_EVENT_TYPE_ID = 13;
 
     protected array $CHART_MODEL_MAP = [
-        'resources'         => \EndoGuard\\Models\Chart\Resources::class,
-        'resource'          => \EndoGuard\\Models\Chart\Resource::class,
-        'users'             => \EndoGuard\\Models\Chart\Users::class,
-        'user'              => \EndoGuard\\Models\Chart\User::class,
-        'isps'              => \EndoGuard\\Models\Chart\Isps::class,
-        'isp'               => \EndoGuard\\Models\Chart\Isp::class,
-        'ips'               => \EndoGuard\\Models\Chart\Ips::class,
-        'ip'                => \EndoGuard\\Models\Chart\Ip::class,
-        'domains'           => \EndoGuard\\Models\Chart\Domains::class,
-        'domain'            => \EndoGuard\\Models\Chart\Domain::class,
-        'userAgents'        => \EndoGuard\\Models\Chart\UserAgents::class,
-        'userAgent'         => \EndoGuard\\Models\Chart\UserAgent::class,
-        'events'            => \EndoGuard\\Models\Chart\Events::class,
-        'emails'            => \EndoGuard\\Models\Chart\Emails::class,
-        'phones'            => \EndoGuard\\Models\Chart\Phones::class,
-        'review-queue'      => \EndoGuard\\Models\Chart\ReviewQueue::class,
-        'country'           => \EndoGuard\\Models\Chart\Country::class,
-        'blacklist'         => \EndoGuard\\Models\Chart\Blacklist::class,
-        'logbook'           => \EndoGuard\\Models\Chart\Logbook::class,
-        'stats'             => \EndoGuard\\Models\Chart\SessionStat::class,
-        'fields'            => \EndoGuard\\Models\Chart\FieldAuditTrails::class,
-        'field'             => \EndoGuard\\Models\Chart\FieldAuditTrail::class,
+        'resources'         => \EndoGuard\Models\Chart\Resources::class,
+        'resource'          => \EndoGuard\Models\Chart\Resource::class,
+        'users'             => \EndoGuard\Models\Chart\Users::class,
+        'user'              => \EndoGuard\Models\Chart\User::class,
+        'isps'              => \EndoGuard\Models\Chart\Isps::class,
+        'isp'               => \EndoGuard\Models\Chart\Isp::class,
+        'ips'               => \EndoGuard\Models\Chart\Ips::class,
+        'ip'                => \EndoGuard\Models\Chart\Ip::class,
+        'domains'           => \EndoGuard\Models\Chart\Domains::class,
+        'domain'            => \EndoGuard\Models\Chart\Domain::class,
+        'userAgents'        => \EndoGuard\Models\Chart\UserAgents::class,
+        'userAgent'         => \EndoGuard\Models\Chart\UserAgent::class,
+        'events'            => \EndoGuard\Models\Chart\Events::class,
+        'emails'            => \EndoGuard\Models\Chart\Emails::class,
+        'phones'            => \EndoGuard\Models\Chart\Phones::class,
+        'review-queue'      => \EndoGuard\Models\Chart\ReviewQueue::class,
+        'country'           => \EndoGuard\Models\Chart\Country::class,
+        'blacklist'         => \EndoGuard\Models\Chart\Blacklist::class,
+        'logbook'           => \EndoGuard\Models\Chart\Logbook::class,
+        'stats'             => \EndoGuard\Models\Chart\SessionStat::class,
+        'fields'            => \EndoGuard\Models\Chart\FieldAuditTrails::class,
+        'field'             => \EndoGuard\Models\Chart\FieldAuditTrail::class,
     ];
 
     protected array $LINE_CHARTS = [
@@ -224,36 +224,36 @@ class Constants {
     ];
 
     protected array $TOP_TEN_MODELS_MAP = [
-        'mostActiveUsers'           => \EndoGuard\\Models\TopTen\UsersByEvents::class,
-        'mostActiveCountries'       => \EndoGuard\\Models\TopTen\CountriesByUsers::class,
-        'mostActiveUrls'            => \EndoGuard\\Models\TopTen\ResourcesByUsers::class,
-        'ipsWithTheMostUsers'       => \EndoGuard\\Models\TopTen\IpsByUsers::class,
-        'usersWithMostLoginFail'    => \EndoGuard\\Models\TopTen\UsersByLoginFail::class,
-        'usersWithMostIps'          => \EndoGuard\\Models\TopTen\UsersByIps::class,
+        'mostActiveUsers'           => \EndoGuard\Models\TopTen\UsersByEvents::class,
+        'mostActiveCountries'       => \EndoGuard\Models\TopTen\CountriesByUsers::class,
+        'mostActiveUrls'            => \EndoGuard\Models\TopTen\ResourcesByUsers::class,
+        'ipsWithTheMostUsers'       => \EndoGuard\Models\TopTen\IpsByUsers::class,
+        'usersWithMostLoginFail'    => \EndoGuard\Models\TopTen\UsersByLoginFail::class,
+        'usersWithMostIps'          => \EndoGuard\Models\TopTen\UsersByIps::class,
     ];
 
     protected array $RULES_TOTALS_MODELS = [
-        \EndoGuard\\Models\Phone::class,
-        \EndoGuard\\Models\Ip::class,
-        \EndoGuard\\Models\Session::class,
-        \EndoGuard\\Models\User::class,
+        \EndoGuard\Models\Phone::class,
+        \EndoGuard\Models\Ip::class,
+        \EndoGuard\Models\Session::class,
+        \EndoGuard\Models\User::class,
     ];
 
     protected array $REST_TOTALS_MODELS = [
-        'isp'       => \EndoGuard\\Models\Isp::class,
-        'resource'  => \EndoGuard\\Models\Resource::class,
-        'domain'    => \EndoGuard\\Models\Domain::class,
-        'device'    => \EndoGuard\\Models\Device::class,
-        'country'   => \EndoGuard\\Models\Country::class,
-        'field'     => \EndoGuard\\Models\FieldAudit::class,
+        'isp'       => \EndoGuard\Models\Isp::class,
+        'resource'  => \EndoGuard\Models\Resource::class,
+        'domain'    => \EndoGuard\Models\Domain::class,
+        'device'    => \EndoGuard\Models\Device::class,
+        'country'   => \EndoGuard\Models\Country::class,
+        'field'     => \EndoGuard\Models\FieldAudit::class,
     ];
 
     protected array $ENRICHING_ATTRIBUTES = [
-        'ip'        => \EndoGuard\\Models\Ip::class,
-        'email'     => \EndoGuard\\Models\Email::class,
-        'domain'    => \EndoGuard\\Models\Domain::class,
-        'phone'     => \EndoGuard\\Models\Phone::class,
-        //'ua'        => \EndoGuard\\Models\Device::class,
+        'ip'        => \EndoGuard\Models\Ip::class,
+        'email'     => \EndoGuard\Models\Email::class,
+        'domain'    => \EndoGuard\Models\Domain::class,
+        'phone'     => \EndoGuard\Models\Phone::class,
+        //'ua'        => \EndoGuard\Models\Device::class,
     ];
 
     protected array $ADMIN_PAGES = [

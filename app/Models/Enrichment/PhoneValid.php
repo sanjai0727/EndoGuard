@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Enrichment;
+namespace EndoGuard\Models\Enrichment;
 
-class PhoneValid extends \EndoGuard\\Models\Enrichment\Base {
+class PhoneValid extends \EndoGuard\Models\Enrichment\Base {
     protected string $phone_number;
     protected int $profiles;
     protected ?string $iso_country_code;
@@ -72,7 +72,7 @@ class PhoneValid extends \EndoGuard\\Models\Enrichment\Base {
         $this->country_code = 0;
 
         if ($this->iso_country_code !== null) {
-            $countryModel = new \EndoGuard\\Models\Country();
+            $countryModel = new \EndoGuard\Models\Country();
             $this->country_code = $countryModel->getCountryIdByIso($this->iso_country_code);
         }
 
@@ -89,7 +89,7 @@ class PhoneValid extends \EndoGuard\\Models\Enrichment\Base {
                 event_phone.key = :key
         ");
 
-        $model = new \EndoGuard\\Models\Phone();
+        $model = new \EndoGuard\Models\Phone();
         $model->execQuery($query, $params);
     }
 }

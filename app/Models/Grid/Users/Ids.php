@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Users;
+namespace EndoGuard\Models\Grid\Users;
 
-class Ids extends \EndoGuard\\Models\Grid\Base\Ids {
+class Ids extends \EndoGuard\Models\Grid\Base\Ids {
     public function getUsersIdsByIpId(): string {
         return (
             'SELECT DISTINCT

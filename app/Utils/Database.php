@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Database {
     private static function getF3(): \Base {
@@ -35,7 +35,7 @@ class Database {
             $database = self::getDb();
 
             if (!$database) {
-                $url = \EndoGuard\\Utils\Variables::getDB();
+                $url = \EndoGuard\Utils\Variables::getDB();
 
                 if ($url === null) {
                     return false;

@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Sort {
     public static function cmpTimestamp(array $left, array $right): int {
@@ -32,7 +32,7 @@ class Sort {
         }
 
         if (($left['missing'] === true) !== ($right['missing'] === true)) {
-            return (\EndoGuard\\Utils\Conversion::intVal($left['missing']) <=> \EndoGuard\\Utils\Conversion::intVal($right['missing']));
+            return (\EndoGuard\Utils\Conversion::intVal($left['missing']) <=> \EndoGuard\Utils\Conversion::intVal($right['missing']));
         }
 
         return $left['uid'] <=> $right['uid'];

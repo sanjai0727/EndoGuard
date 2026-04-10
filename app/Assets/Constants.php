@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Assets;
+namespace EndoGuard\Assets;
 
 abstract class Constants {
     public static function listConstants(): array {

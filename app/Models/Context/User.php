@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Context;
+namespace EndoGuard\Models\Context;
 
 class User extends Base {
     protected ?bool $uniqueValues = false;
@@ -23,7 +23,7 @@ class User extends Base {
     public function getContext(array $accountIds, int $apiKey): array {
         $results = $this->getDetails($accountIds, $apiKey);
 
-        \EndoGuard\\Utils\Enrichment::calculateEmailReputationForContext($results);
+        \EndoGuard\Utils\Enrichment::calculateEmailReputationForContext($results);
 
         $recordsByAccount = [];
         foreach ($results as $item) {

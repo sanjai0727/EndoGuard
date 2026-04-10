@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Base;
+namespace EndoGuard\Models\Grid\Base;
 
-class Ids extends \EndoGuard\\Models\BaseSql {
+class Ids extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     private ?int $apiKey = null;

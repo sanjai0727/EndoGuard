@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class RetentionPolicies extends \EndoGuard\\Models\BaseSql {
+class RetentionPolicies extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_api';
 
     public function getRetentionKeys(): array {

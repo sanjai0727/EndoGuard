@@ -15,18 +15,18 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class LogbookRotation extends Base {
     public function process(): void {
         $this->addLog('Start logbook rotation.');
 
-        $model = new \EndoGuard\\Models\ApiKeys();
+        $model = new \EndoGuard\Models\ApiKeys();
         $keys = $model->getAllApiKeyIds();
         // rotate events for unauthorized requests
         $keys[] = ['id' => null];
 
-        $model = new \EndoGuard\\Models\Logbook();
+        $model = new \EndoGuard\Models\Logbook();
         $cnt = 0;
         foreach ($keys as $key) {
             $cnt += $model->rotateRequests($key['id']);

@@ -15,13 +15,13 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Watchlist;
+namespace EndoGuard\Controllers\Admin\Watchlist;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminWatchlist';
 
     public function getPageParams(): array {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
 
         $dataController = new Data();
         $users = $dataController->getImportantUsers($apiKey);

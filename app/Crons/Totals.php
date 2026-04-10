@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class Totals extends Base {
     // execute before risk score!
@@ -23,15 +23,15 @@ class Totals extends Base {
         $this->addLog('Start totals calculation.');
 
         $start = time();
-        $models = \EndoGuard\\Utils\Constants::get()->REST_TOTALS_MODELS;
+        $models = \EndoGuard\Utils\Constants::get()->REST_TOTALS_MODELS;
 
-        $batchSize = \EndoGuard\\Utils\Variables::getAccountOperationQueueBatchSize();
+        $batchSize = \EndoGuard\Utils\Variables::getAccountOperationQueueBatchSize();
         $bottom = false;
 
-        $queueModel = new \EndoGuard\\Models\Queue();
+        $queueModel = new \EndoGuard\Models\Queue();
 
         // TODO check multiple batches
-        $keys = $queueModel->getNextBatchKeys(\EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $batchSize);
+        $keys = $queueModel->getNextBatchKeys(\EndoGuard\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE, $batchSize);
         $res = [];
 
         foreach ($models as $name => $modelClass) {
@@ -39,11 +39,11 @@ class Totals extends Base {
             $timeMark = time();
             $model = new $modelClass();
             foreach ($keys as $key) {
-                (new \EndoGuard\\Models\SessionStat())->updateStats($key);
+                (new \EndoGuard\Models\SessionStat())->updateStats($key);
 
                 $cnt = $model->updateAllTotals($key);
                 $res[$name]['cnt'] += $cnt;
-                if (time() - $start > \EndoGuard\\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_EXECUTE_TIME_SEC) {
+                if (time() - $start > \EndoGuard\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_EXECUTE_TIME_SEC) {
                     // TODO: any reason to put the rest keys to queue?
                     $res[$name]['s'] = time() - $timeMark;
                     break 2;

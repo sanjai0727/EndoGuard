@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Events extends \EndoGuard\\Models\BaseSql {
+class Events extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getDistinctAccounts(int $after, int $until): array {
@@ -43,8 +43,8 @@ class Events extends \EndoGuard\\Models\BaseSql {
     }
 
     protected function applyLimit(string &$query, array &$queryParams): void {
-        $start = \EndoGuard\\Utils\Conversion::getIntRequestParam('start');
-        $length = \EndoGuard\\Utils\Conversion::getIntRequestParam('length');
+        $start = \EndoGuard\Utils\Conversion::getIntRequestParam('start');
+        $length = \EndoGuard\Utils\Conversion::getIntRequestParam('length');
 
         if (isset($start) && isset($length)) {
             $query .= ' LIMIT :length OFFSET :start';
@@ -104,7 +104,7 @@ class Events extends \EndoGuard\\Models\BaseSql {
         $params = [
             ':api_key'  => $apiKey,
             ':weeks'    => $weeks,
-            ':week_sec' => \EndoGuard\\Utils\Constants::get()->SECONDS_IN_WEEK,
+            ':week_sec' => \EndoGuard\Utils\Constants::get()->SECONDS_IN_WEEK,
         ];
 
         $query = (

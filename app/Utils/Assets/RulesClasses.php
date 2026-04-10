@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Assets;
+namespace EndoGuard\Utils\Assets;
 
 class RulesClasses extends Base {
     private const RULE_BROKEN = 'broken';
@@ -53,15 +53,15 @@ class RulesClasses extends Base {
             return ['&minus;', $cls];
         }
 
-        if ($score >= \EndoGuard\\Utils\Constants::get()->USER_LOW_SCORE_INF && $score < \EndoGuard\\Utils\Constants::get()->USER_LOW_SCORE_SUP) {
+        if ($score >= \EndoGuard\Utils\Constants::get()->USER_LOW_SCORE_INF && $score < \EndoGuard\Utils\Constants::get()->USER_LOW_SCORE_SUP) {
             $cls = 'low';
         }
 
-        if ($score >= \EndoGuard\\Utils\Constants::get()->USER_MEDIUM_SCORE_INF && $score < \EndoGuard\\Utils\Constants::get()->USER_MEDIUM_SCORE_SUP) {
+        if ($score >= \EndoGuard\Utils\Constants::get()->USER_MEDIUM_SCORE_INF && $score < \EndoGuard\Utils\Constants::get()->USER_MEDIUM_SCORE_SUP) {
             $cls = 'medium';
         }
 
-        if ($score >= \EndoGuard\\Utils\Constants::get()->USER_HIGH_SCORE_INF) {
+        if ($score >= \EndoGuard\Utils\Constants::get()->USER_HIGH_SCORE_INF) {
             $cls = 'high';
         }
 
@@ -73,7 +73,7 @@ class RulesClasses extends Base {
     }
 
     protected static function getNamespace(bool $core = true): string {
-        return $core ? '\\EndoGuard\\\Rules\\Core' : '\\EndoGuard\\\Rules\\Custom';
+        return $core ? '\\EndoGuard\\Rules\\Core' : '\\EndoGuard\\Rules\\Custom';
     }
 
     protected static function getClassFilename(string $filename, bool $core = true): string {
@@ -94,7 +94,7 @@ class RulesClasses extends Base {
         return $total;
     }
 
-    public static function getSingleRuleObject(string $uid, ?\Ruler\RuleBuilder $ruleBuilder): ?\EndoGuard\\Assets\Rule {
+    public static function getSingleRuleObject(string $uid, ?\Ruler\RuleBuilder $ruleBuilder): ?\EndoGuard\Assets\Rule {
         $obj = null;
         $cores = [false, true];
 

@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\ReviewQueue;
+namespace EndoGuard\Models\Grid\ReviewQueue;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = null;
     protected string $dateRangeField = 'event_account.added_to_review';
 
@@ -96,7 +96,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
         $this->applyDateRange($query, $queryParams);
 
         $searchConditions = '';
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
             $searchConditions .= (
@@ -116,7 +116,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
             );
 
             $queryParams[':search_value'] = '%' . $search['value'] . '%';
-            $queryParams[':offset'] = strval(\EndoGuard\\Utils\Timezones::getCurrentOperatorOffset());
+            $queryParams[':offset'] = strval(\EndoGuard\Utils\Timezones::getCurrentOperatorOffset());
         }
 
         //Add search and ids into request
@@ -124,7 +124,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applyRules(string &$query, array &$queryParams): void {
-        $ruleUids = \EndoGuard\\Utils\Conversion::getArrayRequestParam('ruleUids');
+        $ruleUids = \EndoGuard\Utils\Conversion::getArrayRequestParam('ruleUids');
         if (!$ruleUids) {
             return;
         }

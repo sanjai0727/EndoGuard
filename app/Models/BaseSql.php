@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
 abstract class BaseSql extends \DB\SQL\Mapper {
     protected ?\Base $f3 = null;
@@ -33,11 +33,11 @@ abstract class BaseSql extends \DB\SQL\Mapper {
     }
 
     protected function getDatabaseConnection(): ?\DB\SQL {
-        return \EndoGuard\\Utils\Database::getDb();
+        return \EndoGuard\Utils\Database::getDb();
     }
 
     public function printLog(): void {
-        echo \EndoGuard\\Utils\Database::getDb()->log();
+        echo \EndoGuard\Utils\Database::getDb()->log();
     }
 
     public function getArrayPlaceholders(array $ids, string $postfix = ''): array {

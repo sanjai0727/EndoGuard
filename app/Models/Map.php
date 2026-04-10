@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Map extends \EndoGuard\\Models\BaseSql {
+class Map extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'countries';
 
     public function getAllCountries(?string $dateFrom, ?string $dateTo, int $apiKey): array {
@@ -61,7 +61,7 @@ class Map extends \EndoGuard\\Models\BaseSql {
     }
 
     public function getAllCountriesByDateRange(int $apiKey): array {
-        $datesRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $datesRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
 
         $dateTo = $datesRange ? ($datesRange['endDate'] ?? null) : null;
         $dateFrom = $datesRange ? ($datesRange['startDate'] ?? null) : null;

@@ -15,17 +15,17 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Users;
+namespace EndoGuard\Controllers\Admin\Users;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminUsers';
 
     public function getPageParams(): array {
         $searchPlacholder = $this->f3->get('AdminUsers_search_placeholder');
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $rulesController = new \EndoGuard\\Controllers\Admin\Rules\Data();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $rulesController = new \EndoGuard\Controllers\Admin\Rules\Data();
 
-        $ruleUid = \EndoGuard\\Utils\Conversion::getStringRequestParam('ruleUid');
+        $ruleUid = \EndoGuard\Utils\Conversion::getStringRequestParam('ruleUid');
         $ruleUid = $ruleUid ? strtoupper($ruleUid) : null;
 
         $pageParams = [

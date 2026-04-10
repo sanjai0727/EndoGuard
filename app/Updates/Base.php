@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Updates;
+namespace EndoGuard\Updates;
 
 abstract class Base {
     public static string $version = '';
 
     abstract public static function apply(\DB\SQL $database): void;
 
-    public static function isApplied(\EndoGuard\\Models\Updates $updatesModel): bool {
+    public static function isApplied(\EndoGuard\Models\Updates $updatesModel): bool {
         return $updatesModel->isApplied(static::$version, 'core');
     }
 }

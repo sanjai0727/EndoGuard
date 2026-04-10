@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Emails;
+namespace EndoGuard\Models\Grid\Emails;
 
-class Ids extends \EndoGuard\\Models\Grid\Base\Ids {
+class Ids extends \EndoGuard\Models\Grid\Base\Ids {
     public function getEmailsIdsByUserId(): string {
         return (
             'SELECT DISTINCT

@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Base;
+namespace EndoGuard\Models\Grid\Base;
 
 class Query {
     protected ?\Base $f3 = null;
@@ -45,8 +45,8 @@ class Query {
     }
 
     protected function applyOrder(string &$query): void {
-        $order = \EndoGuard\\Utils\Conversion::getArrayRequestParam('order');
-        $columns = \EndoGuard\\Utils\Conversion::getArrayRequestParam('columns');
+        $order = \EndoGuard\Utils\Conversion::getArrayRequestParam('order');
+        $columns = \EndoGuard\Utils\Conversion::getArrayRequestParam('columns');
 
         $orderCondition = $this->defaultOrder;
 
@@ -72,7 +72,7 @@ class Query {
     }
 
     protected function applyDateRange(string &$query, array &$queryParams): void {
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
 
         if ($dateRange) {
             $searchConditions = (
@@ -88,8 +88,8 @@ class Query {
     }
 
     protected function applyLimit(string &$query, array &$queryParams): void {
-        $start = \EndoGuard\\Utils\Conversion::getIntRequestParam('start');
-        $length = \EndoGuard\\Utils\Conversion::getIntRequestParam('length');
+        $start = \EndoGuard\Utils\Conversion::getIntRequestParam('start');
+        $length = \EndoGuard\Utils\Conversion::getIntRequestParam('length');
 
         if (isset($start) && isset($length)) {
             $query .= ' LIMIT :length OFFSET :start';

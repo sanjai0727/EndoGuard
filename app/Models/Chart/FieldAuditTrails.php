@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
 class FieldAuditTrails extends Base {
     protected ?string $DB_TABLE_NAME = 'event_field_audit_trail';

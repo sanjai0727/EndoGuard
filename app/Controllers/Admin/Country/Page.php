@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Country;
+namespace EndoGuard\Controllers\Admin\Country;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminCountry';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $countryId = \EndoGuard\\Utils\Conversion::getIntUrlParam('countryId');
+        $countryId = \EndoGuard\Utils\Conversion::getIntUrlParam('countryId');
 
         $hasAccess = $dataController->checkIfOperatorHasAccess($countryId);
 

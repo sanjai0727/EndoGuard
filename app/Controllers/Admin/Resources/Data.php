@@ -15,12 +15,12 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Resources;
+namespace EndoGuard\Controllers\Admin\Resources;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
         $result = [];
-        $model = new \EndoGuard\\Models\Grid\Resources\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Resources\Grid($apiKey);
 
         $map = [
             'userId' => 'getResourcesByUserId',
@@ -30,7 +30,7 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
         $ids = array_column($result['data'], 'id');
         if ($ids) {
-            $model = new \EndoGuard\\Models\Resource();
+            $model = new \EndoGuard\Models\Resource();
             $model->updateTotalsByEntityIds($ids, $apiKey);
             $result['data'] = $model->refreshTotals($result['data'], $apiKey);
         }

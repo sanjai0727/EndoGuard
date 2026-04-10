@@ -15,24 +15,24 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\ISP;
+namespace EndoGuard\Controllers\Admin\ISP;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function checkIfOperatorHasAccess(int $ispId, int $apiKey): bool {
-        return (new \EndoGuard\\Models\Isp())->checkAccess($ispId, $apiKey);
+        return (new \EndoGuard\Models\Isp())->checkAccess($ispId, $apiKey);
     }
 
     public function getFullIspInfoById(int $ispId, int $apiKey): array {
-        $apiKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorApiKeyId();
-        $model = new \EndoGuard\\Models\Isp();
+        $apiKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorApiKeyId();
+        $model = new \EndoGuard\Models\Isp();
         $result = $model->getFullIspInfoById($ispId, $apiKey);
-        $result['lastseen'] = \EndoGuard\\Utils\ElapsedDate::short($result['lastseen']);
+        $result['lastseen'] = \EndoGuard\Utils\ElapsedDate::short($result['lastseen']);
 
         return $result;
     }
 
     private function getNumberOfIpsByIspId(int $ispId, int $apiKey): int {
-        return (new \EndoGuard\\Models\Isp())->getIpCountById($ispId, $apiKey);
+        return (new \EndoGuard\Models\Isp())->getIpCountById($ispId, $apiKey);
     }
 
     public function getIspDetails(int $ispId, int $apiKey): array {

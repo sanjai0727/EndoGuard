@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\IP;
+namespace EndoGuard\Controllers\Admin\IP;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,7 +26,7 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function getIpDetails(): array {
-        $ipId = \EndoGuard\\Utils\Conversion::getIntRequestParam('ipId');
+        $ipId = \EndoGuard\Utils\Conversion::getIntRequestParam('ipId');
         $hasAccess = $this->controller->checkIfOperatorHasAccess($ipId, $this->apiKey);
 
         if (!$hasAccess) {

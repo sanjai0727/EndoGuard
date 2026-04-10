@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
 class Users extends Base {
     protected ?string $DB_TABLE_NAME = 'event_account';
@@ -32,26 +32,26 @@ class Users extends Base {
     }
 
     private function getFirstLine(int $apiKey): array {
-        $dateRange = \EndoGuard\\Utils\DateRange::getDatesRangeFromRequest();
+        $dateRange = \EndoGuard\Utils\DateRange::getDatesRangeFromRequest();
         if (!$dateRange) {
             $dateRange = [
                 'endDate' => date('Y-m-d H:i:s'),
                 'startDate' => date('Y-m-d H:i:s', 0),
             ];
         }
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
+            ':resolution'   => \EndoGuard\Utils\DateRange::getResolutionFromRequest(),
             ':offset'       => strval($offset),
-            ':high_inf'     => \EndoGuard\\Utils\Constants::get()->USER_HIGH_SCORE_INF,
-            //':high_sup'     => \EndoGuard\\Utils\Constants::get()->USER_HIGH_SCORE_SUP,
-            ':med_inf'      => \EndoGuard\\Utils\Constants::get()->USER_MEDIUM_SCORE_INF,
-            ':med_sup'      => \EndoGuard\\Utils\Constants::get()->USER_MEDIUM_SCORE_SUP,
-            ':low_inf'      => \EndoGuard\\Utils\Constants::get()->USER_LOW_SCORE_INF,
-            ':low_sup'      => \EndoGuard\\Utils\Constants::get()->USER_LOW_SCORE_SUP,
+            ':high_inf'     => \EndoGuard\Utils\Constants::get()->USER_HIGH_SCORE_INF,
+            //':high_sup'     => \EndoGuard\Utils\Constants::get()->USER_HIGH_SCORE_SUP,
+            ':med_inf'      => \EndoGuard\Utils\Constants::get()->USER_MEDIUM_SCORE_INF,
+            ':med_sup'      => \EndoGuard\Utils\Constants::get()->USER_MEDIUM_SCORE_SUP,
+            ':low_inf'      => \EndoGuard\Utils\Constants::get()->USER_LOW_SCORE_INF,
+            ':low_sup'      => \EndoGuard\Utils\Constants::get()->USER_LOW_SCORE_SUP,
         ];
 
         $query = (

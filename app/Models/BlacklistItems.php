@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class BlacklistItems extends \EndoGuard\\Models\BaseSql {
+class BlacklistItems extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event';
 
     public function getIpsRelatedToAccountWithinOperator(int $accountId, int $apiKey): array {

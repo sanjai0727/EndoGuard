@@ -15,8 +15,8 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Assets;
+namespace EndoGuard\Assets;
 
-abstract class Context extends \EndoGuard\\Models\Context\Base {
+abstract class Context extends \EndoGuard\Models\Context\Base {
     abstract public function expandContext(array &$extraData, array &$user): void;
 }

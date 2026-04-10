@@ -15,11 +15,11 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Blacklist;
+namespace EndoGuard\Controllers\Admin\Blacklist;
 
-class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
+class Data extends \EndoGuard\Controllers\Admin\Base\Data {
     public function getList(int $apiKey): array {
-        $model = new \EndoGuard\\Models\Grid\Blacklist\Grid($apiKey);
+        $model = new \EndoGuard\Models\Grid\Blacklist\Grid($apiKey);
 
         return $model->getAll();
     }
@@ -29,13 +29,13 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
 
         switch ($type) {
             case 'ip':
-                $model = new \EndoGuard\\Models\Ip();
+                $model = new \EndoGuard\Models\Ip();
                 break;
             case 'email':
-                $model = new \EndoGuard\\Models\Email();
+                $model = new \EndoGuard\Models\Email();
                 break;
             case 'phone':
-                $model = new \EndoGuard\\Models\Phone();
+                $model = new \EndoGuard\Models\Phone();
                 break;
         }
 
@@ -45,29 +45,29 @@ class Data extends \EndoGuard\\Controllers\Admin\Base\Data {
     }
 
     public function setBlacklistUsersCount(bool $cache, int $apiKey): array {
-        $operator = \EndoGuard\\Utils\Routes::getCurrentRequestOperator();
+        $operator = \EndoGuard\Utils\Routes::getCurrentRequestOperator();
 
         if (!$operator) {
-            $key = \EndoGuard\\Entities\ApiKey::getById($apiKey);
-            $operator = \EndoGuard\\Entities\Operator::getById($key->creator);
+            $key = \EndoGuard\Entities\ApiKey::getById($apiKey);
+            $operator = \EndoGuard\Entities\Operator::getById($key->creator);
         }
 
         $takeFromCache = $this->canTakeNumberOfBlacklistUsersFromCache($operator);
 
         $total = $operator->blacklistUsersCnt;
         if (!$cache || !$takeFromCache) {
-            $total = (new \EndoGuard\\Models\Dashboard())->getTotalBlockedUsers(null, $apiKey);
+            $total = (new \EndoGuard\Models\Dashboard())->getTotalBlockedUsers(null, $apiKey);
 
-            $model = new \EndoGuard\\Models\Operator();
+            $model = new \EndoGuard\Models\Operator();
             $model->updateBlacklistUsersCnt($total, $operator->id);
         }
 
         return ['total' => $total];
     }
 
-    private function canTakeNumberOfBlacklistUsersFromCache(\EndoGuard\\Entities\Operator $operator): bool {
+    private function canTakeNumberOfBlacklistUsersFromCache(\EndoGuard\Entities\Operator $operator): bool {
         $interval = \Base::instance()->get('REVIEWED_QUEUE_CNT_CACHE_TIME');
 
-        return !!\EndoGuard\\Utils\DateRange::inIntervalTillNow($operator->reviewQueueUpdatedAt, $interval);
+        return !!\EndoGuard\Utils\DateRange::inIntervalTillNow($operator->reviewQueueUpdatedAt, $interval);
     }
 }

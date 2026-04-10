@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class RetentionPolicyViolations extends Base {
     public function process(): void {
         $this->addLog('Start retention policy violations.');
 
-        $eventsModel = new \EndoGuard\\Models\Events();
-        $retentionModel = new \EndoGuard\\Models\RetentionPolicies();
-        $fieldAuditModel = new \EndoGuard\\Models\FieldAuditTrail();
+        $eventsModel = new \EndoGuard\Models\Events();
+        $retentionModel = new \EndoGuard\Models\RetentionPolicies();
+        $fieldAuditModel = new \EndoGuard\Models\FieldAuditTrail();
 
         $retentionKeys = $retentionModel->getRetentionKeys();
         $cnt = 0;

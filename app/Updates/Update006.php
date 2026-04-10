@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Updates;
+namespace EndoGuard\Updates;
 
 class Update006 extends Base {
     public static string $version = 'v0.9.10';
@@ -133,7 +133,7 @@ class Update006 extends Base {
             $database->exec($sql);
         }
 
-        $params = [':field_edit' => \EndoGuard\\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID];
+        $params = [':field_edit' => \EndoGuard\Utils\Constants::get()->FIELD_EDIT_EVENT_TYPE_ID];
         $sql = (
             'UPDATE event_url
             SET

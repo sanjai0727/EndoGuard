@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Cron {
     private const NOTIFICATION_WINDOW_HOUR_START = 9;
@@ -38,14 +38,14 @@ class Cron {
             'data' => $hashes,
         ];
 
-        $response = \EndoGuard\\Utils\Network::sendApiRequest($postFields, '/global_alert_report', 'POST', $enrichmentKey);
+        $response = \EndoGuard\Utils\Network::sendApiRequest($postFields, '/global_alert_report', 'POST', $enrichmentKey);
 
         return $response->error() ?? '';
     }
 
     public static function checkTimezone(string $timezone): bool {
-        $hour = (new \DateTime('now', \EndoGuard\\Utils\Timezones::getTimezone($timezone)))->format('H');
-        $hour = \EndoGuard\\Utils\Conversion::intValCheckEmpty($hour, 0);
+        $hour = (new \DateTime('now', \EndoGuard\Utils\Timezones::getTimezone($timezone)))->format('H');
+        $hour = \EndoGuard\Utils\Conversion::intValCheckEmpty($hour, 0);
 
         return $hour >= self::NOTIFICATION_WINDOW_HOUR_START && $hour < self::NOTIFICATION_WINDOW_HOUR_END;
     }
@@ -60,10 +60,10 @@ class Cron {
         $subject = sprintf($subject, $reviewCount);
 
         $message = \Base::instance()->get('UnreviewedItemsReminder_email_body');
-        $url = \EndoGuard\\Utils\Variables::getHostWithProtocolAndBase();
+        $url = \EndoGuard\Utils\Variables::getHostWithProtocolAndBase();
         $message = sprintf($message, $name, $email, $reviewCount, $url);
 
-        \EndoGuard\\Utils\Mailer::send($name, $email, $subject, $message);
+        \EndoGuard\Utils\Mailer::send($name, $email, $subject, $message);
 
         return true;
     }

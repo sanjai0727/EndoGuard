@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Http;
+namespace EndoGuard\Utils\Http;
 
 class HttpClient {
-    /** @var array<int, \EndoGuard\\Interfaces\HttpTransportInterface> */
+    /** @var array<int, \EndoGuard\Interfaces\HttpTransportInterface> */
     private array $transports;
 
     /**
-     * @param array<int, \EndoGuard\\Interfaces\HttpTransportInterface> $transports
+     * @param array<int, \EndoGuard\Interfaces\HttpTransportInterface> $transports
      */
     public function __construct(array $transports) {
         $this->transports = $transports;
@@ -30,20 +30,20 @@ class HttpClient {
 
     public static function default(): self {
         $transports = [
-            new \EndoGuard\\Utils\Http\CurlTransport(),
-            new \EndoGuard\\Utils\Http\StreamTransport(),
+            new \EndoGuard\Utils\Http\CurlTransport(),
+            new \EndoGuard\Utils\Http\StreamTransport(),
         ];
 
         return new self($transports);
     }
 
-    public function request(\EndoGuard\\Entities\HttpRequest $request): \EndoGuard\\Entities\HttpResponse {
+    public function request(\EndoGuard\Entities\HttpRequest $request): \EndoGuard\Entities\HttpResponse {
         foreach ($this->transports as $transport) {
             if ($transport->isAvailable()) {
                 return $transport->request($request);
             }
         }
 
-        return \EndoGuard\\Entities\HttpResponse::failure(null, 'no_transport_available', []);
+        return \EndoGuard\Entities\HttpResponse::failure(null, 'no_transport_available', []);
     }
 }

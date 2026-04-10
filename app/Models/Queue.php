@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Queue extends \EndoGuard\\Models\BaseSql {
+class Queue extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'queue_account_operation';
 
     public function add(int $accountId, string $action, int $key): void {
@@ -57,25 +57,25 @@ class Queue extends \EndoGuard\\Models\BaseSql {
     }
 
     public function setWaiting(array $ids): void {
-        $this->setStatus(\EndoGuard\\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE, $ids);
+        $this->setStatus(\EndoGuard\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE, $ids);
     }
 
     public function setFailed(array $ids): void {
-        $this->setStatus(\EndoGuard\\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE, $ids);
+        $this->setStatus(\EndoGuard\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE, $ids);
     }
 
     public function setCompleted(array $ids): void {
-        $this->setStatus(\EndoGuard\\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE, $ids);
+        $this->setStatus(\EndoGuard\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE, $ids);
     }
 
     public function setExecuting(array $ids): void {
-        $this->setStatus(\EndoGuard\\Utils\Constants::get()->EXECUTING_QUEUE_STATUS_TYPE, $ids);
+        $this->setStatus(\EndoGuard\Utils\Constants::get()->EXECUTING_QUEUE_STATUS_TYPE, $ids);
     }
 
     public function isInQueueStatus(int $accountId, string $action, int $key): array {
         $params = [
             ':account'  => $accountId,
-            ':status'   => \EndoGuard\\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE,
+            ':status'   => \EndoGuard\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE,
             ':key'      => $key,
             ':action'   => $action,
         ];
@@ -105,8 +105,8 @@ class Queue extends \EndoGuard\\Models\BaseSql {
 
     public function actionIsInQueueProcessing(string $action, int $key): bool {
         $params = [
-            ':failed'       => \EndoGuard\\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE,
-            ':completed'    => \EndoGuard\\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE,
+            ':failed'       => \EndoGuard\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE,
+            ':completed'    => \EndoGuard\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE,
             ':key'          => $key,
             ':action'       => $action,
         ];
@@ -153,7 +153,7 @@ class Queue extends \EndoGuard\\Models\BaseSql {
 
         $params = [
             ':action'   => $action,
-            ':waiting'  => \EndoGuard\\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE,
+            ':waiting'  => \EndoGuard\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE,
         ];
 
         $arrayPlaceholders = [];
@@ -219,7 +219,7 @@ class Queue extends \EndoGuard\\Models\BaseSql {
 
 
     public function addBatchIds(array $accountIds, string $action, int $key): void {
-        $batchSize = \EndoGuard\\Utils\Variables::getAccountOperationQueueBatchSize();
+        $batchSize = \EndoGuard\Utils\Variables::getAccountOperationQueueBatchSize();
 
         $batch = [];
         $cnt = 0;
@@ -247,7 +247,7 @@ class Queue extends \EndoGuard\\Models\BaseSql {
     public function clearQueue(string $action, string $before): int {
         $params = [
             ':before' => $before,
-            ':status' => \EndoGuard\\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE,
+            ':status' => \EndoGuard\Utils\Constants::get()->COMPLETED_QUEUE_STATUS_TYPE,
             ':action' => $action,
         ];
 
@@ -272,8 +272,8 @@ class Queue extends \EndoGuard\\Models\BaseSql {
     public function setFailedForStuckAction(string $action): void {
         $params = [
             ':action'   => $action,
-            ':status'   => \EndoGuard\\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE,
-            ':stuck'    => \EndoGuard\\Utils\Constants::get()->EXECUTING_QUEUE_STATUS_TYPE,
+            ':status'   => \EndoGuard\Utils\Constants::get()->FAILED_QUEUE_STATUS_TYPE,
+            ':stuck'    => \EndoGuard\Utils\Constants::get()->EXECUTING_QUEUE_STATUS_TYPE,
         ];
 
         $query = (
@@ -293,7 +293,7 @@ class Queue extends \EndoGuard\\Models\BaseSql {
     public function checkExecuting(string $action): array {
         $params = [
             ':action'   => $action,
-            ':status'   => \EndoGuard\\Utils\Constants::get()->EXECUTING_QUEUE_STATUS_TYPE,
+            ':status'   => \EndoGuard\Utils\Constants::get()->EXECUTING_QUEUE_STATUS_TYPE,
         ];
 
         $query = (
@@ -316,7 +316,7 @@ class Queue extends \EndoGuard\\Models\BaseSql {
         $params = [
             ':batch'    => $size,
             ':action'   => $action,
-            ':status'   => \EndoGuard\\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE,
+            ':status'   => \EndoGuard\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE,
         ];
 
         $query = ('
@@ -342,7 +342,7 @@ class Queue extends \EndoGuard\\Models\BaseSql {
         $params = [
             ':batch'    => $size,
             ':action'   => $action,
-            ':status'   => \EndoGuard\\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE,
+            ':status'   => \EndoGuard\Utils\Constants::get()->WAITING_QUEUE_STATUS_TYPE,
         ];
 
         $query = ('

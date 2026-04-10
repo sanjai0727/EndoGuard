@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Views;
+namespace EndoGuard\Views;
 
 class Xml extends Base {
     public function render(): array {

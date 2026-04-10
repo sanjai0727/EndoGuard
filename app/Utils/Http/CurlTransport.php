@@ -15,17 +15,17 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils\Http;
+namespace EndoGuard\Utils\Http;
 
-final class CurlTransport implements \EndoGuard\\Interfaces\HttpTransportInterface {
+final class CurlTransport implements \EndoGuard\Interfaces\HttpTransportInterface {
     public function isAvailable(): bool {
         return function_exists('curl_init');
     }
 
-    public function request(\EndoGuard\\Entities\HttpRequest $request): \EndoGuard\\Entities\HttpResponse {
+    public function request(\EndoGuard\Entities\HttpRequest $request): \EndoGuard\Entities\HttpResponse {
         $ch = curl_init($request->url());
         if ($ch === false) {
-            $result = \EndoGuard\\Entities\HttpResponse::failure(null, 'curl_init_failed', []);
+            $result = \EndoGuard\Entities\HttpResponse::failure(null, 'curl_init_failed', []);
 
             return $result;
         }
@@ -66,19 +66,19 @@ final class CurlTransport implements \EndoGuard\\Interfaces\HttpTransportInterfa
             $error = strval(curl_error($ch));
             curl_close($ch);
 
-            return \EndoGuard\\Entities\HttpResponse::failure($code, $error, []);
+            return \EndoGuard\Entities\HttpResponse::failure($code, $error, []);
         }
 
         curl_close($ch);
 
         if ($raw === false) {
-            $result = \EndoGuard\\Entities\HttpResponse::failure($code, 'curl_exec_failed', []);
+            $result = \EndoGuard\Entities\HttpResponse::failure($code, 'curl_exec_failed', []);
 
             return $result;
         }
 
         $bodyString = strval($raw);
-        $result = \EndoGuard\\Entities\HttpResponse::success($code, $bodyString, []);
+        $result = \EndoGuard\Entities\HttpResponse::success($code, $bodyString, []);
 
         return $result;
     }

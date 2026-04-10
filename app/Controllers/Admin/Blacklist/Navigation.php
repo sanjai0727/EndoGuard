@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Blacklist;
+namespace EndoGuard\Controllers\Admin\Blacklist;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -38,9 +38,9 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
             return [];
         }
 
-        $type   = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
+        $type   = \EndoGuard\Utils\Conversion::getStringRequestParam('type');
         $this->controller->removeItemFromBlacklist($this->id, $type, $this->apiKey);
-        $successCode = \EndoGuard\\Utils\ErrorCodes::ITEM_REMOVED_FROM_BLACKLIST;
+        $successCode = \EndoGuard\Utils\ErrorCodes::ITEM_REMOVED_FROM_BLACKLIST;
 
         return [
             'success'   => $successCode,

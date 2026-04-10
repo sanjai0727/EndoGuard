@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers;
+namespace EndoGuard\Controllers;
 
 abstract class Base {
     protected \Base $f3;
@@ -24,13 +24,13 @@ abstract class Base {
         $this->f3 = \Base::instance();
 
         $keepSessionInDb = $this->f3->get('KEEP_SESSION_IN_DB') ?? null;
-        if (!\EndoGuard\\Utils\Database::initConnect(boolval($keepSessionInDb))) {
+        if (!\EndoGuard\Utils\Database::initConnect(boolval($keepSessionInDb))) {
             $this->f3->error(404);
         }
 
         //Determine current user
-        \EndoGuard\\Utils\Routes::setCurrentRequestOperator();
-        \EndoGuard\\Utils\Routes::setCurrentRequestApiKey();
+        \EndoGuard\Utils\Routes::setCurrentRequestOperator();
+        \EndoGuard\Utils\Routes::setCurrentRequestApiKey();
 
         //Set CSRF token
         //$rnd = mt_rand();
@@ -42,10 +42,10 @@ abstract class Base {
      */
     public function validateCsrfToken(): int|bool {
         $csrf = $this->f3->get('SESSION.csrf');
-        $token = \EndoGuard\\Utils\Conversion::getStringRequestParam('token');
+        $token = \EndoGuard\Utils\Conversion::getStringRequestParam('token');
 
         if (!isset($token) || $token === '' || !isset($csrf) || $csrf === '' || $token !== $csrf) {
-            return \EndoGuard\\Utils\ErrorCodes::CSRF_ATTACK_DETECTED;
+            return \EndoGuard\Utils\ErrorCodes::CSRF_ATTACK_DETECTED;
         }
 
         return false;

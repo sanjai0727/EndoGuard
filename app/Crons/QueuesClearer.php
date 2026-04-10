@@ -15,24 +15,24 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Crons;
+namespace EndoGuard\Crons;
 
 class QueuesClearer extends Base {
     public const DATETIME_FORMAT = 'Y-m-d H:i:s.u';
 
     public function process(): void {
-        $days = \EndoGuard\\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_CLEAR_COMPLETED_AFTER_DAYS;
+        $days = \EndoGuard\Utils\Constants::get()->ACCOUNT_OPERATION_QUEUE_CLEAR_COMPLETED_AFTER_DAYS;
         $before = (new \DateTime(strval($days) . ' days ago'))->format(self::DATETIME_FORMAT);
 
         $queues = [
-            \EndoGuard\\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE,
-            \EndoGuard\\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE,
-            \EndoGuard\\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE,
+            \EndoGuard\Utils\Constants::get()->BLACKLIST_QUEUE_ACTION_TYPE,
+            \EndoGuard\Utils\Constants::get()->DELETE_USER_QUEUE_ACTION_TYPE,
+            \EndoGuard\Utils\Constants::get()->RISK_SCORE_QUEUE_ACTION_TYPE,
         ];
 
         $cnt = 0;
 
-        $model = new \EndoGuard\\Models\Queue();
+        $model = new \EndoGuard\Models\Queue();
 
         // delete completed records
         foreach ($queues as $queue) {

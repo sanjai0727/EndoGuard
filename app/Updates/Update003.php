@@ -15,13 +15,13 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Updates;
+namespace EndoGuard\Updates;
 
 class Update003 extends Base {
     public static string $version = 'v0.9.7';
 
     public static function apply(\DB\SQL $database): void {
-        $data = [':type' => \EndoGuard\\Utils\Constants::get()->PAGE_ERROR_EVENT_TYPE_ID];
+        $data = [':type' => \EndoGuard\Utils\Constants::get()->PAGE_ERROR_EVENT_TYPE_ID];
 
         $queries = [
             'ALTER TABLE event_logbook DROP COLUMN raw_time',

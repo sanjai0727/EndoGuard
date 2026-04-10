@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Enrichment;
+namespace EndoGuard\Controllers\Admin\Enrichment;
 
-class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
+class Navigation extends \EndoGuard\Controllers\Admin\Base\Navigation {
     public function __construct() {
         parent::__construct();
 
@@ -26,11 +26,11 @@ class Navigation extends \EndoGuard\\Controllers\Admin\Base\Navigation {
     }
 
     public function enrichEntity(): array {
-        $enrichmentKey = \EndoGuard\\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
+        $enrichmentKey = \EndoGuard\Utils\ApiKeys::getCurrentOperatorEnrichmentKeyString();
 
-        $type       = \EndoGuard\\Utils\Conversion::getStringRequestParam('type');
-        $search     = \EndoGuard\\Utils\Conversion::getStringRequestParam('search', true);
-        $entityId   = \EndoGuard\\Utils\Conversion::getIntRequestParam('entityId', true);
+        $type       = \EndoGuard\Utils\Conversion::getStringRequestParam('type');
+        $search     = \EndoGuard\Utils\Conversion::getStringRequestParam('search', true);
+        $entityId   = \EndoGuard\Utils\Conversion::getIntRequestParam('entityId', true);
 
         return $this->controller->enrichEntity($type, $search, $entityId, $this->apiKey, $enrichmentKey);
     }

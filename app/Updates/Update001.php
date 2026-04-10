@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Updates;
+namespace EndoGuard\Updates;
 
 class Update001 extends Base {
     public static string $version = 'v0.9.5';

@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Admin\Resource;
+namespace EndoGuard\Controllers\Admin\Resource;
 
-class Page extends \EndoGuard\\Controllers\Admin\Base\Page {
+class Page extends \EndoGuard\Controllers\Admin\Base\Page {
     public ?string $page = 'AdminResource';
 
     public function getPageParams(): array {
         $dataController = new Data();
-        $resourceId = \EndoGuard\\Utils\Conversion::getIntUrlParam('resourceId');
+        $resourceId = \EndoGuard\Utils\Conversion::getIntUrlParam('resourceId');
         $hasAccess = $dataController->checkIfOperatorHasAccess($resourceId);
 
         if (!$hasAccess) {

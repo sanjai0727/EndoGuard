@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Search;
+namespace EndoGuard\Models\Search;
 
-class Phone extends \EndoGuard\\Models\BaseSql {
+class Phone extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'event_phone';
 
     public function searchByPhone(string $query, int $apiKey): array {

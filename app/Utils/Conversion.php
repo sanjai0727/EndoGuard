@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Conversion {
     public static function intVal(mixed $value, ?int $default = null): ?int {

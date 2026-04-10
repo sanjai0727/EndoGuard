@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Ips;
+namespace EndoGuard\Models\Grid\Ips;
 
-class Query extends \EndoGuard\\Models\Grid\Base\Query {
+class Query extends \EndoGuard\Models\Grid\Base\Query {
     protected ?string $defaultOrder = 'event_ip.lastseen DESC';
     protected string $dateRangeField = 'event_ip.lastseen';
 
@@ -104,7 +104,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     private function applySearch(string &$query, array &$queryParams): void {
         $this->applyDateRange($query, $queryParams);
 
-        $search = \EndoGuard\\Utils\Conversion::getDictionaryRequestParam('search');
+        $search = \EndoGuard\Utils\Conversion::getDictionaryRequestParam('search');
         $searchConditions = $this->injectIdQuery('event_ip.id', $queryParams);
 
         if (isset($search['value']) && is_string($search['value']) && $search['value'] !== '') {
@@ -127,7 +127,7 @@ class Query extends \EndoGuard\\Models\Grid\Base\Query {
     }
 
     private function applyIpTypes(string &$query): void {
-        $ipTypeIds = \EndoGuard\\Utils\Conversion::getArrayRequestParam('ipTypeIds');
+        $ipTypeIds = \EndoGuard\Utils\Conversion::getArrayRequestParam('ipTypeIds');
         if (!$ipTypeIds) {
             return;
         }

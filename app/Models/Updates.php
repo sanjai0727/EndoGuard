@@ -15,15 +15,15 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models;
+namespace EndoGuard\Models;
 
-class Updates extends \EndoGuard\\Models\BaseSql {
+class Updates extends \EndoGuard\Models\BaseSql {
     protected ?string $DB_TABLE_NAME = 'dshb_updates';
 
     public function __construct(\Base $f3) {
         $this->f3 = $f3;
 
-        \EndoGuard\\Utils\Database::initConnect(false);
+        \EndoGuard\Utils\Database::initConnect(false);
         $database = $this->getDatabaseConnection();
 
         \DB\SQL\Mapper::__construct($database, $this->DB_TABLE_NAME, $this->DB_TABLE_FIELDS, $this->DB_TABLE_TTL);

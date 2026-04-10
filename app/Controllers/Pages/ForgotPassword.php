@@ -15,13 +15,13 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers\Pages;
+namespace EndoGuard\Controllers\Pages;
 
 class ForgotPassword extends Base {
     public ?string $page = 'ForgotPassword';
 
     public function getPageParams(): array {
-        if (!\EndoGuard\\Utils\Variables::getForgotPasswordAllowed()) {
+        if (!\EndoGuard\Utils\Variables::getForgotPasswordAllowed()) {
             return [];
         }
 
@@ -31,16 +31,16 @@ class ForgotPassword extends Base {
 
         if ($this->isPostRequest()) {
             $params = $this->extractRequestParams(['token', 'email']);
-            $errorCode = \EndoGuard\\Utils\Validators::validateForgotPassword($params);
+            $errorCode = \EndoGuard\Utils\Validators::validateForgotPassword($params);
 
             if (!$errorCode) {
-                $email = \EndoGuard\\Utils\Conversion::getStringRequestParam('email');
-                $model = new \EndoGuard\\Models\Operator();
+                $email = \EndoGuard\Utils\Conversion::getStringRequestParam('email');
+                $model = new \EndoGuard\Models\Operator();
                 $operatorId = $model->getActivatedByEmail($email);
 
                 if ($operatorId) {
                     // Create forgot password record.
-                    $forgotPasswordModel = new \EndoGuard\\Models\ForgotPassword();
+                    $forgotPasswordModel = new \EndoGuard\Models\ForgotPassword();
                     $renewKey = $forgotPasswordModel->insertRecord($operatorId);
 
                     // Send forgot password email.
@@ -51,7 +51,7 @@ class ForgotPassword extends Base {
                 usleep(rand(500000, 1000000));
 
                 // Always report back that the email was sent.
-                $pageParams['SUCCESS_CODE'] = \EndoGuard\\Utils\ErrorCodes::RENEW_KEY_CREATED;
+                $pageParams['SUCCESS_CODE'] = \EndoGuard\Utils\ErrorCodes::RENEW_KEY_CREATED;
             }
 
             $pageParams['VALUES'] = $params;
@@ -62,9 +62,9 @@ class ForgotPassword extends Base {
     }
 
     private function sendPasswordRenewEmail(int $operatorId, string $renewKey): void {
-        $url = \EndoGuard\\Utils\Variables::getHostWithProtocolAndBase();
+        $url = \EndoGuard\Utils\Variables::getHostWithProtocolAndBase();
 
-        $operator = \EndoGuard\\Entities\Operator::getById($operatorId);
+        $operator = \EndoGuard\Entities\Operator::getById($operatorId);
 
         $toName = $operator->firstname;
         $toAddress = $operator->email;
@@ -75,6 +75,6 @@ class ForgotPassword extends Base {
         $renewUrl = sprintf('%s/password-recovering/%s', $url, $renewKey);
         $message = sprintf($message, $renewUrl);
 
-        \EndoGuard\\Utils\Mailer::send($toName, $toAddress, $subject, $message);
+        \EndoGuard\Utils\Mailer::send($toName, $toAddress, $subject, $message);
     }
 }

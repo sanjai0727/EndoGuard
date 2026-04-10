@@ -15,9 +15,9 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Grid\Resources;
+namespace EndoGuard\Models\Grid\Resources;
 
-class Ids extends \EndoGuard\\Models\Grid\Base\Ids {
+class Ids extends \EndoGuard\Models\Grid\Base\Ids {
     public function getResourcesIdsByUserId(): string {
         return (
             'SELECT DISTINCT

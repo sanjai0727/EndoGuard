@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Models\Chart;
+namespace EndoGuard\Models\Chart;
 
 class FieldAuditTrail extends BaseEventsCount {
     public function getCounts(int $apiKey): array {
@@ -44,15 +44,15 @@ class FieldAuditTrail extends BaseEventsCount {
 
     protected function executeOnRangeById(string $query, int $apiKey): array {
         // do not use offset because :start_time/:end_time compared with UTC event.time
-        $dateRange = \EndoGuard\\Utils\DateRange::getLatestNDatesRangeFromRequest(180);
-        $offset = \EndoGuard\\Utils\Timezones::getCurrentOperatorOffset();
+        $dateRange = \EndoGuard\Utils\DateRange::getLatestNDatesRangeFromRequest(180);
+        $offset = \EndoGuard\Utils\Timezones::getCurrentOperatorOffset();
 
         $params = [
             ':api_key'      => $apiKey,
             ':end_time'     => $dateRange['endDate'],
             ':start_time'   => $dateRange['startDate'],
-            ':resolution'   => \EndoGuard\\Utils\DateRange::getResolutionFromRequest(),
-            ':id'           => \EndoGuard\\Utils\Conversion::getIntRequestParam('id'),
+            ':resolution'   => \EndoGuard\Utils\DateRange::getResolutionFromRequest(),
+            ':id'           => \EndoGuard\Utils\Conversion::getIntRequestParam('id'),
             ':offset'       => strval($offset),     // str for postgres
         ];
 
