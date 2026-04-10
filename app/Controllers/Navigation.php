@@ -35,6 +35,11 @@ class Navigation extends Base {
         echo $this->response->render();
     }
 
+    public function visitAboutPage(): void {
+        $this->response->data['HTML_FILE'] = 'about.html';
+        $this->response->data['TITLE'] = 'About Us';
+    }
+
     public function visitSignupPage(): void {
         \EndoGuard\\Utils\Routes::redirectIfLogged();
 

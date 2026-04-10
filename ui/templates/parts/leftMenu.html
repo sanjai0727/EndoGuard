@@ -159,6 +159,13 @@
             <li>
                 <a class="is-docs" href="{{ @LeftMenu_admin_docs_link_url }}" target="_blank" rel="noopener noreferrer">{{ @LeftMenu_admin_docs_link }}</a>
             </li>
+            
+            <li>
+                <set ABOUT_ACTIVE_CLASS="{{ '/about' == @CURRENT_PATH ? 'is-active': 'is-normal'}}" />
+                <a class="{{ @ABOUT_ACTIVE_CLASS }}" href="{{ @BASE }}/about">
+                    <include href="images/icons/help.svg" />{{ @LeftMenu_about_link }}
+                </a>
+            </li>
         </ul>
     </aside>
 </div>

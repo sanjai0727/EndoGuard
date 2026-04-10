@@ -42,4 +42,5 @@ return [
     'LeftMenu_admin_docs_link_url' => 'https://www.endoguard.io/admin-docs.php',
     'LeftMenu_dev_docs_link' => 'Developer docs',
     'LeftMenu_dev_docs_link_url' => 'https://www.endoguard.io/dev-docs.php',
+    'LeftMenu_about_link' => 'About Us',
 ];

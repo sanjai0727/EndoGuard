@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: endoguard
+      POSTGRES_PASSWORD: your_secure_password
+      POSTGRES_DB: endoguard_db
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./install/install.sql:/docker-entrypoint-initdb.d/init.sql
+
+  web:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DATABASE_URL: postgresql://endoguard:your_secure_password@db:5432/endoguard_db
+      SITE: endoguard.online
+      PEPPER: BBlcw0shYHXXCBIIXxaiBySgn3GW0Uzj
+      FORCE_HTTPS: "true"
+    depends_on:
+      - db

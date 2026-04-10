@@ -1,0 +1,27 @@
+{
+  "functions": {
+    "api/**/*.php": {
+      "runtime": "vercel-php@0.7.2"
+    },
+    "index.php": {
+      "runtime": "vercel-php@0.7.2"
+    }
+  },
+  "routes": [
+    {
+      "src": "/ui/(.*)",
+      "dest": "/ui/$1"
+    },
+    {
+      "src": "/sensor/(.*)",
+      "dest": "/sensor/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.php"
+    }
+  ],
+  "env": {
+    "APP_ENV": "production"
+  }
+}
