@@ -27,6 +27,10 @@ RUN if [ -f composer.json ]; then \
 # Set permissions for folders EndoGuard needs to write to
 RUN chown -R www-data:www-data /var/www/html/assets /var/www/html/tmp /var/www/html/config
 
+# Enable environment variables for PHP-FPM
+RUN echo "clear_env = no" >> /usr/local/etc/php-fpm.d/zz-docker.conf
+
 # PHP-FPM runs on port 9000
 EXPOSE 9000
+
 
