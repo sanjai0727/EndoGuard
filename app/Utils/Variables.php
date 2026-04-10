@@ -23,7 +23,7 @@ class Variables {
     }
 
     public static function getDB(): ?string {
-        return getenv('DATABASE_URL') ?: self::getF3()->get('DATABASE_URL');
+        return getenv('DATABASE_URL') ?: ($_ENV['DATABASE_URL'] ?? ($_SERVER['DATABASE_URL'] ?? self::getF3()->get('DATABASE_URL')));
     }
 
     public static function getConfigFile(): string {
@@ -31,7 +31,7 @@ class Variables {
     }
 
     public static function getHosts(): array {
-        $env = getenv('SITE');
+        $env = getenv('SITE') ?: ($_ENV['SITE'] ?? ($_SERVER['SITE'] ?? null));
         $conf = self::getF3()->get('SITE');
 
         return $env ? explode(',', $env) : (is_array($conf) ? $conf : [$conf]);
@@ -54,11 +54,11 @@ class Variables {
     }
 
     public static function getEnrichmentApi(): string {
-        return getenv('ENRICHMENT_API') ?: self::getF3()->get('ENRICHMENT_API');
+        return getenv('ENRICHMENT_API') ?: ($_ENV['ENRICHMENT_API'] ?? ($_SERVER['ENRICHMENT_API'] ?? self::getF3()->get('ENRICHMENT_API')));
     }
 
     public static function getPepper(): string {
-        return getenv('PEPPER') ?: self::getF3()->get('PEPPER');
+        return getenv('PEPPER') ?: ($_ENV['PEPPER'] ?? ($_SERVER['PEPPER'] ?? self::getF3()->get('PEPPER')));
     }
 
     public static function getLogbookLimit(): int {
@@ -81,7 +81,7 @@ class Variables {
 
     public static function getForceHttps(): bool {
         // set 'false' string if FORCE_HTTPS wasn't set due to filter_var() issues
-        $variable = getenv('FORCE_HTTPS') ?: self::getF3()->get('FORCE_HTTPS') ?? 'false';
+        $variable = getenv('FORCE_HTTPS') ?: ($_ENV['FORCE_HTTPS'] ?? ($_SERVER['FORCE_HTTPS'] ?? (self::getF3()->get('FORCE_HTTPS') ?? 'false')));
 
         return \EndoGuard\Utils\Conversion::filterBool($variable) ?? true;
     }
@@ -118,9 +118,9 @@ class Variables {
 
     public static function completedConfig(): bool {
         return
-            (getenv('SITE') || self::getF3()->get('SITE')) &&
-            (getenv('PEPPER') || self::getF3()->get('PEPPER')) &&
-            (getenv('ENRICHMENT_API') || self::getF3()->get('ENRICHMENT_API')) &&
-            (getenv('DATABASE_URL') || self::getF3()->get('DATABASE_URL'));
+            (getenv('SITE') || $_ENV['SITE'] || $_SERVER['SITE'] || self::getF3()->get('SITE')) &&
+            (getenv('PEPPER') || $_ENV['PEPPER'] || $_SERVER['PEPPER'] || self::getF3()->get('PEPPER')) &&
+            (getenv('ENRICHMENT_API') || $_ENV['ENRICHMENT_API'] || $_SERVER['ENRICHMENT_API'] || self::getF3()->get('ENRICHMENT_API')) &&
+            (getenv('DATABASE_URL') || $_ENV['DATABASE_URL'] || $_SERVER['DATABASE_URL'] || self::getF3()->get('DATABASE_URL'));
     }
 }
