@@ -118,9 +118,9 @@ class Variables {
 
     public static function completedConfig(): bool {
         return
-            (getenv('SITE') || $_ENV['SITE'] || $_SERVER['SITE'] || self::getF3()->get('SITE')) &&
-            (getenv('PEPPER') || $_ENV['PEPPER'] || $_SERVER['PEPPER'] || self::getF3()->get('PEPPER')) &&
-            (getenv('ENRICHMENT_API') || $_ENV['ENRICHMENT_API'] || $_SERVER['ENRICHMENT_API'] || self::getF3()->get('ENRICHMENT_API')) &&
-            (getenv('DATABASE_URL') || $_ENV['DATABASE_URL'] || $_SERVER['DATABASE_URL'] || self::getF3()->get('DATABASE_URL'));
+            (getenv('SITE') || ($_ENV['SITE'] ?? false) || ($_SERVER['SITE'] ?? false) || self::getF3()->get('SITE')) &&
+            (getenv('PEPPER') || ($_ENV['PEPPER'] ?? false) || ($_SERVER['PEPPER'] ?? false) || self::getF3()->get('PEPPER')) &&
+            (getenv('ENRICHMENT_API') || ($_ENV['ENRICHMENT_API'] ?? false) || ($_SERVER['ENRICHMENT_API'] ?? false) || self::getF3()->get('ENRICHMENT_API')) &&
+            (getenv('DATABASE_URL') || ($_ENV['DATABASE_URL'] ?? false) || ($_SERVER['DATABASE_URL'] ?? false) || self::getF3()->get('DATABASE_URL'));
     }
 }
