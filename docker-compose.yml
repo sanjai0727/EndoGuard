@@ -1,24 +1,64 @@
 version: '3.8'
 
 services:
+  # Database Service
   db:
     image: postgres:15
+    container_name: endoguard_db
     environment:
-      POSTGRES_USER: endoguard
-      POSTGRES_PASSWORD: your_secure_password
-      POSTGRES_DB: endoguard_db
+      POSTGRES_USER: ${DB_USER:-endoguard}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-your_secure_password}
+      POSTGRES_DB: ${DB_NAME:-endoguard_db}
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
       - ./install/install.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - endoguard_network
 
-  web:
+  # Backend Service (PHP-FPM)
+  backend:
     build: .
-    ports:
-      - "8585:80"
+    container_name: endoguard_backend
+    volumes:
+      - .:/var/www/html
     environment:
-      DATABASE_URL: postgresql://endoguard:your_secure_password@db:5432/endoguard_db
-      SITE: endoguard.online
-      PEPPER: BBlcw0shYHXXCBIIXxaiBySgn3GW0Uzj
-      FORCE_HTTPS: "true"
+      DATABASE_URL: postgresql://${DB_USER:-endoguard}:${DB_PASSWORD:-your_secure_password}@db:5432/${DB_NAME:-endoguard_db}
+      SITE: ${SITE:-endoguard.online}
+      PEPPER: ${PEPPER:-BBlcw0shYHXXCBIIXxaiBySgn3GW0Uzj}
+      FORCE_HTTPS: "${FORCE_HTTPS:-true}"
     depends_on:
       - db
+    networks:
+      - endoguard_network
+
+  # Frontend Service (Nginx)
+  frontend:
+    image: nginx:alpine
+    container_name: endoguard_frontend
+    ports:
+      - "8585:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    networks:
+      - endoguard_network
+
+  # Database Management (Optional but highly recommended)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: endoguard_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@endoguard.io
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8586:80"
+    depends_on:
+      - db
+    networks:
+      - endoguard_network
+
+networks:
+  endoguard_network:
+    driver: bridge
