@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Utils;
+namespace EndoGuard\Utils;
 
 class Variables {
     private static function getF3(): \Base {

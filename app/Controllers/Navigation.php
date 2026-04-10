@@ -15,14 +15,14 @@
 
 declare(strict_types=1);
 
-namespace EndoGuard\\Controllers;
+namespace EndoGuard\Controllers;
 
 class Navigation extends Base {
-    public \EndoGuard\\Views\Base $response;
+    public \EndoGuard\Views\Base $response;
 
     public function beforeroute(): void {
         // CSRF assignment in base page
-        $this->response = new \EndoGuard\\Views\Frontend();
+        $this->response = new \EndoGuard\Views\Frontend();
     }
 
     /**
@@ -43,39 +43,39 @@ class Navigation extends Base {
     public function visitSignupPage(): void {
         \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        $pageController = new \EndoGuard\\Controllers\Pages\Signup();
+        $pageController = new \EndoGuard\Controllers\Pages\Signup();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitLoginPage(): void {
         \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        $pageController = new \EndoGuard\\Controllers\Pages\Login();
+        $pageController = new \EndoGuard\Controllers\Pages\Login();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitForgotPasswordPage(): void {
         \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        if (!\EndoGuard\\Utils\Variables::getForgotPasswordAllowed()) {
+        if (!\EndoGuard\Utils\Variables::getForgotPasswordAllowed()) {
             $this->f3->reroute('/');
         }
 
-        $pageController = new \EndoGuard\\Controllers\Pages\ForgotPassword();
+        $pageController = new \EndoGuard\Controllers\Pages\ForgotPassword();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitPasswordRecoveringPage(): void {
         \EndoGuard\\Utils\Routes::redirectIfLogged();
 
-        $pageController = new \EndoGuard\\Controllers\Pages\PasswordRecovering();
+        $pageController = new \EndoGuard\Controllers\Pages\PasswordRecovering();
         $this->response->data = $pageController->getPageParams();
     }
 
     public function visitLogoutPage(): void {
-        \EndoGuard\\Utils\Routes::redirectIfUnlogged();
+        \EndoGuard\Utils\Routes::redirectIfUnlogged();
 
-        $pageController = new \EndoGuard\\Controllers\Pages\Logout();
+        $pageController = new \EndoGuard\Controllers\Pages\Logout();
         $this->response->data = $pageController->getPageParams();
     }
 }
