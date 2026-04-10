@@ -837,7 +837,7 @@ function checkLatestVersion(): ?bool {
 
     require_once $path;
 
-    $version = \EndoGuard\\Utils\VersionControl::versionString();
+    $version = \EndoGuard\Utils\VersionControl::versionString();
 
     $useragent = 'endoguard-install';
     $useragent = $version ? $useragent . '/' . $version : $useragent;
